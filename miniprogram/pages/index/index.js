@@ -73,12 +73,20 @@ Page({
         ]
     },
 
+
+// functions
+
     onLoad: function (e) {
         let that = this;
 
         clearInterval(init); // 计时器归零
         that.data.minute = 0;
         that.data.second = 0;
+    },
+
+    onReady() {
+        // const pkType = this.selectComponent('.pk-type') //获取组件实例
+        // pkType.setIndexes([this.data.index]) //setIndexes()中的参数是一个数组
     },
 
     onUnload() {
@@ -117,8 +125,9 @@ Page({
         }
 
         // initical question
-        //type = getQuesType( );
         ret = that.initQues(type);
+        if (ret == -1)
+            return -1;
 
         that.setData({
             enSwitch: true
@@ -186,11 +195,6 @@ Page({
         this.setData({ showGrade: false });
     },
 
-    onReady() {
-        // const pkType = this.selectComponent('.pk-type') //获取组件实例
-        // pkType.setIndexes([this.data.index]) //setIndexes()中的参数是一个数组
-    },
-
     onChangeGrade(event) {
         // const { picker, value, index } = event.detail;
         // Toast(`当前值：${value}, 当前索引：${index}`);
@@ -247,7 +251,6 @@ Page({
 
     onConfirmType(e) {
         let that = this;
-        // Toast('确定');
 
         that.data.indexType = e.detail.index;
 
@@ -256,15 +259,9 @@ Page({
             txtScreenType: e.detail.value[1],
             showType: false
         });
-
-        // console.log(e.detail.index);
-        // console.log(e.detail.value);
-        console.log(e.detail.index[0]);
-        console.log(e.detail.index[1]);
     },
 
     onCancelType() {
-        //Toast('取消');
         this.setData({ showType: false });
     },
 
@@ -313,7 +310,7 @@ Page({
         let idxType = that.data.indexType;
 
         switch (idxType[0]){        //  FIXME: double switch
-            case 0:
+            case 0:             //  一年级上
                 switch (idxType[1]) {
                     case 0:     // 5以内加法或减法
                         ret = g1First.g1First5AorS(0, 0, this);
@@ -321,69 +318,247 @@ Page({
                     case 1:     //  10以内加法或减法
                         ret = g1First.g1First10AorS(0, 1, this);
                         break;
-                    case 3:     //  10以内连加或连减
-                        retString = g1First.g1First10DulAorS(10, 10, 10, 2);
+                    case 2:     //  10以内连加或连减
+                        ret = g1First.g1First10DulAorS(0, 2, this);
                         break;
-                    case 4:     //  10以内加减混合
-                        retString = g1First.g1First10AandS(10, 10, 10, 3);
+                    case 3:     //  10以内加减混合
+                        ret = g1First.g1First10AandS(0, 3, this);
                         break;
-                    case 5:     //  10加个位数
-                        retString = g1First.g1First10A1b(10, 9, 4);
+                    case 4:     //  10加个位数
+                        ret = g1First.g1First10A1b(0, 4, this);
                         break;
-                    case 6:     //  20以内进位加法
-                        retString = g1First.g1First20ACarry(20, 20, 5);
+                    case 5:     //  20以内进位加法
+                        ret = g1First.g1First20ACarry(0, 5, this);
                         break;
                     default:
                         return -1;
                 }
                 break;
-            case 1:
+            case 1:             //  一年级下
                 switch (idxType[1]) {
                     case 0:     //  20以内退位减法
+                        ret = g1Second.g1Second20SBorrow(1, 0, this);
                         break;
                     case 1:     //  20以内加法或减法
+                        ret = g1Second.g1Second20AorS(1, 1, this);
                         break;
                     case 2:     //  整十加减整十
+                        ret = g1Second.g1Second10AandS10(1, 2, this);
                         break;
                     case 3:     //  两位数加减一位数或整十数
+                        ret = g1Second.g1Second2bAandS10(1, 3, this);
                         break;
                     case 4:     //  20以内连加或连减
+                        ret = g1Second.g1Second20DulAorS(1, 4, this);
                         break;
                     case 5:      //  20以内加减混合
+                        ret = g1Second.g1Second20AandS(1, 5, this);
                         break;
                     default:
                         break;                    
                 }
                 break;
-            case 2:
-                console.log('grade 2');
+            case 2:             //  二年级上
+                switch (idxType[1]) {
+                    case 0:     //  两位数加减一位或两位数无进位退位
+                        break;
+                    case 1:     //  100以内连加或连减
+                        break;
+                    case 2:      //  100以内加减混合
+                        break;
+                    case 3:      //   6以内乘法
+                        break;
+                    case 4:     //   表内乘法
+                        break;
+                    case 5:     //   表内除法
+                        break;
+                    case 6:      //   100以内连乘或连除
+                        break;
+                    case 7:     //   100以内乘除混合
+                        break;
+                    case 8:      //   100以内乘与加或乘与减
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 3:
-                console.log('grade 2');
+            case 3:             //  二年级下
+                switch (idxType[1]) {
+                    case 0:     //   几百几十相加或减
+                        break;
+                    case 1:     //   几千几百相加或减
+                        break;
+                    case 2:     //   几千几百与几百几十相加或减
+                        break;
+                    case 3:      //   三位数加减法
+                        break;
+                    case 4:     //   两位数加减两位数含进位退位
+                        break;
+                    case 5:     //   表内乘、除法
+                        break;
+                    case 6:      //   有余数除法
+                        break;
+                    case 7:      //   两位数连加或连减
+                        break;
+                    case 8:      //   两位数加减混合
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 4:
-                console.log('grade 3');
+            case 4:             //  三年级上
+                switch (idxType[1]) {
+                    case 0:      //   整十整百乘一位数
+                        break;
+                    case 1:     //   整十整百除一位数
+                        break;
+                    case 2:     //   两位数三位数乘一位数
+                        break;
+                    case 3:     //   两位数除以一位数
+                        break;
+                    case 4:     //   三位数乘以或除以一位数
+                        break;
+                    case 5:     //   两位乘除一位混合运算
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 5:
-                console.log('grade 3');
+            case 5:             //  三年级下
+                switch (idxType[1]) {
+                    case 0:     //   两位数乘或除一位数
+                        break;
+                    case 1:     //   三位数乘或除一位数
+                        break;
+                    case 2:      //   整十整百乘一位数
+                        break;
+                    case 3:      //   两位数乘两位数
+                        break;
+                    case 4:      //   两位数连乘
+                        break;
+                    case 5:      //   两位数乘加、乘减混合
+                        break;
+                    case 6:      //   两个两位数四则混合运算
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 6:
-                console.log('grade 4');
+            case 6:             //  四年级上
+                switch (idxType[1]) {
+                    case 0:     //   三位整数加减法
+                        break;
+                    case 1:     //   两位数或三位数乘一位数
+                        break;
+                    case 2:     //   两位数或三位数除一位数
+                        break;
+                    case 3:     //   两位数三位数除整十数
+                        break;
+                    case 4:      //   三位数除以两位数
+                        break;
+                    case 5:     //   被除数或除数末尾含0
+                        break;
+                    case 6:      //   三位数两步混合运算
+                        break;
+                    case 7:     //   三位整数四则混合运算
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 7:
-                console.log('grade 4');
+            case 7:             //  四年级下
+                switch (idxType[1]) {
+                    case 0:     //   三位整数加减法
+                        break;
+                    case 1:      //   两位数乘一位数或整十数
+                        break;
+                    case 2:     //   两位三位数除一位或整十数
+                        break;
+                    case 3:     //   两位数乘整十数
+                        break;
+                    case 4:     //   整百数乘整十数
+                        break;
+                    case 5:      //   三位数乘两位
+                        break;
+                    case 6:     //四年级四测混合运算
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 8:
-                console.log('grade 5');
+            case 8:             //  五年级上
+                switch (idxType[1]) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 9:
-                console.log('grade 5');
+            case 9:             //  五年级下
+                switch (idxType[1]) {
+                    case 0:     //小数运算
+                        break;
+                    case 1:     //小数四则混合运算
+                        break;
+                    case 2:      //小数简便运算
+                        break;
+                    case 3:      //简单方程
+                        break;
+                    case 4:      //同分母分数加减
+                        break;
+                    case 5:      //带括号分数加减混合
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 10:
-                console.log('grade 6');
+            case 10:            //  六年级上
+                switch (idxType[1]) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case 11:
-                console.log('grade 6');
+            case 11:            //  六年级下
+                switch (idxType[1]) {
+                    case 0:      // 各类型数字一步运算
+                        break;
+                    case 1:     // 各类型数字四则运算
+                        break;
+                    case 2:      // 各类型数字简便运算
+                        break;
+                    case 3:     // 解方程
+                        break;
+                    case 4:      // 解比例
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 return -1;
