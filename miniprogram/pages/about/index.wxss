@@ -1,0 +1,44 @@
+@import "../../style/common.wxss";
+
+/* about */
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.page-section {
+    width: 100%;
+    /* margin-bottom: 60rpx; */
+}
+
+.page-section:last-child {
+    margin-bottom: 0;
+}
+
+.page-section-spacing {
+    box-sizing: border-box;
+    padding: 0 60rpx; 
+}
+
+.swp-pic {
+    width: 640rpx;
+    height: 400rpx;
+}
+
+.swp-pic image {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-item {
+    display: block;
+}
+
+.loc-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+}
+/* about css */

@@ -1,0 +1,88 @@
+<!--index.wxml-->
+<view class="container">
+    <van-row>
+        <van-calendar title="每日打卡" poppable="{{ false }}" show-confirm="{{ false }}" class="calendar" row-height="32" />
+    </van-row>
+
+    <!-- <view class="top-50"> -->
+    <van-row>
+        <view class="pad-50"> </view>
+    </van-row>
+
+    <van-row>
+        <van-col span="6">
+
+            <!-- <view class="lFrame"> -->
+            <van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
+                <van-sidebar-item title="分数加减" dot />
+                <van-sidebar-item title="四则混合" info="5" />
+                <van-sidebar-item title="带括号的计算" info="99+" />
+            </van-sidebar>
+            <!-- </view> -->
+        </van-col>
+
+        <van-col span="18">
+            <!-- <view class="rFrame"> -->
+
+            <view wx:if="{{activeKey == 0}}" class="ques_panel">
+                <van-swipe-cell right-width="{{ 65 }}">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+                <van-swipe-cell right-width="{{ 65 }}">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+                <van-swipe-cell right-width="{{ 65 }}">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+                <van-swipe-cell right-width="{{ 65 }}">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+                <van-swipe-cell right-width="{{ 65 }}">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+                <van-swipe-cell right-width="{{ 65 }}" async-close bind:close="onClose">
+                    <van-cell-group>
+                        <van-cell title="1342 + 221412 =" />
+                    </van-cell-group>
+                    <view slot="right" class="bc-red">删除</view>
+                </van-swipe-cell>
+            </view>
+
+            <view wx:if="{{activeKey == 1}}" class="ques_panel">
+                <button bindtap='onTapAdd'>添加input组件</button>
+                <button bindtap='onTapDel'>删除Input组件</button>
+                <block wx:for="{{obj}}" wx:key="index">
+                    <!-- <input value="{{item}}"></input> -->
+                    <van-swipe-cell right-width="{{ 65 }}" async-close bind:close="onClose">
+                        <van-cell-group>
+                            <van-cell title="1342 + 221412 =" />
+                        </van-cell-group>
+                        <view slot="right" class="bc-red">删除</view>
+                    </van-swipe-cell>
+                </block>
+            </view>
+
+            <view wx:if="{{activeKey == 2}}" class="ques_panel">
+                第三页
+            </view>
+        </van-col>
+    </van-row>
+    <!-- </view> -->
+
+    <van-notify id="van-notify" />
+</view>

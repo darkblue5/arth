@@ -1,0 +1,43 @@
+/**index.wxss**/
+.calendar {
+  --calendar-height: 300px;
+}
+
+.lFrame {
+    display: flex;
+}
+
+.rFrame {
+    display: flex;
+}
+
+.ques_panel {
+    /* width: 400rpx; */
+    /* width: 100%; */
+    width: 550rpx;
+    height: 100%;
+}
+
+.top-50 {
+    margin-top: 50rpx;
+}
+
+.pad-50 {
+    height: 50rpx;
+}
+
+.bc-red {
+    background-color:crimson;
+}
+
+.bc-green {
+    background-color: aquamarine;
+}
+
+.bc-blue {
+    background-color:cornflowerblue;
+}
+
+.bc-gray {
+    background-color: darkgrey;
+}

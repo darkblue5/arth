@@ -1,0 +1,94 @@
+/**index.wxss**/
+
+.containerRep {
+      position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#mychart-dom-multi-bar {
+  position: absolute;
+  top: 150rpx;
+  bottom: 75%;
+  left: 10rpx;
+  right: 10rpx;
+}
+
+#mychart-dom-multi-scatter {
+  position: absolute;
+  top: 900rpx;
+  bottom: 20%; 
+  left: 10rpx;
+  right: 10rpx;
+}
+
+/* 
+#mychart-dom-multi-rbar {
+  position: absolute;
+  top: 60%;
+  bottom: 25%;
+  left: 0;
+  right: 0;
+} */
+
+.top-50 {
+    margin-top: 50rpx;
+}
+
+.top-350 {
+    margin-top: 350rpx;
+}
+
+.top-450 {
+    margin-top: 450rpx;
+}
+
+.top-500 {
+    margin-top: 500rpx;
+}
+
+.top-550 {
+    margin-top: 550rpx;
+}
+
+.top-750 {
+    margin-top: 750rpx;
+}
+
+.top-850 {
+    margin-top: 850rpx;
+}
+
+.top-900 {
+    margin-top: 900rpx;
+}
+
+.top-1050 {
+    margin-top: 1050rpx;
+}
+
+
+.bc-red {
+    background-color:crimson;
+}
+
+.bc-green {
+    background-color: aquamarine;
+}
+
+.chart-height {
+    height: 100%;
+        /* height: auto; */
+
+}
+
+.list-height {
+    width: 100%;
+    /* height: 330rpx; */
+}

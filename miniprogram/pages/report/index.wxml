@@ -1,0 +1,56 @@
+<!--index.wxml-->
+<view class="containerRep">
+
+    <view class="list-height">
+        <van-panel title="答题记录" desc="本日答题情况" status="本日">
+            <view class="top-550">
+                <van-grid column-num="4" border>
+                    <van-grid-item text="本日{{compCount}}题" icon="records" />
+                    <van-grid-item text="答对{{crrCount}}题" icon="completed" info="{{lastCount}}" />
+                    <van-grid-item text="正确率" icon="discount" info="82%" />
+                    <van-grid-item text="累计{{totalCount}}题" icon="medal-o" />
+                </van-grid>
+            </view>
+        </van-panel>
+    </view>
+
+    <view class="chart-height">
+        <ec-canvas id="mychart-dom-multi-bar" canvas-id="mychart-multi-bar" ec="{{ ecBar }}"></ec-canvas>
+    </view>
+
+    <view class="chart-height">
+        <ec-canvas id="mychart-dom-multi-scatter" canvas-id="mychart-multi-scatter" ec="{{ ecScatter }}"></ec-canvas>
+    </view>
+
+    <view class="list-height top-1050">
+        <van-panel title="排名" desc="综合积分排行" status="最新">
+            <view class="list-height">
+                <van-cell value="5408" icon="user-circle-o" is-link>
+                    <view slot="title">
+                        <view class="van-cell-text ">钱某人</view>
+                        <van-tag type="primary ">冠军</van-tag>
+                    </view>
+                </van-cell>
+                <van-cell value="5408" icon="manager-o" is-link>
+                    <view slot="title">
+                        <view class="van-cell-text ">王大苗</view>
+                        <van-tag type="danger ">亚军</van-tag>
+                    </view>
+                </van-cell>
+                <van-cell value="5408" icon="user-o" is-link>
+                    <view slot="title">
+                        <view class="van-cell-text">李二狗</view>
+                        <van-tag type="success">季军</van-tag>
+                    </view>
+                </van-cell>
+                <van-cell value="5408" icon="contact" is-link>
+                    <view slot="title">
+                        <view class="van-cell-text">黄三井</view>
+                        <van-tag type="warning">殿军</van-tag>
+                    </view>
+                </van-cell>
+                </view>
+            </van-panel>
+    </view>
+    <!-- delete some codes -->
+</view>

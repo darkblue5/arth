@@ -1,0 +1,59 @@
+{
+    "tabBar": {
+        "color": "#ddd",
+        "selectedColor": "#1296db",
+        "borderStyle": "white",
+        "backgroundColor": "#f2f2f2",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "images/ico_calcu.png",
+                "selectedIconPath": "images/ico_ccalcu.png"
+            },
+            {
+                "pagePath": "pages/wrong/index",
+                "text": "错题集",
+                "iconPath": "images/ico_ankle.png",
+                "selectedIconPath": "images/ico_cankle.png"
+            },
+            {
+                "pagePath": "pages/report/index",
+                "text": "排行榜",
+                "iconPath": "images/clock.png",
+                "selectedIconPath": "images/clockoff.png"
+            },
+            {
+                "pagePath": "pages/about/index",
+                "text": "关于",
+                "iconPath": "images/ico_about.png",
+                "selectedIconPath": "images/ico_cabout.png"
+            }
+        ]
+    },
+    "pages": [
+        "pages/index/index",
+        "pages/wrong/index",                
+        "pages/report/index",                                            "pages/about/index",                                
+        "pages/userConsole/userConsole",
+        "pages/storageConsole/storageConsole",
+        "pages/databaseGuide/databaseGuide",
+        "pages/addFunction/addFunction",
+        "pages/deployFunctions/deployFunctions",
+        "pages/chooseLib/chooseLib",
+        "pages/openapi/openapi",
+        "pages/openapi/serverapi/serverapi",
+        "pages/openapi/callback/callback",
+        "pages/openapi/cloudid/cloudid",
+        "pages/im/im",
+        "pages/im/room/room"
+    ],
+    "window": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#F6F6F6",
+        "navigationBarTitleText": "云开发 QuickStart",
+        "navigationBarTextStyle": "black"
+    },
+    "sitemapLocation": "sitemap.json"
+}

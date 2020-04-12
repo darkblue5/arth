@@ -1,0 +1,51 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="top-50 bc-white">
+
+        <view class="page-section page-section-spacing swiper">
+            <swiper class="swp-pic" indicator-dots="true" autoplay="true" circular="true" interval="4000" duration="1000" previous-margin="0px" next-margin="0px">
+                <swiper-item>
+                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/gsmc.png" />
+                </swiper-item>
+                <swiper-item>
+                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/scp.png" />
+                </swiper-item>
+                <swiper-item>
+                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/yong.png" />
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
+
+    <view class="top-50 bc-white">
+        <van-row>
+            <van-panel title="文升教育" desc="在线教育应用开发" status="持续升级中" use-footer-slot>
+                <view class="loc-mid font-150 top-50 btm-40">
+                    <van-image width="40" height="40" src="cloud://ascpg.6173-ascpg-1301277680/appicon.png" /> 计算能手 1.0.3</view>
+                <view slot="footer" class="footer">
+                    <van-button size="small" bind:click="onBtnRet">返回</van-button>
+                    <van-button size="small" type="primary" open-type="share">分享</van-button>
+                </view>
+            </van-panel>
+        </van-row>
+    </view>
+
+    <view class="top-50 bc-white">
+        <van-cell-group>
+            <van-cell value="打分" icon="star-o" is-link>
+                <view slot="title">
+                    <view class="van-cell-text">软件评分</view>
+                    <!-- <van-tag type="danger">活动</van-tag> -->
+                    <van-tag round type="success">热评</van-tag>
+
+                </view>
+            </van-cell>
+            <van-cell title="联系客服" icon="service-o" >
+                <!-- <van-icon slot="right-icon" name="search" class="custom-icon" /> -->
+                <van-button size="mini" plain type="primary" open-type="contact">客服</van-button>
+            </van-cell>
+        </van-cell-group>
+    </view>
+
+
+</view>

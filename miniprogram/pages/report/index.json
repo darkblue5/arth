@@ -1,0 +1,12 @@
+{
+    "usingComponents": {
+        "ec-canvas": "../../miniprogram_npm/ec-canvas/ec-canvas",
+        "van-button": "@vant/weapp/button/index",
+        "van-panel": "@vant/weapp/panel/index",
+        "van-grid": "@vant/weapp/grid/index",
+        "van-grid-item": "@vant/weapp/grid-item/index",
+        "van-cell": "@vant/weapp/cell/index",
+        "van-cell-group": "@vant/weapp/cell-group/index",
+        "van-tag": "@vant/weapp/tag/index"
+    }
+}

@@ -1,0 +1,132 @@
+/**index.wxss**/
+
+@import "../../style/common.wxss";
+
+/* page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+} */
+
+
+.top_frame {
+    height: 100rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+}
+
+.mid_area {
+    padding: 10rpx;
+    height: 100%;
+}
+
+.top-screen2 {
+    height: 100rpx;
+    padding: 10rpx;
+    border-radius: 25rpx;
+    border-style: solid;
+    box-shadow: 4rpx 4rpx 2rpx #888888;
+    background-color: #bcc6be;
+    border: 1rpx solid whitesmoke;
+}
+
+.height-150 {
+    height: 90rpx;
+}
+
+.vw-ll {
+    font-size: 28rpx;
+}
+
+.vw-lm {
+    line-height: 90rpx;
+    text-align: left;
+    font-size: 90rpx;
+}
+
+.vw-rm {
+    margin-top: 10rpx;
+    text-align: center;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    height: 70rpx;
+    border-right: 2rpx solid #000;
+}
+
+.vw-rr {
+    margin-top: 10rpx;
+    text-align: center;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    height: 70rpx;
+}
+
+.vw-d-ll {
+    font-size: 28rpx;
+}
+
+.vw-lm2 {
+    line-height: 90rpx;
+    text-align: left;
+    font-size: 90rpx;
+}
+
+.vw-d-rr {
+    margin-top: 20rpx;
+}
+
+.vw-d-mr {
+    margin-top: 30rpx;
+    text-align: center;
+    line-height: 70rpx;
+    font-size: 28rpx;
+    height: 60rpx;
+    border-radius: 10rpx;
+    border: 2rpx solid #dddddd;
+    box-shadow:4rpx 4rpx 0rpx #888888 inset;
+    background-color: #e9eaea;
+}
+
+.vw-d-mm {
+
+}
+
+/* mid */
+.vw-ques {
+    height: 700rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.vw-col {
+    height: 700rpx;
+    font-size: 40rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.txt-ques {
+    font-size: 40rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    margin-top: 10rxp;
+}
+
+.btn-wrap {
+    box-shadow:2px 2px 0px 0px #555555;
+    background-color: #fdfdfd;
+}
+
+.pk_type {
+
+}
+
+.pk_grade {
+    
+}

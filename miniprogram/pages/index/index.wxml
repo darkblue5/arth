@@ -1,0 +1,140 @@
+<!--index.wxml-->
+<view class="container">
+
+    <!-- top area -->
+    <view class="row bc-white">
+        <view class="top-screen2">
+            <van-row>
+                <van-col span="3">
+                    <view class="height-150 vw-ll">用时</view>
+                </van-col>
+                <van-col span="8">
+                    <view class="height-150 vw-lm">{{txtTimer}}</view>
+                </van-col>
+                <van-col span="4">
+                    <view class="height-150 vw-rm" bindtap="onTapVwType">五上</view>
+                </van-col>
+                <van-col span="9">
+                    <view class="height-150 vw-rr" bindtap="onTapVwType">分数四则综合运算</view>
+                </van-col>
+            </van-row>
+        </view>
+        <!-- <view class="top-frame">
+
+        </view> -->
+        <view class="bc-white font-28 top-10">
+            <van-row gutter="10">
+                <van-col span="5">计时
+                    <van-switch checked="{{ enTimer }}" active-color="#cbe5bc" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeTimer" />
+                </van-col>
+                <van-col span="5">音乐
+                    <van-switch checked="{{ enMusic }}" active-color="#cbe5bc" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeMusic" />
+                </van-col>
+                <van-col span="5">
+                    <view class="height-150"></view>
+                </van-col>
+                <van-col span="5">
+                    <view class="vw-d-mr" bindtap="onTapVwGrade">五年级</view>
+                </van-col>
+                <van-col span="2">
+                    <view class="vw-d-rr">
+                        <van-button round type="default">登陆</van-button>
+                    </view>
+                </van-col>
+            </van-row>
+        </view>
+
+    </view>
+
+    <!--  middle area -->
+    <view class="mid_area top-50 bc-white">
+        <van-row gutter="20">
+            <van-col span="11">
+                <block wx:if="{{isFraction == 0}}">
+                    <view class="vw-ques">
+                        <text class="txt-ques">{{ques0}}\n</text>
+                        <text class="txt-ques">{{ques1}}\n</text>
+                        <text class="txt-ques">{{ques2}}\n</text>
+                        <text class="txt-ques">{{ques3}}\n</text>
+                        <text class="txt-ques">{{ques4}}\n</text>
+                        <text class="txt-ques">{{ques5}}\n</text>
+                    </view>
+                    <!-- <van-cell-group>
+                        <van-cell title="{{ques0}}" border="{{ false }}" size="large" />
+                        <van-cell title="{{ques1}}" border="{{ false }}" size="large" />
+                        <van-cell title="{{ques2}}" border="{{ false }}" size="large" />
+                        <van-cell title="{{ques3}}" border="{{ false }}" size="large" />
+                        <van-cell title="{{ques4}}" border="{{ false }}" size="large" />
+                        <van-cell title="{{ques5}}" border="{{ false }}" size="large" />
+                    </van-cell-group> -->
+                </block>
+            </van-col>
+
+            <van-col span="1">
+                <view class="vw-col">
+                    <text>=</text>
+                    <text>=</text>
+                    <text>=</text>
+                    <text>=</text>
+                    <text>=</text>
+                    <text>=</text>
+                </view>
+            </van-col>
+
+            <van-col span="8">
+                <block wx:if="{{isFraction == 0}}">
+                    <view class="vw-col">
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                    </view>
+                </block>
+            </van-col>
+
+            <van-col span="3">
+                <view class="vw-col">
+                    <van-icon name="success" color="{{tickColor0}}" />
+                    <van-icon name="success" color="{{tickColor1}}" />
+                    <van-icon name="success" color="{{tickColor2}}" />
+                    <van-icon name="success" color="{{tickColor3}}" />
+                    <van-icon name="success" color="{{tickColor4}}" />
+                    <van-icon name="success" color="{{tickColor5}}" />
+                </view>
+            </van-col>
+
+        </van-row>
+    </view>
+
+    <!-- bottom area -->
+    <view class="top-50">
+        <van-row gutter="20">
+            <van-col span="12">
+                <view class="btn-wrap">
+                    <van-button icon="upgrade" type="default" bind:click="onBtnStart" block>  开   始</van-button>
+                </view>
+            </van-col>
+            <van-col span="12">
+                <view class="btn-wrap">
+                    <van-button icon="certificate" type="default" bind:click="onBtnSubmit" block>  提   交</van-button>
+                </view>
+            </van-col>
+        </van-row>
+    </view>
+
+<van-toast id="van-toast" />
+
+<!-- 题型选择 -->
+<van-popup show="{{ showType }}" position="left" custom-style="width: 80%; height: 60%" bind:close="onPopTypeClose">
+    <van-picker class="pk-type" columns="{{ type }}" bind:change="onChangeType" show-toolbar />
+</van-popup>
+
+<!-- 年级选择 -->
+<van-popup show="{{ showGrade }}" position="top" custom-style="height: 40%;" bind:close="onPopGradeClose">
+    <van-picker class="pk-grade" columns="{{ grades }}" bind:change="onChangeGrade" show-toolbar />
+</van-popup>
+
+<!-- end container -->
+</view>
