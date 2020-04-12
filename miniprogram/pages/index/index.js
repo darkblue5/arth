@@ -6,6 +6,19 @@ import * as config from '../config/config.js';
 let init;   // timer
 const audio = wx.createInnerAudioContext({}); //  audio
 
+let g1First = require('../ques/g1first.js');
+let g1Second = require('../ques/g1second.js');
+let g2First = require('../ques/g2first.js');
+let g2Second = require('../ques/g2second.js');
+let g3First = require('../ques/g3first.js');
+let g3Second = require('../ques/g3second.js');
+let g4First = require('../ques/g4first.js');
+let g4Second = require('../ques/g4second.js');
+let g5Second = require('../ques/g5second.js');
+let g6Second = require('../ques/g6second.js');
+
+const QCOUNT = 6; //1组6道题
+const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
 Page({
     data: {
@@ -34,7 +47,16 @@ Page({
         ques4: '13242 + 2123',
         ques5: '1322 + 2123',
         
-        userGrade: 1,   //  用户所在年级
+        showGrade: false,
+        showType: false,
+
+        txtScreenGrade: '一年级上',
+        txtScreenType: '5以内的加法或减法',
+        txtButtonGrade: '一年级',
+
+        userGrade: 1,           //  用户所在年级
+        indexType: [],          //  picker 控件试题类型索引
+        txtType: [],            //  picker 控件題型字符串 
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
         type: [
@@ -46,7 +68,7 @@ Page({
             {
                 values: config.types['一年级上'],
                 className: 'column2',
-                defaultIndex: 2
+                defaultIndex: 0
             }
         ]
     },
@@ -74,6 +96,7 @@ Page({
     //  button START click
     onBtnStart: function(e) {
         let that = this;
+        let type = 0, ret = 0;
 
         // start timer
         if (that.data.enTimer) {
@@ -93,6 +116,10 @@ Page({
             audio.play();
         }
 
+        // initical question
+        //type = getQuesType( );
+        ret = that.initQues(type);
+
         that.setData({
             enSwitch: true
         });
@@ -109,6 +136,9 @@ Page({
         // stop music
         if (that.data.enMusic)
             audio.pause();
+
+        // updata answer data
+
 
         that.setData({
             enSwitch: false
@@ -162,23 +192,81 @@ Page({
     },
 
     onChangeGrade(event) {
+        // const { picker, value, index } = event.detail;
+        // Toast(`当前值：${value}, 当前索引：${index}`);
+    },
+
+    onConfirmGrade(event) {
+        let that = this;
+        let strGrade = '';
         const { picker, value, index } = event.detail;
-        Toast(`当前值：${value}, 当前索引：${index}`);
+        //Toast(`当前值：${value}, 当前索引：${index}`);
+
+        switch (index) {
+            case 0:
+                strGrade = '一年级';
+                break;
+            case 1:
+                strGrade = '二年级';
+                break;
+            case 2:
+                strGrade = '三年级';
+                break;
+            case 3:
+                strGrade = '四年级';
+                break;
+            case 4:
+                strGrade = '五年级';
+                break;
+            case 5:
+                strGrade = '六年级';
+                break;
+            default:
+                break;
+        }
+
+        this.setData({ 
+            showGrade: false,
+            txtScreenGrade: strGrade,
+        });
+        that.data.userGrade = index + 1;
+
+        //console.log(that.data.userGrade);
+    },
+
+    onCancelGrade() {
+        //Toast('取消');
+        this.setData({ showGrade: false });
     },
 
     onChangeType(event) {
-       // console.log('events act');
-
-        // const { picker, value, index } = event.detail;
-        // Toast(`当前值：${value}, 当前索引：${index}`);
-
-        // const { pkType, value } = event.detail;
-        // pkType.setColumnValues(1, this.data.type[value[0]]);
-        // getApp().picker = picker;
-
-       // picker.setColumnValues(1, types[value[0]]);
+        Toast('数值改变');
+        const { picker, value, index } = event.detail;
+        picker.setColumnValues(1, config.types[value[0]]);
     },
 
+    onConfirmType(e) {
+        let that = this;
+        // Toast('确定');
+
+        that.data.indexType = e.detail.index;
+
+        this.setData({ 
+            txtScreenGrade: e.detail.value[0],
+            txtScreenType: e.detail.value[1],
+            showType: false
+        });
+
+        // console.log(e.detail.index);
+        // console.log(e.detail.value);
+        console.log(e.detail.index[0]);
+        console.log(e.detail.index[1]);
+    },
+
+    onCancelType() {
+        //Toast('取消');
+        this.setData({ showType: false });
+    },
 
     // timer function
     timerClear: function (e) { //计时归零
@@ -218,4 +306,88 @@ Page({
         that.setData({ txtTimer: mutVal + ":" + secVal, });
     },
 
+    // decode question type
+    initQues(type) {
+        let that = this;
+        let ret;
+        let idxType = that.data.indexType;
+
+        switch (idxType[0]){        //  FIXME: double switch
+            case 0:
+                switch (idxType[1]) {
+                    case 0:     // 5以内加法或减法
+                        ret = g1First.g1First5AorS(0, 0, this);
+                        break;
+                    case 1:     //  10以内加法或减法
+                        ret = g1First.g1First10AorS(0, 1, this);
+                        break;
+                    case 3:     //  10以内连加或连减
+                        retString = g1First.g1First10DulAorS(10, 10, 10, 2);
+                        break;
+                    case 4:     //  10以内加减混合
+                        retString = g1First.g1First10AandS(10, 10, 10, 3);
+                        break;
+                    case 5:     //  10加个位数
+                        retString = g1First.g1First10A1b(10, 9, 4);
+                        break;
+                    case 6:     //  20以内进位加法
+                        retString = g1First.g1First20ACarry(20, 20, 5);
+                        break;
+                    default:
+                        return -1;
+                }
+                break;
+            case 1:
+                switch (idxType[1]) {
+                    case 0:     //  20以内退位减法
+                        break;
+                    case 1:     //  20以内加法或减法
+                        break;
+                    case 2:     //  整十加减整十
+                        break;
+                    case 3:     //  两位数加减一位数或整十数
+                        break;
+                    case 4:     //  20以内连加或连减
+                        break;
+                    case 5:      //  20以内加减混合
+                        break;
+                    default:
+                        break;                    
+                }
+                break;
+            case 2:
+                console.log('grade 2');
+                break;
+            case 3:
+                console.log('grade 2');
+                break;
+            case 4:
+                console.log('grade 3');
+                break;
+            case 5:
+                console.log('grade 3');
+                break;
+            case 6:
+                console.log('grade 4');
+                break;
+            case 7:
+                console.log('grade 4');
+                break;
+            case 8:
+                console.log('grade 5');
+                break;
+            case 9:
+                console.log('grade 5');
+                break;
+            case 10:
+                console.log('grade 6');
+                break;
+            case 11:
+                console.log('grade 6');
+                break;
+            default:
+                return -1;
+        }
+        return 0;
+    }
 })

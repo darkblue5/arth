@@ -8,14 +8,14 @@
                 <van-col span="3">
                     <view class="height-150 vw-ll">用时</view>
                 </van-col>
-                <van-col span="8">
+                <van-col span="7">
                     <view class="height-150 vw-lm">{{txtTimer}}</view>
                 </van-col>
-                <van-col span="4">
-                    <view class="height-150 vw-rm" bindtap="onTapVwType">五上</view>
+                <van-col span="5">
+                    <view class="height-150 vw-rm" bindtap="onTapVwType">{{txtScreenGrade}}</view>
                 </van-col>
                 <van-col span="9">
-                    <view class="height-150 vw-rr" bindtap="onTapVwType">分数四则综合运算</view>
+                    <view class="height-150 vw-rr" bindtap="onTapVwType">{{txtScreenType}}</view>
                 </van-col>
             </van-row>
         </view>
@@ -34,7 +34,7 @@
                     <view class="height-150"></view>
                 </van-col>
                 <van-col span="5">
-                    <view class="vw-d-mr" bindtap="onTapVwGrade">五年级</view>
+                    <view class="vw-d-mr" bindtap="onTapVwGrade">{{txtScreenGrade}}</view>
                 </van-col>
                 <van-col span="2">
                     <view class="vw-d-rr">
@@ -127,13 +127,13 @@
 <van-toast id="van-toast" />
 
 <!-- 题型选择 -->
-<van-popup show="{{ showType }}" position="left" custom-style="width: 80%; height: 60%" bind:close="onPopTypeClose">
-    <van-picker class="pk-type" columns="{{ type }}" bind:change="onChangeType" show-toolbar />
+<van-popup show="{{ showType }}" position="top" custom-style="height: 60%" bind:close="onPopTypeClose">
+    <van-picker class="pk-type" columns="{{ type }}" bind:change="onChangeType" bind:cancel="onCancelType" bind:confirm="onConfirmType" show-toolbar />
 </van-popup>
 
 <!-- 年级选择 -->
-<van-popup show="{{ showGrade }}" position="top" custom-style="height: 40%;" bind:close="onPopGradeClose">
-    <van-picker class="pk-grade" columns="{{ grades }}" bind:change="onChangeGrade" show-toolbar />
+<van-popup show="{{ showGrade }}" position="top" custom-style="height: 50%;" visible-item-count	="3" bind:close="onPopGradeClose" >
+    <van-picker class="pk-grade" columns="{{ grades }}" show-toolbar bind:change="onChangeGrade" bind:cancel="onCancelGrade" bind:confirm="onConfirmGrade"/>
 </van-popup>
 
 <!-- end container -->
