@@ -361,22 +361,31 @@ Page({
             case 2:             //  二年级上
                 switch (idxType[1]) {
                     case 0:     //  两位数加减一位或两位数无进位退位
+                        ret = g2First.f2bAorS12bNoCarry(2, 0, this);
                         break;
                     case 1:     //  100以内连加或连减
+                        ret = g2First.f100DulAorS(2, 1, this);
                         break;
                     case 2:      //  100以内加减混合
+                        ret = g2First.f100AandS(2, 2, this);
                         break;
                     case 3:      //   6以内乘法
+                        ret = g2First.f66M(2, 3, this);
                         break;
                     case 4:     //   表内乘法
+                        ret = g2First.f99M(2, 4, this);
                         break;
                     case 5:     //   表内除法
+                        ret = g2First.f9D(2, 5, this);
                         break;
                     case 6:      //   100以内连乘或连除
+                        ret = g2First.f100DoulMorD(2, 6, this);
                         break;
                     case 7:     //   100以内乘除混合
+                        ret = g2First.f100MandD(2, 7, this);
                         break;
                     case 8:      //   100以内乘与加或乘与减
+                        ret = g2First.f100MandAS(2, 8, this);
                         break;
                     default:
                         break;
@@ -385,22 +394,31 @@ Page({
             case 3:             //  二年级下
                 switch (idxType[1]) {
                     case 0:     //   几百几十相加或减
+                        ret = g2Second.f110AorS(3, 0, this);
                         break;
                     case 1:     //   几千几百相加或减
+                        ret = g2Second.f1100AorS(3, 1, this);
                         break;
                     case 2:     //   几千几百与几百几十相加或减
+                        ret = g2Second.f1100AorS(3, 2, this);
                         break;
                     case 3:      //   三位数加减法
+                        ret = g2Second.f3bAorS(3, 3, this);
                         break;
                     case 4:     //   两位数加减两位数含进位退位
+                        ret = g2Second.f2bAorSCarry(3, 4, this);
                         break;
                     case 5:     //   表内乘、除法
+                        ret = g2Second.f1bMorD(3, 5, this);
                         break;
                     case 6:      //   有余数除法
+                        ret = g2Second.f2bDMod(3, 6, this);
                         break;
                     case 7:      //   两位数连加或连减
+                        ret = g2Second.f2bDulAandS(3, 7, this);
                         break;
                     case 8:      //   两位数加减混合
+                        ret = g2Second.f2bAandS(3, 8, this);
                         break;
                     default:
                         break;
@@ -409,16 +427,22 @@ Page({
             case 4:             //  三年级上
                 switch (idxType[1]) {
                     case 0:      //   整十整百乘一位数
+                        ret = g3First.f110M1b(4, 0, this);
                         break;
                     case 1:     //   整十整百除一位数
+                        ret = g3First.f110D1b(4, 1, this);
                         break;
                     case 2:     //   两位数三位数乘一位数
+                        ret = g3First.f3b2bD1b(4, 2, this);
                         break;
                     case 3:     //   两位数除以一位数
+                        ret = g3First.f2bD1b(4, 3, this);
                         break;
                     case 4:     //   三位数乘以或除以一位数
+                        ret = g3First.f3bMorD1b(4, 4, this);
                         break;
                     case 5:     //   两位乘除一位混合运算
+                        ret = g3First.f3bMandD1b(4, 5, this);
                         break;
                     default:
                         break;
@@ -427,18 +451,25 @@ Page({
             case 5:             //  三年级下
                 switch (idxType[1]) {
                     case 0:     //   两位数乘或除一位数
+                        ret = g3Second.f2bMorD1b(5, 0, this);
                         break;
                     case 1:     //   三位数乘或除一位数
+                        ret = g3Second.f3bMorD1b(5, 1, this);
                         break;
                     case 2:      //   整十整百乘一位数
+                        ret = g3Second.f110M1b(5, 2, this);
                         break;
                     case 3:      //   两位数乘两位数
+                        ret = g3Second.f2bM2b(5, 3, this);
                         break;
                     case 4:      //   两位数连乘
+                        ret = g3Second.f2bDoulM(5, 4, this);
                         break;
                     case 5:      //   两位数乘加、乘减混合
+                        ret = g3Second.f2bMandAorS(5, 5, this);
                         break;
                     case 6:      //   两个两位数四则混合运算
+                        ret = g3Second.f2bMandAorS(5, 6, this);
                         break;
                     default:
                         break;
@@ -447,20 +478,28 @@ Page({
             case 6:             //  四年级上
                 switch (idxType[1]) {
                     case 0:     //   三位整数加减法
+                        ret = g4First.f3bAorS(6, 0, this);
                         break;
                     case 1:     //   两位数或三位数乘一位数
+                        ret = g4First.f3b2bM1b(6, 1, this);
                         break;
                     case 2:     //   两位数或三位数除一位数
+                        ret = g4First.f3b2bD1b(6, 2, this);
                         break;
                     case 3:     //   两位数三位数除整十数
+                        ret = g4First.f3b2bD10(6, 3, this);
                         break;
                     case 4:      //   三位数除以两位数
+                        ret = g4First.f3bD2b(6, 4, this);
                         break;
                     case 5:     //   被除数或除数末尾含0
+                        ret = g4First.f3b0D2b0(6, 5, this);
                         break;
                     case 6:      //   三位数两步混合运算
+                        ret = g4First.f3b3bASMD2s(6, 6, this);
                         break;
                     case 7:     //   三位整数四则混合运算
+                        ret = g4First.f3b3bASMD3s(6, 7, this);
                         break;
                     default:
                         break;
@@ -469,18 +508,25 @@ Page({
             case 7:             //  四年级下
                 switch (idxType[1]) {
                     case 0:     //   三位整数加减法
+                        ret = g4Second.f3bAorS(7, 0, this);
                         break;
                     case 1:      //   两位数乘一位数或整十数
+                        ret = g4Second.f2bM1b10(7, 1, this);
                         break;
                     case 2:     //   两位三位数除一位或整十数
+                        ret = g4Second.f2b3bD1b10(7, 2, this);
                         break;
                     case 3:     //   两位数乘整十数
+                        ret = g4Second.f2bM10(7, 3, this);
                         break;
                     case 4:     //   整百数乘整十数
+                        ret = g4Second.f100M10(7, 4, this);
                         break;
                     case 5:      //   三位数乘两位
+                        ret = g4Second.f3bM2b(7, 5, this);
                         break;
                     case 6:     //四年级四测混合运算
+                        ret = g4Second.f3b3bASMD4s(7, 6, this);
                         break;
                     default:
                         break;
@@ -509,16 +555,22 @@ Page({
             case 9:             //  五年级下
                 switch (idxType[1]) {
                     case 0:     //小数运算
+                        ret = g5Second.f1pot(9, 0, this);
                         break;
                     case 1:     //小数四则混合运算
+                        ret = g5Second.fpotASMD(9, 1, this);
                         break;
                     case 2:      //小数简便运算
+                        ret = g5Second.fpotSimple(9, 2, this);
                         break;
                     case 3:      //简单方程
+                        ret = g5Second.f2formula(9, 3, this);
                         break;
                     case 4:      //同分母分数加减
+                        ret = g5Second.fsfAorS(9, 4, this);
                         break;
                     case 5:      //带括号分数加减混合
+                        ret = g5Second.fdfAorS(9, 5, this);
                         break;
                     default:
                         break;
@@ -547,14 +599,19 @@ Page({
             case 11:            //  六年级下
                 switch (idxType[1]) {
                     case 0:      // 各类型数字一步运算
+                        ret = g6Second.f61Step(11, 0, this);
                         break;
                     case 1:     // 各类型数字四则运算
+                        ret = g6Second.f64Opt(11, 1, this);
                         break;
                     case 2:      // 各类型数字简便运算
+                        ret = g6Second.f6Simple(11, 2, this);
                         break;
                     case 3:     // 解方程
+                        ret = g6Second.f6Formula(11, 3, this);
                         break;
                     case 4:      // 解比例
+                        ret = g6Second.f6Scale(11, 4, this);
                         break;
                     default:
                         break;
