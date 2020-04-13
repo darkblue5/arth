@@ -10,201 +10,284 @@
 
 let util = require("util.js");
 
-
 //	70	三位整数加减法
-function f3bAorS(upa, upb, type) {
-	let a = 0, b = 0, m = 0;
+function f3bAorS(grade, type, pt) {
+    let a = 0, b = 0, m = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType;
+    let i = 0;
+    let that = pt;
 
-    optType = Math.ceil(Math.random() * 2);
+    if (grade == 7 && type == 0) {
+        for (i = 0; i < 6; i++) {
+            optType = Math.ceil(Math.random() * 2);
 
-    if (type == 70) {
-        switch (optType) {
-            case 1:     //a+b
-                a = util.rangeRand(111, 999);
-                b = util.rangeRand(111, 999 - a);
+            switch (optType) {
+                case 1:     //a+b
+                    a = util.rangeRand(111, 999);
+                    b = util.rangeRand(111, 999 - a);
 
-                arr = [a, '+', b];
-                ans = a + b;
-                break;
-            case 2:     //a-b
-                a = util.rangeRand(111, 999);
-                b = util.rangeRand(111, a - 1);
+                    arr = [a, '+', b];
+                    ans = a + b;
+                    break;
+                case 2:     //a-b
+                    a = util.rangeRand(111, 999);
+                    b = util.rangeRand(111, a - 1);
 
-                arr = [a, '-', b];
-                ans = a - b;
-                break;
-            default:
-                break;
+                    arr = [a, '-', b];
+                    ans = a - b;
+                    break;
+                default:
+                    break;
+            }
+            ques[i] = arr.join(' ');
         }
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	71	两位数乘一位数或整十数
-function f2bM1b10 (upa, upb, type) {
-let a = 0, b = 0, m = 0;
+function f2bM1b10(grade, type, pt) {
+    let a = 0, b = 0, m = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let i = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
-	a = util.rangeRand(11, 99);
+    if (grade == 7 && type == 1) {
+        for (i = 0; i < 6; i++) {
 
-    if (type == 71) {
-		if (bit == 1) {
-			b = util.rangeRand(1, 9);
-		} else if (bit == 2) {
-			b = util.rangeRand(1, 9);
-			b = b * 10;
-		}
+            bit = Math.ceil(Math.random() * 2);
+            a = util.rangeRand(11, 99);
+            if (bit == 1) {
+                b = util.rangeRand(1, 9);
+            } else if (bit == 2) {
+                b = util.rangeRand(1, 9);
+                b = b * 10;
+            }
 
-		arr = [a, '×', b];
-		ans = a * b;
+            arr = [a, '×', b];
+            ans = a * b;
+
+            ques[i] = arr.join(' ');
+        }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	72	两位三位数除一位或整十数
 //  FIXME: 余数处理, 
-function f2b3bD1b10 (upa, upb, type) {
-	let a = 0, b = 0, mod = 0;
+function f2b3bD1b10(grade, type, pt) {
+    let a = 0, b = 0, mod = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let i = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
+    if (grade == 7 && type == 2) {
+        for (i = 0; i < 6; i++) {
 
-    if (type == 72) {
-		if (bit == 1) {
-			a = util.rangeRand(11, 99);
-		} else if (bit == 2) {
-			a = util.rangeRand(111, 999);
-		}
+            bit = Math.ceil(Math.random() * 2);
 
-		b = util.rangeRand(2, 9);
+            if (bit == 1) {
+                a = util.rangeRand(11, 99);
+            } else if (bit == 2) {
+                a = util.rangeRand(111, 999);
+            }
 
-		mod = a % b;
-		if (mod != 0)
-			a = a - mod;
+            b = util.rangeRand(2, 9);
 
-		arr = [a, '÷', b];
-		ans = a / b;
+            mod = a % b;
+            if (mod != 0)
+                a = a - mod;
+
+            arr = [a, '÷', b];
+            ans = a / b;
+
+            ques[i] = arr.join(' ');
+
+        }
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	73	两位数乘整十数
-function f2bM10 (upa, upb, type) {
-	let a = 0, b = 0, m = 0;
+function f2bM10(grade, type, pt) {
+    let a = 0, b = 0, m = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let i = 0;
+    let that = pt;
 
-	//bit = Math.ceil(Math.random() * 2);
-	bit = 2;
-	a = util.rangeRand(11, 99);
+    if (grade == 7 && type == 3) {
+        for (i = 0; i < 6; i++) {
 
-    if (type == 73) {
-		if (bit == 1) {
-			b = util.rangeRand(1, 9);
-		} else if (bit == 2) {
-			b = util.rangeRand(1, 9);
-			b = b * 10;
-		}
+            bit = 2;
+            a = util.rangeRand(11, 99);
+            if (bit == 1) {
+                b = util.rangeRand(1, 9);
+            } else if (bit == 2) {
+                b = util.rangeRand(1, 9);
+                b = b * 10;
+            }
 
-		arr = [a, '×', b];
-		ans = a * b;
+            arr = [a, '×', b];
+            ans = a * b;
+
+            ques[i] = arr.join(' ');
+
+        }
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	74	整百数乘整十数
-function f100M10 (upa, upb, type) {
-	let a = 0, b = 0, m = 0;
+function f100M10(grade, type, pt) {
+    let a = 0, b = 0, m = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0;
+    let i = 0;
+    let that = pt;
 
-    if (type == 74) {
-		a = util.rangeRand(1, 9);
-		b = util.rangeRand(1, 9);
+    if (grade == 7 && type == 4) {
+        for (i = 0; i < 6; i++) {
 
-		a = a * 100;
-		b = b * 10;
+            a = util.rangeRand(1, 9);
+            b = util.rangeRand(1, 9);
 
-		arr = [a, '×', b];
-		ans = a * b;
+            a = a * 100;
+            b = b * 10;
+
+            arr = [a, '×', b];
+            ans = a * b;
+
+            ques[i] = arr.join(' ');
+        }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	75	三位数乘两位
-function f3bM2b (upa, upb, type) {
-	let a = 0, b = 0, m = 0;
+function f3bM2b(grade, type, pt) {
+    let a = 0, b = 0, m = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0;
+    let i = 0;
+    let that = pt;
 
-    if (type == 75) {
-		a = util.rangeRand(111, 999);
-		b = util.rangeRand(11, 99);
+    if (grade == 7 && type == 5) {
+        for (i = 0; i < 6; i++) {
 
-		arr = [a, '×', b];
-		ans = a * b;
+            a = util.rangeRand(111, 999);
+            b = util.rangeRand(11, 99);
+
+            arr = [a, '×', b];
+            ans = a * b;
+
+            ques[i] = arr.join(' ');
+        }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	76	三位数四测混合运算 4题带小括号，2题带中括号
-function f3b3bASMD4s (db, type, point) {
+function f3b3bASMD4s(grade, type, db, pt) {
     let col1 = [];
     let col2 = [];
     let col3 = [];
     let that = point;
-    let sques1="", sques2="", sques3="", sques0="", sques4="", sques5="";
+    let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
-    let i = 0, j = 0, k=0;
+    let i = 0, j = 0, k = 0;
 
-    if (type == 76) {
+    if (grade == 7 && type == 6) {
         db.collection('q52').where({
             type: 5211
         }).get({
@@ -229,7 +312,7 @@ function f3b3bASMD4s (db, type, point) {
                 })
             }
         });
-        
+
         db.collection('q52').where({
             type: 1114
         }).get({
@@ -245,9 +328,6 @@ function f3b3bASMD4s (db, type, point) {
                 sques3 = col2[j].ques;
                 nkey3 = col2[j].key;
 
-                // console.log(nkey2);
-                // console.log(nkey3);
-
                 that.setData({
                     ques2: sques2 + '=',
                     ques3: sques3 + '=',
@@ -257,7 +337,7 @@ function f3b3bASMD4s (db, type, point) {
                 })
             }
         });
-       
+
         db.collection('q52').where({
             type: 1124
         }).get({
@@ -294,18 +374,18 @@ function f3b3bASMD4s (db, type, point) {
 }
 
 //	77	简便运算
-function fg4easy (upa, upb, type) {
+function fg4easy(upa, upb, type) {
 
 }
 
 
 module.exports = {
-	f3bAorS: f3bAorS,
-	f2bM1b10: f2bM1b10,
-	f2b3bD1b10: f2b3bD1b10,
-	f2bM10: f2bM10,
-	f100M10: f100M10,
-	f3bM2b: f3bM2b,
-	f3b3bASMD4s: f3b3bASMD4s,
-	fg4easy: fg4easy,
+    f3bAorS: f3bAorS,
+    f2bM1b10: f2bM1b10,
+    f2b3bD1b10: f2b3bD1b10,
+    f2bM10: f2bM10,
+    f100M10: f100M10,
+    f3bM2b: f3bM2b,
+    f3b3bASMD4s: f3b3bASMD4s,
+    fg4easy: fg4easy,
 }

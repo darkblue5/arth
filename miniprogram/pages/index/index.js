@@ -20,6 +20,8 @@ let g6Second = require('../ques/g6second.js');
 const QCOUNT = 6; //1组6道题
 const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
+let db =0;
+
 Page({
     data: {
         enMusic: false,
@@ -400,7 +402,7 @@ Page({
                         ret = g2Second.f1100AorS(3, 1, this);
                         break;
                     case 2:     //   几千几百与几百几十相加或减
-                        ret = g2Second.f1100AorS(3, 2, this);
+                        ret = g2Second.f1100AorS110(3, 2, this);
                         break;
                     case 3:      //   三位数加减法
                         ret = g2Second.f3bAorS(3, 3, this);
@@ -469,7 +471,7 @@ Page({
                         ret = g3Second.f2bMandAorS(5, 5, this);
                         break;
                     case 6:      //   两个两位数四则混合运算
-                        ret = g3Second.f2bMandAorS(5, 6, this);
+                        ret = g3Second.f2bMandAorS(5, 6, db, this);
                         break;
                     default:
                         break;
@@ -496,10 +498,10 @@ Page({
                         ret = g4First.f3b0D2b0(6, 5, this);
                         break;
                     case 6:      //   三位数两步混合运算
-                        ret = g4First.f3b3bASMD2s(6, 6, this);
+                        ret = g4First.f3b3bASMD2s(6, 6, db, this);
                         break;
                     case 7:     //   三位整数四则混合运算
-                        ret = g4First.f3b3bASMD3s(6, 7, this);
+                        ret = g4First.f3b3bASMD3s(6, 7, db, this);
                         break;
                     default:
                         break;
@@ -526,7 +528,7 @@ Page({
                         ret = g4Second.f3bM2b(7, 5, this);
                         break;
                     case 6:     //四年级四测混合运算
-                        ret = g4Second.f3b3bASMD4s(7, 6, this);
+                        ret = g4Second.f3b3bASMD4s(7, 6, db, this);
                         break;
                     default:
                         break;

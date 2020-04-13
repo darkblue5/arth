@@ -11,16 +11,18 @@
 let util = require("util.js");
 
 //	三位整数加减法
-function f3bAorS (upa, upb, type) {
-    let a = 0, b = 0, m = 0;
+function f3bAorS(grade, type, pt) {
+    let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType;
+    let that = pt;
 
-    optType = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 0) {
+        for(i=0; i<6; i++) {
+        optType = Math.ceil(Math.random() * 2);
 
-    if (type == 60) {
         switch (optType) {
             case 1:     //a+b
                 a = util.rangeRand(111, 999);
@@ -39,161 +41,227 @@ function f3bAorS (upa, upb, type) {
             default:
                 break;
         }
+
+        ques[i] = arr.join(' ');
+    }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	61 两位数或三位数乘一位数
-function f3b2bM1b (upa, upb, type) {
-	let a = 0, b = 0, m = 0;
+function f3b2bM1b(grade, type, pt) {
+    let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 1) {
+                for(i=0; i<6; i++) {
 
-    if (type == 61) {
-		if (bit == 1) {
-			a = util.rangeRand(11, 99);
-		} else if (bit == 2) {
-			a = util.rangeRand(111, 999);
-		}
+        bit = Math.ceil(Math.random() * 2);
 
-		b = util.rangeRand(1, 9);
+        if (bit == 1) {
+            a = util.rangeRand(11, 99);
+        } else if (bit == 2) {
+            a = util.rangeRand(111, 999);
+        }
 
-		arr = [a, '×', b];
-		ans = a * b;
+        b = util.rangeRand(1, 9);
+
+        arr = [a, '×', b];
+        ans = a * b;
+
+        ques[i] = arr.join(' ');
+    }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	62 两位数或三位数除一位数
-function f3b2bD1b (upa, upb, type) {
-	let a = 0, b = 0, c = 0, mod = 0;
+function f3b2bD1b(grade, type, pt) {
+    let a = 0, b = 0, c = 0, mod = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 2) {
+                for(i=0; i<6; i++) {
 
-    if (type == 62) {
-		if (bit == 1) {
-			a = util.rangeRand(11, 99);
-		} else if (bit == 2) {
-			a = util.rangeRand(111, 999);
-		}
+        bit = Math.ceil(Math.random() * 2);
 
-		b = util.rangeRand(2, 9);
+        if (bit == 1) {
+            a = util.rangeRand(11, 99);
+        } else if (bit == 2) {
+            a = util.rangeRand(111, 999);
+        }
 
-		mod = a % b;
-		if (mod != 0)
-			a = a - mod;
+        b = util.rangeRand(2, 9);
 
-		c = a / b;
+        mod = a % b;
+        if (mod != 0)
+            a = a - mod;
+
+        c = a / b;
         arr = [a, '÷', b];
 
-        console.log(a);
+        ques[i] = arr.join(' ');
+    }
 
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + c + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 
 }
 
 //	63 两位数三位数除整十数
-function f3b2bD10 (upa, upb, type) {
-	let a = 0, b = 0, mod = 0;
+function f3b2bD10(grade, type, pt) {
+    let a = 0, b = 0, mod = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 3) {
+                for(i=0; i<6; i++) {
 
-    if (type == 63) {
-		if (bit == 1) {
-			a = util.rangeRand(1, 9);
-		} else if (bit == 2) {
-			a = util.rangeRand(11, 99);
-		}
+        bit = Math.ceil(Math.random() * 2);
 
-		b = util.rangeRand(1, 9);
+        if (bit == 1) {
+            a = util.rangeRand(1, 9);
+        } else if (bit == 2) {
+            a = util.rangeRand(11, 99);
+        }
 
-		mod = a % b;
-		if (mod != 0)
-			a = a - mod;
+        b = util.rangeRand(1, 9);
 
-		a = a * 10;
-		b = b * 10;
+        mod = a % b;
+        if (mod != 0)
+            a = a - mod;
 
-		arr = [a, '÷', b];
-		ans = a / b;
+        a = a * 10;
+        b = b * 10;
+
+        arr = [a, '÷', b];
+        ans = a / b;
+
+        ques[i] = arr.join(' ');
+    }
 
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	64 三位数除以两位数
-function f3bD2b (upa, upb, type) {
-	let a = 0, b = 0, mod = 0;
+function f3bD2b(grade, type, pt) {
+    let a = 0, b = 0, mod = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let that = pt;
 
-	bit = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 4) {
+                for(i=0; i<6; i++) {
 
-    if (type == 64) {
-		a = util.rangeRand(111, 999);
-		b = util.rangeRand(11, 99);
+        bit = Math.ceil(Math.random() * 2);
 
-		mod = a % b;
-		if (mod != 0)
-			a = a - mod;
+        a = util.rangeRand(111, 999);
+        b = util.rangeRand(11, 99);
 
-		arr = [a, '÷', b];
-		ans = a / b;
+        mod = a % b;
+        if (mod != 0)
+            a = a - mod;
+
+        arr = [a, '÷', b];
+        ans = a / b;
+
+        ques[i] = arr.join(' ');
+    }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	65 被除数或除数末尾含0
-function f3b0D2b0 (upa, upb, type) {
-    let a = 0, b = 0, m = 0;
+function f3b0D2b0(grade, type, pt) {
+    let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
     let ans;
-    let ques;
+    let ques = [];
     let optType = 0, bit = 0;
+    let that = pt;
 
-    bit = Math.ceil(Math.random() * 2);
+    if (grade == 6 && type == 5) {
+                for(i=0; i<6; i++) {
 
-    if (type == 65) {
+        bit = Math.ceil(Math.random() * 2);
+
         if (bit == 1) {
             a = util.rangeRand(1, 9);
             b = util.rangeRand(2, 9);
@@ -208,23 +276,33 @@ function f3b0D2b0 (upa, upb, type) {
             ans = a * 10;
         }
 
+        ques[i] = arr.join(' ');
+    }
+
     } else {
         return -1;
     }
 
-    ques = arr.join(' ') + ' =' + ans + '%';
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
 
-    return ques;
+    return 0;
 }
 
 //	66 三位数两步混合运算
-function f3b3bASMD2s (type, db, point) {
+function f3b3bASMD2s(grade, type, db, pt) {
     let col = [];
     let that = point;
     let cques = [], ckey = [];
     let k = 0, i = 0;
 
-    if (type == 66) {
+    if (grade == 6 && type == 6) {
         db.collection('q41').where({
             type: 4101
         }).get({
@@ -257,17 +335,26 @@ function f3b3bASMD2s (type, db, point) {
         return -1;
     }
 
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
+
     return 0;
 }
 
 //	67 三位整数四则混合运算
-function f3b3bASMD3s(type, db, point) {
+function f3b3bASMD3s(grade, type, db, pt) {
     let col = [];
     let that = point;
     let cques = [], ckey = [];
     let k = 0, i = 0;
 
-    if (type == 67) {
+    if (grade == 6 && type == 7) {
         db.collection('q41').where({
             type: 4102
         }).get({
@@ -300,17 +387,26 @@ function f3b3bASMD3s(type, db, point) {
         return -1;
     }
 
+    that.setData({
+        ques0: ques[0],
+        ques1: ques[1],
+        ques2: ques[2],
+        ques3: ques[3],
+        ques4: ques[4],
+        ques5: ques[5]
+    });
+
     return 0;
 }
 
 
 module.exports = {
-	f3bAorS: f3bAorS,
-	f3b2bM1b: f3b2bM1b,
-	f3b2bD1b: f3b2bD1b,
-	f3b2bD10: f3b2bD10,
-	f3bD2b: f3bD2b,
-	f3b0D2b0: f3b0D2b0,
-	f3b3bASMD2s: f3b3bASMD2s,
-	f3b3bASMD3s: f3b3bASMD3s,
+    f3bAorS: f3bAorS,
+    f3b2bM1b: f3b2bM1b,
+    f3b2bD1b: f3b2bD1b,
+    f3b2bD10: f3b2bD10,
+    f3bD2b: f3bD2b,
+    f3b0D2b0: f3b0D2b0,
+    f3b3bASMD2s: f3b3bASMD2s,
+    f3b3bASMD3s: f3b3bASMD3s,
 }
