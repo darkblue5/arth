@@ -1,7 +1,11 @@
 /**index.wxss**/
 .calendar {
-  --calendar-height: 300px;
+  --calendar-height: 500rpx;
 }
+/* 
+.van-calendar__confirm {
+    height: 10rpx;
+} */
 
 .lFrame {
     display: flex;

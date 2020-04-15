@@ -43,7 +43,7 @@
         wx:if="{{ showConfirm }}"
         round
         block
-        type="danger"
+        type="default"
         color="{{ color }}"
         custom-class="van-calendar__confirm"
         disabled="{{ computed.getButtonDisabled(type, currentDate) }}"

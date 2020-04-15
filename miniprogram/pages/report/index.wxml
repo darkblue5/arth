@@ -22,7 +22,7 @@
         <ec-canvas id="mychart-dom-multi-scatter" canvas-id="mychart-multi-scatter" ec="{{ ecScatter }}"></ec-canvas>
     </view>
 
-    <view class="list-height top-1050">
+    <view class="list-height top-550">
         <van-panel title="排名" desc="综合积分排行" status="最新">
             <view class="list-height">
                 <van-cell value="5408" icon="user-circle-o" is-link>

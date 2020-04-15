@@ -9,8 +9,8 @@
 
 let util = require("util.js");
 
-function f1pot(db, type, point) {
-    let that = point;
+function f1pot(grade, type, pt) {
+    let that = pt;
     let pta, ita, a;
     let ptb, itb, b;
     let c;
@@ -22,10 +22,9 @@ function f1pot(db, type, point) {
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let i = 0;
 
-    if (type == 90) {
+    if (grade == 9 && type == 0) {
         for (i=0; i<6; i++) {
             optType = util.rangeRand(1, 4);
-           // optType = 3;
 
             switch (optType) {
                 case 1:
@@ -112,12 +111,12 @@ function f1pot(db, type, point) {
        }
 
         that.setData({
-            ques0: sques0 + '=',
-            ques1: sques1 + '=',
-            ques2: sques2 + '=',
-            ques3: sques3 + '=',
-            ques4: sques4 + '=',
-            ques5: sques5 + '=',
+            ques0: sques0,
+            ques1: sques1,
+            ques2: sques2,
+            ques3: sques3,
+            ques4: sques4,
+            ques5: sques5,
 
             key0: nkey0,
             key1: nkey1,
@@ -126,21 +125,23 @@ function f1pot(db, type, point) {
             key4: nkey4,
             key5: nkey5,
 
-            keyType: 1
+            quesType: 0,
+            ansType: 1
         })
     }
 
     return 0;
 }
 
-function fpotASMD(type, db, point) {
-    let that = point;
+// 小数四则混合运算
+function fpotASMD(grade, type, db, pt) {
+    let that = pt;
     let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
 	let col = [];
     let i = 0;
 
-    if (type == 91) {
+    if (grade == 9 && type == 1) {
 		db.collection('q52').where({
             type: 5211
         }).get({
@@ -179,12 +180,12 @@ function fpotASMD(type, db, point) {
 				nkey5 = col[i].key;
 				
                 that.setData({
-                    ques0: sques0 + '=',
-                    ques1: sques1 + '=',
-                    ques2: sques2 + '=',
-                    ques3: sques3 + '=',
-                    ques4: sques4 + '=',
-                    ques5: sques5 + '=',
+                    ques0: sques0,
+                    ques1: sques1,
+                    ques2: sques2,
+                    ques3: sques3,
+                    ques4: sques4,
+                    ques5: sques5,
 
                     key0: nkey0,
                     key1: nkey1,
@@ -193,6 +194,8 @@ function fpotASMD(type, db, point) {
                     key4: nkey4,
                     key5: nkey5,
 
+                    quesType: 0,
+                    ansType: 1
                 })
             }
         });
@@ -201,14 +204,15 @@ function fpotASMD(type, db, point) {
     return 0;
 }
 
-function fpotSimple(type, db, point) {
-    let that = point;
+//小数简便运算
+function fpotSimple(grade, type, db, pt) {
+    let that = pt;
     let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let col = [];
     let i = 0;
 
-    if (type == 92) {
+    if (grade == 9 && type == 2) {
         db.collection('q52').where({
             type: 5212
         }).get({
@@ -247,12 +251,12 @@ function fpotSimple(type, db, point) {
                 nkey5 = col[i].key;
 
                 that.setData({
-                    ques0: sques0 + '=',
-                    ques1: sques1 + '=',
-                    ques2: sques2 + '=',
-                    ques3: sques3 + '=',
-                    ques4: sques4 + '=',
-                    ques5: sques5 + '=',
+                    ques0: sques0,
+                    ques1: sques1,
+                    ques2: sques2,
+                    ques3: sques3,
+                    ques4: sques4,
+                    ques5: sques5,
 
                     key0: nkey0,
                     key1: nkey1,
@@ -268,14 +272,15 @@ function fpotSimple(type, db, point) {
     return 0;
 }
 
-function f2formula(db, type, point) {
-    let that = point;
+//简单方程
+function f2formula(grade, type, db, pt) {
+    let that = pt;
     let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let col = [];
     let i = 0;
 
-    if (type == 93) {
+    if (grade == 9 && type == 3) {
        // sques1 = "2+□=7  □中填：";
         //sques2 = "2+=7  中填：";
         db.collection('q52').where({
@@ -284,7 +289,7 @@ function f2formula(db, type, point) {
             success: res => {
                 col = res.data;
 
-                console.log(col.length);
+                //console.log(col.length);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques0 = col[i].ques;
@@ -315,7 +320,7 @@ function f2formula(db, type, point) {
                 sques5 = col[i].ques;
                 nkey5 = col[i].key;
 
-                console.log(sques0, sques1, sques2, sques3, sques4, sques5);
+                //console.log(sques0, sques1, sques2, sques3, sques4, sques5);
 
                 that.setData({
                     ques0: sques0,
@@ -331,6 +336,8 @@ function f2formula(db, type, point) {
                     key3: nkey3,
                     key4: nkey4,
                     key5: nkey5,
+
+                    quesType: 3,
                 });
             }
         });
@@ -339,8 +346,102 @@ function f2formula(db, type, point) {
     return 0;
 }
 
-function fdfAorS(type, db, point) {
-    let that = point;
+//同分母分数加减
+function fsfAorS(grade, type, pt) {
+    let that = pt;
+    let shizi = [];
+
+    let you = [];
+    let czs = [], cfz = [], cfm = [], cop = [];
+    let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
+    let len = 0;
+    let i = 0, j = 0;
+    let optType = 0;
+
+    if (grade == 9 && type == 4) {
+        for (j = 0; j < 6; j++) {
+            optType = util.rangeRand(1, 2);
+
+            you[0] = true;
+            // czs[0] = 0;
+
+            cfm[0] = util.rangeRand(3, 99);
+            cfz[0] = util.rangeRand(1, cfm[0] - 1);
+
+            if (optType == 1) {
+                you[1] = false;
+                czs[1] = '+';
+
+                you[2] = true;
+                cfz[2] = util.rangeRand(1, cfm[0] - cfz[0] - 1);
+                cfm[2] = cfm[0];
+
+                cKeyZs[j] = 0;
+                cKeyFz[j] = cfz[0] + cfz[2];
+                cKeyFm[j] = cfm[0];
+            } else if(optType == 2) {
+                you[1] = false;
+                czs[1] = '-';
+
+                you[2] = true;
+                cfz[2] = util.rangeRand(1, cfz[0] - 1);
+                cfm[2] = cfm[0];
+
+                cKeyZs[j] = 0;
+                cKeyFz[j] = cfz[0] - cfz[2];
+                cKeyFm[j] = cfm[0];
+            }
+
+            shizi[j] = [
+                {
+                    youfs: you[0],
+                    zs: czs[0],
+                    fz: cfz[0],
+                    fm: cfm[0],
+                },
+                {
+                    youfs: you[1],
+                    zs: czs[1],
+                    fz: cfz[1],
+                    fm: cfm[1],
+                },
+                {
+                    youfs: you[2],
+                    zs: czs[2],
+                    fz: cfz[2],
+                    fm: cfm[2],
+                }
+
+            ];
+
+            cKeyFraType[j] = 2;
+        }
+
+        that.setData({
+            quesType: 1,
+
+            ques0: shizi[0],
+            ques1: shizi[1],
+            ques2: shizi[2],
+            ques3: shizi[3],
+            ques4: shizi[4],   
+            ques5: shizi[5],
+
+           // keyZs: cKeyZs,
+            keyFz: cKeyFz,
+            keyFm: cKeyFm,
+
+            keyFraType: cKeyFraType
+
+        });
+    }
+
+    return 0;
+}
+
+//异分母带括号分数加减
+function fdfAorS(grade, type, db, pt) {
+    let that = pt;
     let shizi = [];
 
     let node = [], ans = [], ansZs = [], ansFs = [];
@@ -359,7 +460,7 @@ function fdfAorS(type, db, point) {
     let col = [];
 
 
-    if (type == 95) {
+    if (grade == 9 && type == 5) {
         // ques[0] = "64 + f3/5 - f2/7";
         // ques[1] = "f8/11 + 52 - f1/3";
         // ques[2] = "f8/11 + 52 - f1/3";
@@ -508,6 +609,8 @@ function fdfAorS(type, db, point) {
                 }
 
                 that.setData({
+                    quesType: 1,
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
@@ -522,103 +625,12 @@ function fdfAorS(type, db, point) {
                     keyFraType: cKeyFraType
                 });
             }
-        });
-
-       
+        });       
     }
 
     return 0;
 }
 
-//同分母分数加减
-function fsfAorS(type, point) {
-    let that = point;
-    let shizi = [];
-
-    let you = [];
-    let czs = [], cfz = [], cfm = [], cop = [];
-    let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
-    let len = 0;
-    let i = 0, j = 0;
-    let optType = 0;
-
-    if (type == 94) {
-        for (j = 0; j < 6; j++) {
-            optType = util.rangeRand(1, 2);
-
-            you[0] = true;
-            // czs[0] = 0;
-
-            cfm[0] = util.rangeRand(3, 99);
-            cfz[0] = util.rangeRand(1, cfm[0] - 1);
-
-            if (optType == 1) {
-                you[1] = false;
-                czs[1] = '+';
-
-                you[2] = true;
-                cfz[2] = util.rangeRand(1, cfm[0] - cfz[0] - 1);
-                cfm[2] = cfm[0];
-
-                cKeyZs[j] = 0;
-                cKeyFz[j] = cfz[0] + cfz[2];
-                cKeyFm[j] = cfm[0];
-            } else if(optType == 2) {
-                you[1] = false;
-                czs[1] = '-';
-
-                you[2] = true;
-                cfz[2] = util.rangeRand(1, cfz[0] - 1);
-                cfm[2] = cfm[0];
-
-                cKeyZs[j] = 0;
-                cKeyFz[j] = cfz[0] - cfz[2];
-                cKeyFm[j] = cfm[0];
-            }
-
-            shizi[j] = [
-                {
-                    youfs: you[0],
-                    zs: czs[0],
-                    fz: cfz[0],
-                    fm: cfm[0],
-                },
-                {
-                    youfs: you[1],
-                    zs: czs[1],
-                    fz: cfz[1],
-                    fm: cfm[1],
-                },
-                {
-                    youfs: you[2],
-                    zs: czs[2],
-                    fz: cfz[2],
-                    fm: cfm[2],
-                }
-
-            ];
-
-            cKeyFraType[j] = 2;
-        }
-
-        that.setData({
-            ques0: shizi[0],
-            ques1: shizi[1],
-            ques2: shizi[2],
-            ques3: shizi[3],
-            ques4: shizi[4],   
-            ques5: shizi[5],
-
-           // keyZs: cKeyZs,
-            keyFz: cKeyFz,
-            keyFm: cKeyFm,
-
-            keyFraType: cKeyFraType
-        });
-    }
-
-    return 0;
-}
 
 module.exports = {
     f1pot: f1pot,

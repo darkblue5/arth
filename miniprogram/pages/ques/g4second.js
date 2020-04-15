@@ -282,7 +282,7 @@ function f3b3bASMD4s(grade, type, db, pt) {
     let col1 = [];
     let col2 = [];
     let col3 = [];
-    let that = point;
+    let that = pt;
     let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let i = 0, j = 0, k = 0;
@@ -304,8 +304,8 @@ function f3b3bASMD4s(grade, type, db, pt) {
                 nkey1 = col1[i].key;
 
                 that.setData({
-                    ques0: sques0 + '=',
-                    ques1: sques1 + '=',
+                    ques0: sques0,
+                    ques1: sques1,
 
                     key0: nkey0,
                     key1: nkey1
@@ -314,7 +314,7 @@ function f3b3bASMD4s(grade, type, db, pt) {
         });
 
         db.collection('q52').where({
-            type: 1114
+            type: 5212
         }).get({
             success: res => {
                 col2 = res.data;
@@ -329,8 +329,8 @@ function f3b3bASMD4s(grade, type, db, pt) {
                 nkey3 = col2[j].key;
 
                 that.setData({
-                    ques2: sques2 + '=',
-                    ques3: sques3 + '=',
+                    ques2: sques2,
+                    ques3: sques3,
 
                     key2: nkey2,
                     key3: nkey3
@@ -339,7 +339,7 @@ function f3b3bASMD4s(grade, type, db, pt) {
         });
 
         db.collection('q52').where({
-            type: 1124
+            type: 5213
         }).get({
             success: res => {
                 col3 = res.data;
@@ -357,8 +357,8 @@ function f3b3bASMD4s(grade, type, db, pt) {
                 // console.log(nkey5);
 
                 that.setData({
-                    ques4: sques4 + '=',
-                    ques5: sques5 + '=',
+                    ques4: sques4,
+                    ques5: sques5,
 
                     key4: nkey4,
                     key5: nkey5

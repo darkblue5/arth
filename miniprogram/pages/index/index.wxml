@@ -50,7 +50,7 @@
     <view class="mid_area top-50 bc-white">
         <van-row gutter="20">
             <van-col span="11">
-                <block wx:if="{{isFraction == 0}}">
+                <block wx:if="{{quesType == 0 || quesType == 3}}">
                     <view class="vw-ques">
                         <text class="txt-ques">{{ques0}}\n</text>
                         <text class="txt-ques">{{ques1}}\n</text>
@@ -59,30 +59,185 @@
                         <text class="txt-ques">{{ques4}}\n</text>
                         <text class="txt-ques">{{ques5}}\n</text>
                     </view>
-                    <!-- <van-cell-group>
+                </block>
+                <block wx:elif="{{quesType == 1}}">
+                    <view class="vw-ques-fraction">
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques0}}" wx:key="index">
+                            <view class="zsbufen">
+                                {{item.zs}}
+                            </view>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                        
+                    </view>
+
+
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques1}}" wx:key="index">
+                            <block wx:if="{{!item.youfs}}">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+                            </block>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi ">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu ">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                       
+                    </view>
+
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques2}}" wx:key="index">
+                            <block wx:if="{{!item.youfs}}">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+                            </block>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi ">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu ">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                        
+                    </view>
+
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques3}}" wx:key="index">
+                            <block wx:if="{{!item.youfs}}">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+                            </block>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi ">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu ">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                      
+                    </view>
+
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques4}}" wx:key="index">
+                            <block wx:if="{{!item.youfs}}">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+                            </block>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi ">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu ">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                    
+                    </view>
+
+                    <view class="shizi">
+                        <view class="fenshu" wx:for="{{ques5}}" wx:key="index">
+                            <block wx:if="{{!item.youfs}}">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+                            </block>
+
+                            <block wx:if="{{item.youfs}}">
+                                <view class="fsbufen">
+                                    <view class="fenzi ">
+                                        {{item.fz}}
+                                    </view>
+
+                                    <view class="fenmu ">
+                                        {{item.fm}}
+                                    </view>
+                                </view>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+                </block>
+                <block wx:elif="{{quesType == 2}}">
+
+                </block>
+
+                <!-- <van-cell-group>
                         <van-cell title="{{ques0}}" border="{{ false }}" size="large" />
                         <van-cell title="{{ques1}}" border="{{ false }}" size="large" />
                         <van-cell title="{{ques2}}" border="{{ false }}" size="large" />
                         <van-cell title="{{ques3}}" border="{{ false }}" size="large" />
                         <van-cell title="{{ques4}}" border="{{ false }}" size="large" />
                         <van-cell title="{{ques5}}" border="{{ false }}" size="large" />
-                    </van-cell-group> -->
+                </van-cell-group> -->
+            </van-col>
+
+            <van-col span="4">
+                <block wx:if="{{quesType == 0 || quesType == 1}}">
+                    <view class="vw-col">
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                    </view>
+                </block>
+                <block wx:elif="{{quesType == 3}}">
+                    <view class="vw-col">
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                    </view>
                 </block>
             </van-col>
 
-            <van-col span="1">
-                <view class="vw-col">
-                    <text>=</text>
-                    <text>=</text>
-                    <text>=</text>
-                    <text>=</text>
-                    <text>=</text>
-                    <text>=</text>
-                </view>
-            </van-col>
-
-            <van-col span="8">
-                <block wx:if="{{isFraction == 0}}">
+            <van-col span="5">
+                <block wx:if="{{ansType == 0 || ansType == 1}}">
                     <view class="vw-col">
                         <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
                         <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
@@ -113,28 +268,28 @@
         <van-row gutter="20">
             <van-col span="12">
                 <view class="btn-wrap">
-                    <van-button icon="upgrade" type="default" bind:click="onBtnStart" block>  开   始</van-button>
+                    <van-button icon="upgrade" type="default" bind:click="onBtnStart" block> 开 始</van-button>
                 </view>
             </van-col>
             <van-col span="12">
                 <view class="btn-wrap">
-                    <van-button icon="certificate" type="default" bind:click="onBtnSubmit" block>  提   交</van-button>
+                    <van-button icon="certificate" type="default" bind:click="onBtnSubmit" block> 提 交</van-button>
                 </view>
             </van-col>
         </van-row>
     </view>
 
-<van-toast id="van-toast" />
+    <van-toast id="van-toast" />
 
-<!-- 题型选择 -->
-<van-popup show="{{ showType }}" position="top" custom-style="height: 60%" bind:close="onPopTypeClose">
-    <van-picker class="pk-type" columns="{{ type }}" bind:change="onChangeType" bind:cancel="onCancelType" bind:confirm="onConfirmType" show-toolbar />
-</van-popup>
+    <!-- 题型选择 -->
+    <van-popup show="{{ showType }}" position="top" custom-style="height: 60%" bind:close="onPopTypeClose">
+        <van-picker class="pk-type" columns="{{ type }}" bind:change="onChangeType" bind:cancel="onCancelType" bind:confirm="onConfirmType" show-toolbar />
+    </van-popup>
 
-<!-- 年级选择 -->
-<van-popup show="{{ showGrade }}" position="top" custom-style="height: 50%;" visible-item-count	="3" bind:close="onPopGradeClose" >
-    <van-picker class="pk-grade" columns="{{ grades }}" show-toolbar bind:change="onChangeGrade" bind:cancel="onCancelGrade" bind:confirm="onConfirmGrade"/>
-</van-popup>
+    <!-- 年级选择 -->
+    <van-popup show="{{ showGrade }}" position="top" custom-style="height: 50%;" visible-item-count="3" bind:close="onPopGradeClose">
+        <van-picker class="pk-grade" columns="{{ grades }}" show-toolbar bind:change="onChangeGrade" bind:cancel="onCancelGrade" bind:confirm="onConfirmGrade" />
+    </van-popup>
 
-<!-- end container -->
+    <!-- end container -->
 </view>

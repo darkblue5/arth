@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 .containerRep {
-      position: absolute;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -13,19 +13,19 @@
 }
 
 #mychart-dom-multi-bar {
-  position: absolute;
-  top: 150rpx;
-  bottom: 75%;
-  left: 10rpx;
-  right: 10rpx;
+    position: absolute;
+    top: 150rpx;
+    bottom: 75%;
+    left: 10rpx;
+    right: 10rpx;
 }
 
 #mychart-dom-multi-scatter {
-  position: absolute;
-  top: 900rpx;
-  bottom: 20%; 
-  left: 10rpx;
-  right: 10rpx;
+    position: absolute;
+    top: 900rpx;
+    /* bottom: 20%; */
+    left: 10rpx;
+    right: 10rpx;
 }
 
 /* 
@@ -73,9 +73,8 @@
     margin-top: 1050rpx;
 }
 
-
 .bc-red {
-    background-color:crimson;
+    background-color: crimson;
 }
 
 .bc-green {
@@ -84,8 +83,7 @@
 
 .chart-height {
     height: 100%;
-        /* height: auto; */
-
+    /* height: auto; */
 }
 
 .list-height {

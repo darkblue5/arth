@@ -111,6 +111,14 @@
     justify-content: space-around;
 }
 
+.vw-col-forum {
+    height: 700rpx;
+    font-size: 40rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .txt-ques {
     font-size: 40rpx;
     height: 100rpx;
@@ -129,4 +137,58 @@
 
 .pk_grade {
     
+}
+
+/* fraction question */
+.vw-ques-fraction {
+    font-size: 15pt;
+    height: 750rpx;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 分数部分 */
+.shizi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 5rpx;
+/*    border: 3rpx solid black;
+*/}
+
+.fenshu {
+    display: flex;
+    flex-direction: row;
+    margin-right: 5rpx;
+    /* width: 200rpx; */
+    /* height: 80rpx; */
+}
+
+.zsbufen {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-right: 5rpx;
+    /* width: 100rpx; */
+    /* height: 80rpx; */
+
+}
+
+.fsbufen {
+    /* width: 100rpx; */
+    padding-right: 5rpx;
+}
+
+.fenzi {
+    /* height: 40rpx; */
+    /* align-items: center; */
+    display: flex;
+    justify-content: center;
+}
+
+.fenmu {
+    /* height: 40rpx; */
+    border-top: 4rpx solid black;
 }

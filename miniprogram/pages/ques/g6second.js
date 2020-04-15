@@ -9,7 +9,7 @@
 
 let util = require("util.js");
 
-function f61Step(type, db, point) {
+function f61Step(grade, type, db, point) {
     let col1 = [];
     let col2 = [];
     let col3 = [];
@@ -27,7 +27,7 @@ function f61Step(type, db, point) {
     let tmpQues, tmpAns;
     let fsfh = [];
 
-    if (type == 110) {
+    if (grade = 11 && type == 0) {
         db.collection('q62').where({
             type: 6211
         }).get({
@@ -45,8 +45,10 @@ function f61Step(type, db, point) {
 
                 //console.log(nkey0, nkey1);
                 that.setData({
-                    ques0: sques0 + '=',
-                    ques1: sques1 + '=',
+                    quesType: 0,
+
+                    ques0: sques0,
+                    ques1: sques1,
 
                     key0: nkey0,
                     key1: nkey1,
@@ -66,7 +68,7 @@ function f61Step(type, db, point) {
 
                 console.log(nkey2);
                 that.setData({
-                    ques2: sques2 + '=',
+                    ques2: sques2,
                     key2: nkey2
                 })
             }
@@ -218,7 +220,7 @@ function f61Step(type, db, point) {
     return 0;
 }
 
-function f64Opt(type, db, point) {
+function f64Opt(grade, type, db, point) {
 	let col1 = [];
     let col2 = [];
     let col3 = [];
@@ -236,7 +238,7 @@ function f64Opt(type, db, point) {
     let tmpQues, tmpAns;
     let fsfh = [];
 
-    if (type == 111) {
+    if (grade = 11 &&  type == 1) {
         db.collection('q62').where({
             type: 6221
         }).get({
@@ -467,7 +469,7 @@ function f64Opt(type, db, point) {
     return 0;
 }
 
-function f6Simple(type, db, point) {
+function f6Simple(grade, type, db, point) {
     let that = point;
     let shizi = [];
 
@@ -487,7 +489,7 @@ function f6Simple(type, db, point) {
     let col = [];
 
 
-    if (type == 112) {
+    if (grade = 11 && type == 2) {
         // ques[0] = "64 + f3/5 - f2/7";
         // ques[1] = "f8/11 + 52 - f1/3";
         // ques[2] = "f8/11 + 52 - f1/3";
@@ -688,7 +690,7 @@ function f6Simple(type, db, point) {
 
 }
 
-function f6Formula(type, db, point) {
+function f6Formula(grade, type, db, point) {
     let that = point;
     let shizi = [];
 
@@ -708,7 +710,7 @@ function f6Formula(type, db, point) {
     let col = [];
 
 
-    if (type == 113) {
+    if (grade = 11 && type == 3) {
         // ques[0] = "64 + f3/5 - f2/7";
         // ques[1] = "f8/11 + 52 - f1/3";
         // ques[2] = "f8/11 + 52 - f1/3";
@@ -913,7 +915,7 @@ function f6Formula(type, db, point) {
 
 }
 
-function f6Scale(type, db, point) {
+function f6Scale(grade, type, db, point) {
 
     let that = point;
     let shizi = [];
@@ -934,7 +936,7 @@ function f6Scale(type, db, point) {
     let col = [];
 
 
-    if (type == 114) {
+    if (grade = 11 && type == 4) {
         // ques[0] = "64 + f3/5 - f2/7";
         // ques[1] = "f8/11 + 52 - f1/3";
         // ques[2] = "f8/11 + 52 - f1/3";

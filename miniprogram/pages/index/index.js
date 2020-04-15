@@ -20,7 +20,7 @@ let g6Second = require('../ques/g6second.js');
 const QCOUNT = 6; //1组6道题
 const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
-let db =0;
+const db = wx.cloud.database({});
 
 Page({
     data: {
@@ -41,7 +41,10 @@ Page({
         tickColor4: 'white',
         tickColor5: 'red',
 
-        isFraction: 0,
+        quesType: 0,        //  0: 整数、小数四则   1: 分数四则     2：3题整数3题分数 
+                            //  3：整数小数方程和比例   4: 分数方程
+        ansType: 0,         //  0： 整数    2：整数带余数   3：浮点数   4：分数
+
         ques0: '1322 + 2123',
         ques1: '1322 + 2123',
         ques2: '1322 + 2123',
@@ -471,7 +474,7 @@ Page({
                         ret = g3Second.f2bMandAorS(5, 5, this);
                         break;
                     case 6:      //   两个两位数四则混合运算
-                        ret = g3Second.f2bMandAorS(5, 6, db, this);
+                        ret = g3Second.f2bASMD2s(5, 6, db, this);
                         break;
                     default:
                         break;
@@ -560,19 +563,19 @@ Page({
                         ret = g5Second.f1pot(9, 0, this);
                         break;
                     case 1:     //小数四则混合运算
-                        ret = g5Second.fpotASMD(9, 1, this);
+                        ret = g5Second.fpotASMD(9, 1, db, this);
                         break;
-                    case 2:      //小数简便运算
-                        ret = g5Second.fpotSimple(9, 2, this);
+                    case 2:      //小数简便运算     FIXME: 间距
+                        ret = g5Second.fpotSimple(9, 2, db, this);
                         break;
                     case 3:      //简单方程
-                        ret = g5Second.f2formula(9, 3, this);
+                        ret = g5Second.f2formula(9, 3, db, this);
                         break;
                     case 4:      //同分母分数加减
                         ret = g5Second.fsfAorS(9, 4, this);
                         break;
                     case 5:      //带括号分数加减混合
-                        ret = g5Second.fdfAorS(9, 5, this);
+                        ret = g5Second.fdfAorS(9, 5, db, this);
                         break;
                     default:
                         break;
@@ -601,19 +604,19 @@ Page({
             case 11:            //  六年级下
                 switch (idxType[1]) {
                     case 0:      // 各类型数字一步运算
-                        ret = g6Second.f61Step(11, 0, this);
+                        ret = g6Second.f61Step(11, 0, db, this);
                         break;
                     case 1:     // 各类型数字四则运算
-                        ret = g6Second.f64Opt(11, 1, this);
+                        ret = g6Second.f64Opt(11, 1, db, this);
                         break;
                     case 2:      // 各类型数字简便运算
-                        ret = g6Second.f6Simple(11, 2, this);
+                        ret = g6Second.f6Simple(11, 2, db, this);
                         break;
                     case 3:     // 解方程
-                        ret = g6Second.f6Formula(11, 3, this);
+                        ret = g6Second.f6Formula(11, 3, db, this);
                         break;
                     case 4:      // 解比例
-                        ret = g6Second.f6Scale(11, 4, this);
+                        ret = g6Second.f6Scale(11, 4, db, this);
                         break;
                     default:
                         break;

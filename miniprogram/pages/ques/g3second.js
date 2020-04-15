@@ -309,6 +309,7 @@ function f2bASMD2s(grade, type, db, pt) {
         }).get({
             success: res => {
                 col = res.data;
+
                 //  FIXME: 
                 for (k = 0; k < 6; k++) {
                     i = Math.floor(Math.random() * (col.length - 1));
@@ -332,15 +333,6 @@ function f2bASMD2s(grade, type, db, pt) {
     } else {
         return -1;
     }
-
-    that.setData({
-        ques0: ques[0],
-        ques1: ques[1],
-        ques2: ques[2],
-        ques3: ques[3],
-        ques4: ques[4],
-        ques5: ques[5]
-    });
 
     return 0;
 }

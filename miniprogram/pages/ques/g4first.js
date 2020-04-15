@@ -298,7 +298,7 @@ function f3b0D2b0(grade, type, pt) {
 //	66 三位数两步混合运算
 function f3b3bASMD2s(grade, type, db, pt) {
     let col = [];
-    let that = point;
+    let that = pt;
     let cques = [], ckey = [];
     let k = 0, i = 0;
 
@@ -314,18 +314,15 @@ function f3b3bASMD2s(grade, type, db, pt) {
                     cques[k] = col[i].ques;
                     ckey[k] = parseInt(col[i].key);
                     col.splice(i, 1);
-                    //console.log(cques[k]);
-                    console.log(ckey[k]);
-
                 }
 
                 that.setData({
-                    ques0: cques[0] + '=',
-                    ques1: cques[1] + '=',
-                    ques2: cques[2] + '=',
-                    ques3: cques[3] + '=',
-                    ques4: cques[4] + '=',
-                    ques5: cques[5] + '=',
+                    ques0: cques[0],
+                    ques1: cques[1],
+                    ques2: cques[2],
+                    ques3: cques[3],
+                    ques4: cques[4],
+                    ques5: cques[5],
 
                     key: ckey
                 });
@@ -335,22 +332,13 @@ function f3b3bASMD2s(grade, type, db, pt) {
         return -1;
     }
 
-    that.setData({
-        ques0: ques[0],
-        ques1: ques[1],
-        ques2: ques[2],
-        ques3: ques[3],
-        ques4: ques[4],
-        ques5: ques[5]
-    });
-
     return 0;
 }
 
 //	67 三位整数四则混合运算
 function f3b3bASMD3s(grade, type, db, pt) {
     let col = [];
-    let that = point;
+    let that = pt;
     let cques = [], ckey = [];
     let k = 0, i = 0;
 
@@ -366,18 +354,15 @@ function f3b3bASMD3s(grade, type, db, pt) {
                     cques[k] = col[i].ques;
                     ckey[k] = parseInt(col[i].key);
                     col.splice(i, 1);
-                    //console.log(cques[k]);
-                    console.log(ckey[k]);
-
                 }
 
                 that.setData({
-                    ques0: cques[0] + '=',
-                    ques1: cques[1] + '=',
-                    ques2: cques[2] + '=',
-                    ques3: cques[3] + '=',
-                    ques4: cques[4] + '=',
-                    ques5: cques[5] + '=',
+                    ques0: cques[0],
+                    ques1: cques[1],
+                    ques2: cques[2],
+                    ques3: cques[3],
+                    ques4: cques[4],
+                    ques5: cques[5],
 
                     key: ckey
                 });
@@ -386,15 +371,6 @@ function f3b3bASMD3s(grade, type, db, pt) {
     } else {
         return -1;
     }
-
-    that.setData({
-        ques0: ques[0],
-        ques1: ques[1],
-        ques2: ques[2],
-        ques3: ques[3],
-        ques4: ques[4],
-        ques5: ques[5]
-    });
 
     return 0;
 }
