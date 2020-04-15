@@ -62,142 +62,142 @@
                 </block>
                 <block wx:elif="{{quesType == 1}}">
                     <view class="vw-ques-fraction">
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques0}}" wx:key="index">
-                            <view class="zsbufen">
-                                {{item.zs}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques0}}" wx:key="index">
+                                <view class="zsbufen">
+                                    {{item.zs}}
+                                </view>
+
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu">
+                                            {{item.fm}}
+                                        </view>
+                                    </view>
+                                </block>
                             </view>
 
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi">
-                                        {{item.fz}}
-                                    </view>
-
-                                    <view class="fenmu">
-                                        {{item.fm}}
-                                    </view>
-                                </view>
-                            </block>
                         </view>
-                        
-                    </view>
 
 
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques1}}" wx:key="index">
-                            <block wx:if="{{!item.youfs}}">
-                                <view class="zsbufen">
-                                    {{item.zs}}
-                                </view>
-                            </block>
-
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi ">
-                                        {{item.fz}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques1}}" wx:key="index">
+                                <block wx:if="{{!item.youfs}}">
+                                    <view class="zsbufen">
+                                        {{item.zs}}
                                     </view>
+                                </block>
 
-                                    <view class="fenmu ">
-                                        {{item.fm}}
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi ">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu ">
+                                            {{item.fm}}
+                                        </view>
                                     </view>
-                                </view>
-                            </block>
+                                </block>
+                            </view>
+
                         </view>
-                       
-                    </view>
 
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques2}}" wx:key="index">
-                            <block wx:if="{{!item.youfs}}">
-                                <view class="zsbufen">
-                                    {{item.zs}}
-                                </view>
-                            </block>
-
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi ">
-                                        {{item.fz}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques2}}" wx:key="index">
+                                <block wx:if="{{!item.youfs}}">
+                                    <view class="zsbufen">
+                                        {{item.zs}}
                                     </view>
+                                </block>
 
-                                    <view class="fenmu ">
-                                        {{item.fm}}
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi ">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu ">
+                                            {{item.fm}}
+                                        </view>
                                     </view>
-                                </view>
-                            </block>
+                                </block>
+                            </view>
+
                         </view>
-                        
-                    </view>
 
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques3}}" wx:key="index">
-                            <block wx:if="{{!item.youfs}}">
-                                <view class="zsbufen">
-                                    {{item.zs}}
-                                </view>
-                            </block>
-
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi ">
-                                        {{item.fz}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques3}}" wx:key="index">
+                                <block wx:if="{{!item.youfs}}">
+                                    <view class="zsbufen">
+                                        {{item.zs}}
                                     </view>
+                                </block>
 
-                                    <view class="fenmu ">
-                                        {{item.fm}}
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi ">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu ">
+                                            {{item.fm}}
+                                        </view>
                                     </view>
-                                </view>
-                            </block>
+                                </block>
+                            </view>
+
                         </view>
-                      
-                    </view>
 
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques4}}" wx:key="index">
-                            <block wx:if="{{!item.youfs}}">
-                                <view class="zsbufen">
-                                    {{item.zs}}
-                                </view>
-                            </block>
-
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi ">
-                                        {{item.fz}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques4}}" wx:key="index">
+                                <block wx:if="{{!item.youfs}}">
+                                    <view class="zsbufen">
+                                        {{item.zs}}
                                     </view>
+                                </block>
 
-                                    <view class="fenmu ">
-                                        {{item.fm}}
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi ">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu ">
+                                            {{item.fm}}
+                                        </view>
                                     </view>
-                                </view>
-                            </block>
+                                </block>
+                            </view>
+
                         </view>
-                    
-                    </view>
 
-                    <view class="shizi">
-                        <view class="fenshu" wx:for="{{ques5}}" wx:key="index">
-                            <block wx:if="{{!item.youfs}}">
-                                <view class="zsbufen">
-                                    {{item.zs}}
-                                </view>
-                            </block>
-
-                            <block wx:if="{{item.youfs}}">
-                                <view class="fsbufen">
-                                    <view class="fenzi ">
-                                        {{item.fz}}
+                        <view class="shizi">
+                            <view class="fenshu" wx:for="{{ques5}}" wx:key="index">
+                                <block wx:if="{{!item.youfs}}">
+                                    <view class="zsbufen">
+                                        {{item.zs}}
                                     </view>
+                                </block>
 
-                                    <view class="fenmu ">
-                                        {{item.fm}}
+                                <block wx:if="{{item.youfs}}">
+                                    <view class="fsbufen">
+                                        <view class="fenzi ">
+                                            {{item.fz}}
+                                        </view>
+
+                                        <view class="fenmu ">
+                                            {{item.fm}}
+                                        </view>
                                     </view>
-                                </view>
-                            </block>
+                                </block>
+                            </view>
                         </view>
                     </view>
-                </view>
                 </block>
                 <block wx:elif="{{quesType == 2}}">
 
@@ -236,18 +236,37 @@
                 </block>
             </van-col>
 
-            <van-col span="5">
-                <block wx:if="{{ansType == 0 || ansType == 1}}">
+            <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
+                <van-col span="4">
                     <view class="vw-col">
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
-                        <van-field value="{{ username3 }}" input-align="right" border="{{true}}" />
+                        <!-- <van-field value="{{ ans0 }}" type="number" border="{{true}}" bind:blur="onBluAns0"/>
+                        <van-field value="{{ ans1 }}" border="{{true}}" />
+                        <van-field value="{{ ans2 }}" border="{{true}}" />
+                        <van-field value="{{ ans3 }}" border="{{true}}" />
+                        <van-field value="{{ ans4 }}" border="{{true}}" />
+                        <van-field value="{{ ans5 }}" border="{{true}}" /> -->
+                        <input class="inp-ans" type="number" value='{{ans0}}' bindblur="onBluAns0" />
+                        <input class="inp-ans" type="number" value='{{ans1}}' bindblur="onBluAns1" />
+                        <input class="inp-ans" type="number" value='{{ans2}}' bindblur="onBluAns2" />
+                        <input class="inp-ans" type="number" value='{{ans3}}' bindblur="onBluAns3" />
+                        <input class="inp-ans" type="number" value='{{ans4}}' bindblur="onBluAns4" />
+                        <input class="inp-ans" type="number" value='{{ans5}}' bindblur="onBluAns5" />
                     </view>
-                </block>
-            </van-col>
+                </van-col>
+            </block>
+
+            <block wx:if="{{keyType == 1}}">
+                <van-col span="4">
+                    <view class="vw-col">
+                        <input class="in-mod" type="number" value='{{mod0}}' bindblur="onBluMod0" />
+                        <input class="in-mod" type="number" value='{{mod1}}' bindblur="onBluMod1" />
+                        <input class="in-mod" type="number" value='{{mod2}}' bindblur="onBluMod2" />
+                        <input class="in-mod" type="number" value='{{mod3}}' bindblur="onBluMod3" />
+                        <input class="in-mod" type="number" value='{{mod4}}' bindblur="onBluMod4" />
+                        <input class="in-mod" type="number" value='{{mod5}}' bindblur="onBluMod5" />
+                    </view>
+                </van-col>
+            </block>
 
             <van-col span="3">
                 <view class="vw-col">

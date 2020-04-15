@@ -34,24 +34,43 @@ Page({
 
         mp3: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',
 
-        tickColor0: 'red',
+        tickColor0: 'white',
         tickColor1: 'white',
-        tickColor2: 'red',
-        tickColor3: 'red',
+        tickColor2: 'white',
+        tickColor3: 'white',
         tickColor4: 'white',
-        tickColor5: 'red',
+        tickColor5: 'white',
 
         quesType: 0,        //  0: 整数、小数四则   1: 分数四则     2：3题整数3题分数 
                             //  3：整数小数方程和比例   4: 分数方程
-        ansType: 0,         //  0： 整数    2：整数带余数   3：浮点数   4：分数
+        keyType: 0,         //  0： 整数    1：整数带余数   2：浮点数   3：分数
 
-        ques0: '1322 + 2123',
-        ques1: '1322 + 2123',
-        ques2: '1322 + 2123',
-        ques3: '1322 + 2123',
-        ques4: '13242 + 2123',
-        ques5: '1322 + 2123',
+        ques0: '',
+        ques1: '',
+        ques2: '',
+        ques3: '',
+        ques4: '',
+        ques5: '',
+
+        ans0: '',
+        ans1: '',
+        ans2: '',
+        ans3: '',
+        ans4: '',
+        ans5: '',
+
+        keys: [],
+        keyMods: [],
+        modJudg: [0, 0],   //  0：错 1：对，前整数，后余数        
+        keyZs: [],
+        keyFz: [],
+        keyFm: [],
+        fraJudg: [0, 0, 0], //  0：错 1：对，一整数，二分子，三分母
         
+        curRecord: [0, 0],
+        dayRecord: [0, 0],
+        talRecord: [0, 0],
+
         showGrade: false,
         showType: false,
 
@@ -90,8 +109,14 @@ Page({
     },
 
     onReady() {
-        // const pkType = this.selectComponent('.pk-type') //获取组件实例
-        // pkType.setIndexes([this.data.index]) //setIndexes()中的参数是一个数组
+        let that = this;
+        let ret = 0;
+
+        // initical question
+        that.data.indexType = [0, 0];   //  初始类型
+        ret = that.initQues(0);
+        if (ret == -1)
+            return -1;
     },
 
     onUnload() {
@@ -129,13 +154,30 @@ Page({
             audio.play();
         }
 
-        // initical question
+        // initical question && ticker
         ret = that.initQues(type);
         if (ret == -1)
             return -1;
 
         that.setData({
-            enSwitch: true
+            enSwitch: true,
+
+            tickColor0: 'white',
+            tickColor1: 'white',
+            tickColor2: 'white',
+            tickColor3: 'white',
+            tickColor4: 'white',
+            tickColor5: 'white',
+
+            ans0: ' ',
+            ans1: ' ',
+            ans2: ' ',
+            ans3: ' ',
+            ans4: ' ',
+            ans5: ' ',
+
+            modJudg: [0, 0],
+            fraJudg: [0, 0, 0]
         });
     },
 
@@ -153,10 +195,75 @@ Page({
 
         // updata answer data
 
-
         that.setData({
-            enSwitch: false
+            enSwitch: false,
+
+            tickColor0: 'white',
+            tickColor1: 'white',
+            tickColor2: 'white',
+            tickColor3: 'white',
+            tickColor4: 'white',
+            tickColor5: 'white',
+
+            ans0: ' ',
+            ans1: ' ',
+            ans2: ' ',
+            ans3: ' ',
+            ans4: ' ',
+            ans5: ' ',
         });
+    },
+
+    onBluAns0: function(e) {
+        let that = this;
+        
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[0]) {
+                    that.setData({
+                        tickColor0: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[0]) {
+                    that.data.modJudg[0] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[1] == 1) {
+                        this.setData({
+                            tickColor0: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(that.data.ans[0] - that.data.key0) <= FLOTERR) {
+                    this.setData({
+                        tickColor0: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
+    onBluMod0: function(e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[0]) {
+            that.data.modJudg[1] = 1        //余数部分判定
+            if (that.data.modJudg[0] == 1) {
+                this.setData({
+                    tickColor0: 'red',
+                });
+            }
+        }
     },
 
     //  switch
@@ -338,6 +445,7 @@ Page({
                     default:
                         return -1;
                 }
+                //console.log(that.data.keys);
                 break;
             case 1:             //  一年级下
                 switch (idxType[1]) {
@@ -362,6 +470,7 @@ Page({
                     default:
                         break;                    
                 }
+                console.log(that.data.keys);
                 break;
             case 2:             //  二年级上
                 switch (idxType[1]) {
@@ -395,6 +504,7 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
                 break;
             case 3:             //  二年级下
                 switch (idxType[1]) {
@@ -428,6 +538,8 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+
                 break;
             case 4:             //  三年级上
                 switch (idxType[1]) {
@@ -452,6 +564,8 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+
                 break;
             case 5:             //  三年级下
                 switch (idxType[1]) {
@@ -479,6 +593,8 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+
                 break;
             case 6:             //  四年级上
                 switch (idxType[1]) {
@@ -509,6 +625,8 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+
                 break;
             case 7:             //  四年级下
                 switch (idxType[1]) {
@@ -536,6 +654,8 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+
                 break;
             case 8:             //  五年级上
                 switch (idxType[1]) {
@@ -580,6 +700,10 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keys);
+                console.log(that.data.keyZs);
+                console.log(that.data.keyFz);
+                console.log(that.data.keyFm);
                 break;
             case 10:            //  六年级上
                 switch (idxType[1]) {
@@ -621,6 +745,9 @@ Page({
                     default:
                         break;
                 }
+                console.log(that.data.keyZs);
+                console.log(that.data.keyFz);
+                console.log(that.data.keyFm);
                 break;
             default:
                 return -1;

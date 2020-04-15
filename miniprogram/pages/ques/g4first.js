@@ -14,7 +14,7 @@ let util = require("util.js");
 function f3bAorS(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -29,14 +29,14 @@ function f3bAorS(grade, type, pt) {
                 b = util.rangeRand(111, 999 - a);
 
                 arr = [a, '+', b];
-                ans = a + b;
+                key[i] = a + b;
                 break;
             case 2:     //a-b
                 a = util.rangeRand(111, 999);
                 b = util.rangeRand(111, a - 1);
 
                 arr = [a, '-', b];
-                ans = a - b;
+                key[i] = a - b;
                 break;
             default:
                 break;
@@ -50,12 +50,17 @@ function f3bAorS(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -65,7 +70,7 @@ function f3bAorS(grade, type, pt) {
 function f3b2bM1b(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let that = pt;
@@ -84,7 +89,7 @@ function f3b2bM1b(grade, type, pt) {
         b = util.rangeRand(1, 9);
 
         arr = [a, '×', b];
-        ans = a * b;
+        key[i] = a * b;
 
         ques[i] = arr.join(' ');
     }
@@ -94,12 +99,17 @@ function f3b2bM1b(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -109,56 +119,63 @@ function f3b2bM1b(grade, type, pt) {
 function f3b2bD1b(grade, type, pt) {
     let a = 0, b = 0, c = 0, mod = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let that = pt;
 
     if (grade == 6 && type == 2) {
-                for(i=0; i<6; i++) {
+        for(i=0; i<6; i++) {
 
-        bit = Math.ceil(Math.random() * 2);
+            bit = Math.ceil(Math.random() * 2);
 
-        if (bit == 1) {
-            a = util.rangeRand(11, 99);
-        } else if (bit == 2) {
-            a = util.rangeRand(111, 999);
+            if (bit == 1) {
+                a = util.rangeRand(11, 99);
+            } else if (bit == 2) {
+                a = util.rangeRand(111, 999);
+            }
+
+            b = util.rangeRand(2, 9);
+
+            mod = a % b;
+            if (mod != 0)
+                a = a - mod;
+
+            c = a / b;
+            arr = [a, '÷', b];
+
+            key[i] = c;
+            ques[i] = arr.join(' ');
         }
-
-        b = util.rangeRand(2, 9);
-
-        mod = a % b;
-        if (mod != 0)
-            a = a - mod;
-
-        c = a / b;
-        arr = [a, '÷', b];
-
-        ques[i] = arr.join(' ');
-    }
 
     } else {
         return -1;
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
 
 }
 
+//  FIXME: 0开头
 //	63 两位数三位数除整十数
 function f3b2bD10(grade, type, pt) {
     let a = 0, b = 0, mod = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let that = pt;
@@ -184,7 +201,7 @@ function f3b2bD10(grade, type, pt) {
         b = b * 10;
 
         arr = [a, '÷', b];
-        ans = a / b;
+        key[i] = a / b;
 
         ques[i] = arr.join(' ');
     }
@@ -193,13 +210,18 @@ function f3b2bD10(grade, type, pt) {
         return -1;
     }
 
-    that.setData({
+     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -209,7 +231,7 @@ function f3b2bD10(grade, type, pt) {
 function f3bD2b(grade, type, pt) {
     let a = 0, b = 0, mod = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let that = pt;
@@ -227,7 +249,7 @@ function f3bD2b(grade, type, pt) {
             a = a - mod;
 
         arr = [a, '÷', b];
-        ans = a / b;
+        key[i] = a / b;
 
         ques[i] = arr.join(' ');
     }
@@ -236,13 +258,18 @@ function f3bD2b(grade, type, pt) {
         return -1;
     }
 
-    that.setData({
+     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -252,7 +279,7 @@ function f3bD2b(grade, type, pt) {
 function f3b0D2b0(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let that = pt;
@@ -267,13 +294,13 @@ function f3b0D2b0(grade, type, pt) {
             b = util.rangeRand(2, 9);
 
             arr = [a * b * 10, '÷', b];
-            ans = a * 10;
+            key[i] = a * 10;
         } else if (bit == 2) {
             a = util.rangeRand(1, 9);
             b = util.rangeRand(2, 9);
 
             arr = [a * b * 100, '÷', b * 10];
-            ans = a * 10;
+            key[i] = a * 10;
         }
 
         ques[i] = arr.join(' ');
@@ -284,12 +311,17 @@ function f3b0D2b0(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -317,6 +349,9 @@ function f3b3bASMD2s(grade, type, db, pt) {
                 }
 
                 that.setData({
+                    quesType: 0,
+                    keyType: 0,
+
                     ques0: cques[0],
                     ques1: cques[1],
                     ques2: cques[2],
@@ -324,7 +359,7 @@ function f3b3bASMD2s(grade, type, db, pt) {
                     ques4: cques[4],
                     ques5: cques[5],
 
-                    key: ckey
+                    keys: ckey
                 });
             }
         });
@@ -357,6 +392,9 @@ function f3b3bASMD3s(grade, type, db, pt) {
                 }
 
                 that.setData({
+                    quesType: 0,
+                    keyType: 0,
+
                     ques0: cques[0],
                     ques1: cques[1],
                     ques2: cques[2],
@@ -364,7 +402,7 @@ function f3b3bASMD3s(grade, type, db, pt) {
                     ques4: cques[4],
                     ques5: cques[5],
 
-                    key: ckey
+                    keys: ckey
                 });
             }
         });

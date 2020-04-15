@@ -15,7 +15,7 @@ function f2bAorS12bNoCarry(grade, type, pt) {
     let a1 = 0, a2 = 0, a = 0, b1 = 0, b2 = 0, b = 0, m = 0, n = 0;
     let i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let bit;
@@ -40,7 +40,7 @@ function f2bAorS12bNoCarry(grade, type, pt) {
     				b = b1 + b2 * 10;
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     //a-b
                 	a1 = util.rangeRand(1, 9);
@@ -56,7 +56,7 @@ function f2bAorS12bNoCarry(grade, type, pt) {
     				b = b1 + b2 * 10;
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -69,12 +69,17 @@ function f2bAorS12bNoCarry(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -85,7 +90,7 @@ function f2bAorS12bNoCarry(grade, type, pt) {
 function f100DulAorS(grade, type, pt) {
     let a = 0, b = 0, c = 0, m = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt
@@ -101,14 +106,14 @@ function f100DulAorS(grade, type, pt) {
                     b = util.rangeRand(m, 100 / 2);
                     c = util.rangeRand(1, 100 - a - b);
                     arr = [a, '+', b, '+', c];
-                    ans = a + b + c;
+                    key[i] = a + b + c;
                     break;
                 case 2: // a - b - c
                     a = util.rangeRand(100 / 2, 100 * 4 / 5);
                     b = util.rangeRand(1, 100 - a - 5);
                     c = util.rangeRand(1, 100 - a - b);
                     arr = [a, '-', b, '-', c];
-                    ans = a - b - c;
+                    key[i] = a - b - c;
                     break;
                 default:
                     break;
@@ -119,15 +124,19 @@ function f100DulAorS(grade, type, pt) {
 
     }
 
-   that.setData({
+    that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
-    });
+        ques5: ques[5],
 
+        keys: key
+    });
     return 0;
 }
 
@@ -135,7 +144,7 @@ function f100DulAorS(grade, type, pt) {
 function f100AandS(grade, type, pt) {
     let a = 0, b = 0, c = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -151,14 +160,14 @@ function f100AandS(grade, type, pt) {
                     b = util.rangeRand(1, 100 - 5 - a);
                     c = util.rangeRand(1, a + b);
                     arr = [a, '+', b, '-', c];
-                    ans = a + b - c;
+                    key[i] = a + b - c;
                     break;
                 case 2:     //a-b+c
                     a = util.rangeRand(1, 100 * 4 / 5);
                     b = util.rangeRand(1, a - 5);
                     c = util.rangeRand(1, 100 - a + b)
                     arr = [a, '-', b, '+', c];
-                    ans = a - b + c;
+                    key[i] = a - b + c;
                     break;
                 default:
                     return -1;
@@ -168,12 +177,17 @@ function f100AandS(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -185,7 +199,7 @@ function f100AandS(grade, type, pt) {
 function f66M(grade, type, pt) {
     let a = 0, b = 0, i=0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let that = pt;
 
@@ -196,19 +210,24 @@ function f66M(grade, type, pt) {
             b = util.rangeRand(1, 6);
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
         }
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -217,7 +236,7 @@ function f66M(grade, type, pt) {
 function f99M(grade, type, pt) {
     let a = 0, b = 0, i=0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let that = pt;
 
@@ -227,19 +246,24 @@ function f99M(grade, type, pt) {
             b = util.rangeRand(1, 9);
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
         }
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -249,7 +273,7 @@ function f99M(grade, type, pt) {
 function f9D(grade, type, pt) {
     let a = 0, b = 0, c = 0, i=0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let that = pt;
 
@@ -261,19 +285,24 @@ function f9D(grade, type, pt) {
             c = a * b;
 
             arr = [c, '÷', a];
-            ans = b;
+            key[i] = b;
 
             ques[i] = arr.join(' ');
         }
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -285,7 +314,7 @@ function f9D(grade, type, pt) {
 function f100DoulMorD(grade, type, pt) {
     let a = 0, b = 0, c = 0, m = 0, n = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -302,7 +331,7 @@ function f100DoulMorD(grade, type, pt) {
                     c = util.rangeRand(1, 9);
                  
                     arr = [a, '×', b, '×', c];
-                    ans = a * b * c;
+                    key[i] = a * b * c;
                     break;
                 case 2:     //a/b*c
                     m = util.rangeRand(1, 9);
@@ -313,7 +342,7 @@ function f100DoulMorD(grade, type, pt) {
                     a = n * b;
 
                     arr = [a, '÷', m, '÷', c];
-                    ans = a / m / c;
+                    key[i] = a / m / c;
                     break;
                 default:
                     return -1;
@@ -325,12 +354,17 @@ function f100DoulMorD(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -342,7 +376,7 @@ function f100DoulMorD(grade, type, pt) {
 function f100MandD(grade, type, pt) {
     let a = 0, b = 0, c = 0, m = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -362,7 +396,7 @@ function f100MandD(grade, type, pt) {
                     b = b * m;
 
                     arr = [a, '×', b, '÷', c];
-                    ans = a * b / c;
+                    key[i] = a * b / c;
                     break;
                 case 2:     //a/b*c
                     m = util.rangeRand(1, 9);
@@ -370,7 +404,7 @@ function f100MandD(grade, type, pt) {
                     a = m * b;
                     c = util.rangeRand(1, 9);
                     arr = [a, '÷', b, '×', c];
-                    ans = a / b * c;
+                    key[i] = a / b * c;
                     break;
                 default:
                     return -1;
@@ -380,12 +414,17 @@ function f100MandD(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -396,7 +435,7 @@ function f100MandD(grade, type, pt) {
 function f100MandAS(grade, type, pt) {
     let a = 0, b = 0, c = 0, m = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -413,7 +452,7 @@ function f100MandAS(grade, type, pt) {
                     m = a * b;
                     c = util.rangeRand(1, m);
                     arr = [a, '×', b, '+', c];
-                    ans = a * b + c;
+                    key[i] = a * b + c;
                     break;
                 case 2:     //a x b - c
                     a = util.rangeRand(1, 9);
@@ -421,7 +460,7 @@ function f100MandAS(grade, type, pt) {
                     m = a * b;
                     c = util.rangeRand(1, m - 1);
                     arr = [a, '×', b, '-', c];
-                    ans = a * b - c;
+                    key[i] = a * b - c;
                     break;
                 default:
                     return -1;
@@ -431,12 +470,17 @@ function f100MandAS(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;

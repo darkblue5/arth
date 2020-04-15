@@ -14,7 +14,7 @@ let util = require("util.js");
 function f3bAorS(grade, type, pt) {
     let a = 0, b = 0, m = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let i = 0;
@@ -30,14 +30,14 @@ function f3bAorS(grade, type, pt) {
                     b = util.rangeRand(111, 999 - a);
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     //a-b
                     a = util.rangeRand(111, 999);
                     b = util.rangeRand(111, a - 1);
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -49,12 +49,17 @@ function f3bAorS(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -64,7 +69,7 @@ function f3bAorS(grade, type, pt) {
 function f2bM1b10(grade, type, pt) {
     let a = 0, b = 0, m = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let i = 0;
@@ -83,7 +88,7 @@ function f2bM1b10(grade, type, pt) {
             }
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
         }
@@ -93,12 +98,17 @@ function f2bM1b10(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -109,7 +119,7 @@ function f2bM1b10(grade, type, pt) {
 function f2b3bD1b10(grade, type, pt) {
     let a = 0, b = 0, mod = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let i = 0;
@@ -133,7 +143,7 @@ function f2b3bD1b10(grade, type, pt) {
                 a = a - mod;
 
             arr = [a, '÷', b];
-            ans = a / b;
+            key[i] = a / b;
 
             ques[i] = arr.join(' ');
 
@@ -143,12 +153,17 @@ function f2b3bD1b10(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -158,7 +173,7 @@ function f2b3bD1b10(grade, type, pt) {
 function f2bM10(grade, type, pt) {
     let a = 0, b = 0, m = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0, bit = 0;
     let i = 0;
@@ -177,7 +192,7 @@ function f2bM10(grade, type, pt) {
             }
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
 
@@ -187,12 +202,17 @@ function f2bM10(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -202,7 +222,7 @@ function f2bM10(grade, type, pt) {
 function f100M10(grade, type, pt) {
     let a = 0, b = 0, m = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0;
     let i = 0;
@@ -218,7 +238,7 @@ function f100M10(grade, type, pt) {
             b = b * 10;
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
         }
@@ -228,12 +248,17 @@ function f100M10(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -243,7 +268,7 @@ function f100M10(grade, type, pt) {
 function f3bM2b(grade, type, pt) {
     let a = 0, b = 0, m = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType = 0;
     let i = 0;
@@ -256,7 +281,7 @@ function f3bM2b(grade, type, pt) {
             b = util.rangeRand(11, 99);
 
             arr = [a, '×', b];
-            ans = a * b;
+            key[i] = a * b;
 
             ques[i] = arr.join(' ');
         }
@@ -266,12 +291,17 @@ function f3bM2b(grade, type, pt) {
     }
 
     that.setData({
+    	quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -286,6 +316,7 @@ function f3b3bASMD4s(grade, type, db, pt) {
     let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let i = 0, j = 0, k = 0;
+    let key = [];
 
     if (grade == 7 && type == 6) {
         db.collection('q52').where({
@@ -296,19 +327,19 @@ function f3b3bASMD4s(grade, type, db, pt) {
 
                 i = Math.floor(Math.random() * (col1.length - 1));
                 sques0 = col1[i].ques;
-                nkey0 = col1[i].key;
+                key[0] = col1[i].key;
                 col1.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col1.length - 1));
                 sques1 = col1[i].ques;
-                nkey1 = col1[i].key;
+                key[1] = col1[i].key;
 
                 that.setData({
+                	quesType: 0,
+                    keyType: 0,
+
                     ques0: sques0,
                     ques1: sques1,
-
-                    key0: nkey0,
-                    key1: nkey1
                 })
             }
         });
@@ -321,19 +352,16 @@ function f3b3bASMD4s(grade, type, db, pt) {
 
                 j = Math.floor(Math.random() * (col2.length - 1));
                 sques2 = col2[j].ques;
-                nkey2 = col2[j].key;
+                key[2] = col2[j].key;
                 col1.splice(j, 1);
 
                 j = Math.floor(Math.random() * (col2.length - 1));
                 sques3 = col2[j].ques;
-                nkey3 = col2[j].key;
+                key[3] = col2[j].key;
 
                 that.setData({
                     ques2: sques2,
                     ques3: sques3,
-
-                    key2: nkey2,
-                    key3: nkey3
                 })
             }
         });
@@ -346,12 +374,12 @@ function f3b3bASMD4s(grade, type, db, pt) {
 
                 k = Math.floor(Math.random() * (col3.length - 1));
                 sques4 = col3[k].ques;
-                nkey4 = col3[k].key;
+                key[4] = col3[k].key;
                 col1.splice(k, 1);
 
                 k = Math.floor(Math.random() * (col3.length - 1));
                 sques5 = col3[k].ques;
-                nkey5 = col3[k].key;
+                key[5] = col3[k].key;
 
                 // console.log(nkey4);
                 // console.log(nkey5);
@@ -360,8 +388,7 @@ function f3b3bASMD4s(grade, type, db, pt) {
                     ques4: sques4,
                     ques5: sques5,
 
-                    key4: nkey4,
-                    key5: nkey5
+                    keys: key
                 })
             }
         });

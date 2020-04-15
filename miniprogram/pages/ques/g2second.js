@@ -14,11 +14,10 @@ let util = require("util.js");
 function f110AorS(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
-
 
     if (grade == 3 && type == 0) {
         for (i = 0; i < 6; i++) {
@@ -32,7 +31,7 @@ function f110AorS(grade, type, pt) {
                     b = b * 10;
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     // a - b
                     a = util.rangeRand(11, 100 - 1);
@@ -42,7 +41,7 @@ function f110AorS(grade, type, pt) {
                     b = b * 10;
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -55,12 +54,17 @@ function f110AorS(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -71,7 +75,7 @@ function f110AorS(grade, type, pt) {
 function f1100AorS(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -91,7 +95,7 @@ function f1100AorS(grade, type, pt) {
                     b = b * 100;
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     // a - b
                     a = util.rangeRand(11, 100 - 1);
@@ -101,7 +105,7 @@ function f1100AorS(grade, type, pt) {
                     b = b * 100;
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -112,14 +116,18 @@ function f1100AorS(grade, type, pt) {
         return -1;
     }
 
-
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -130,7 +138,7 @@ function f1100AorS(grade, type, pt) {
 function f1100AorS110(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -150,7 +158,7 @@ function f1100AorS110(grade, type, pt) {
                     b = b * 10;
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     // a - b
                     a = util.rangeRand(11, 100 - 1);
@@ -160,7 +168,7 @@ function f1100AorS110(grade, type, pt) {
                     b = b * 10;
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -172,16 +180,19 @@ function f1100AorS110(grade, type, pt) {
         return -1;
     }
 
-
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
-    });
+        ques5: ques[5],
 
+        keys: key
+    });
     return 0;
 
 }
@@ -190,7 +201,7 @@ function f1100AorS110(grade, type, pt) {
 function f3bAorS(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -207,14 +218,14 @@ function f3bAorS(grade, type, pt) {
                     b = util.rangeRand(111, 999 - a);
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     // a - b
                     a = util.rangeRand(111, 999);
                     b = util.rangeRand(111, a);
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -227,12 +238,17 @@ function f3bAorS(grade, type, pt) {
 
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -244,7 +260,7 @@ function f2bAorSCarry(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let a1 = 0, a2 = 0, b1 = 0, b2 = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -266,7 +282,7 @@ function f2bAorSCarry(grade, type, pt) {
                     b = b1 + b2 * 10;
 
                     arr = [a, '+', b];
-                    ans = a + b;
+                    key[i] = a + b;
                     break;
                 case 2:     // a - b
                     a1 = util.rangeRand(1, 8);
@@ -279,7 +295,7 @@ function f2bAorSCarry(grade, type, pt) {
                     b = b1 + b2 * 10;
 
                     arr = [a, '-', b];
-                    ans = a - b;
+                    key[i] = a - b;
                     break;
                 default:
                     break;
@@ -291,12 +307,17 @@ function f2bAorSCarry(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -307,7 +328,7 @@ function f2bAorSCarry(grade, type, pt) {
 function f1bMorD(grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -324,7 +345,7 @@ function f1bMorD(grade, type, pt) {
                     b = util.rangeRand(1, 9);
 
                     arr = [a, '×', b];
-                    ans = a * b;
+                    key[i] = a * b;
                     break;
                 case 2:     // a / b
                     a = util.rangeRand(1, 9);
@@ -332,7 +353,7 @@ function f1bMorD(grade, type, pt) {
                     m = a * b;
 
                     arr = [m, '÷', b];
-                    ans = m / b;
+                    key[i] = m / b;
                     break;
                 default:
                     break;
@@ -346,13 +367,18 @@ function f1bMorD(grade, type, pt) {
     }
 
 
-    that.setData({
+     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -360,9 +386,10 @@ function f1bMorD(grade, type, pt) {
 
 //	36	有余数除法
 function f2bDMod(grade, type, pt) {
-    let a = 0, b = 0, m = 0, mod = 0, i = 0;
+    let a = 0, b = 0, m = 0, i = 0, mod = 0;
     let arr = [];
-    let ans;
+    let key = [];
+    let mods = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -379,8 +406,8 @@ function f2bDMod(grade, type, pt) {
             mod = util.rangeRand(1, b - 1)
 
             arr = [m + mod, '÷', b];
-            ans = a;
-
+            key[i] = a;
+            mods[i] = mod;
             ques[i] = arr.join(' ');
 
         }
@@ -389,12 +416,18 @@ function f2bDMod(grade, type, pt) {
     }
 
     that.setData({
+        quesType: 0,
+        keyType: 1,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key,
+        keyMods: mods
     });
 
     return 0;
@@ -407,7 +440,7 @@ function f2bDMod(grade, type, pt) {
 function f2bDulAandS(grade, type, pt) {
     let a = 0, b = 0, c = 0, i = 0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -424,14 +457,14 @@ function f2bDulAandS(grade, type, pt) {
                     b = util.rangeRand(11, 99 - 50)
                     c = util.rangeRand(11, 99 - a - b);
                     arr = [a, '+', b, '+', c];
-                    ans = a + b + c;
+                    key[i] = a + b + c;
                     break;
                 case 2: // a - b - c
                     a = util.rangeRand(70, 99);
                     b = util.rangeRand(11, a - 11);
                     c = util.rangeRand(11, a - b);
                     arr = [a, '-', b, '-', c];
-                    ans = a - b - c;
+                    key[i] = a - b - c;
                     break;
                 default:
                     break;
@@ -443,12 +476,17 @@ function f2bDulAandS(grade, type, pt) {
 
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;
@@ -459,7 +497,7 @@ function f2bDulAandS(grade, type, pt) {
 function f2bAandS(grade, type, pt) {
     let a = 0, b = 0, c = 0, i = 0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -475,14 +513,14 @@ function f2bAandS(grade, type, pt) {
                     b = util.rangeRand(11, 99);
                     c = util.rangeRand(11, 99)
                     arr = [a, '+', b, '-', c];
-                    ans = a + b - c;
+                    key[i] = a + b - c;
                     break;
                 case 2:     //a-b+c
                     a = util.rangeRand(11, 99);
                     b = util.rangeRand(11, a);
                     c = util.rangeRand(11, 99 - a + b)
                     arr = [a, '-', b, '+', c];
-                    ans = a - b + c;
+                    key[i] = a - b + c;
                     break;
                 default:
                     return -1;
@@ -493,12 +531,17 @@ function f2bAandS(grade, type, pt) {
 
 
     that.setData({
+        quesType: 0,
+        keyType: 0,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
         ques3: ques[3],
         ques4: ques[4],
-        ques5: ques[5]
+        ques5: ques[5],
+
+        keys: key
     });
 
     return 0;

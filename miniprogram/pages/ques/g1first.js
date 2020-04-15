@@ -13,7 +13,7 @@ let util = require("util.js");
 function g1First5AorS (grade, type, pt) {
     let a = 0, b = 0, m = 0, i = 0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -29,7 +29,7 @@ function g1First5AorS (grade, type, pt) {
 	                b = util.rangeRand(1, m);
 
 	                arr = [a, '+', b];
-	                ans = a + b;
+	                key[i] = a + b;
 	                break;
 	            case 2:     //a-b
 	                a = util.rangeRand(1, 5 - 1);
@@ -37,7 +37,7 @@ function g1First5AorS (grade, type, pt) {
 
 
 	                arr = [a, '-', b];
-	                ans = a - b;
+	                key[i] = a - b;
 	                break;
 	            default:
 	                break;
@@ -49,12 +49,17 @@ function g1First5AorS (grade, type, pt) {
     }
 
     that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return 0;
@@ -65,7 +70,7 @@ function g1First5AorS (grade, type, pt) {
 function g1First10AorS(grade, type, pt) {
     let a = 0, b = 0, m = 0, i=0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -81,14 +86,14 @@ function g1First10AorS(grade, type, pt) {
 	                b = util.rangeRand(1, m);
 
 	                arr = [a, '+', b];
-	                ans = a + b;
+	                key[i] = a + b;
 	                break;
 	            case 2:     //a-b
 	                a = util.rangeRand(1, 10 - 1);
 	                b = util.rangeRand(1, a);
 
 	                arr = [a, '-', b];
-	                ans = a - b;
+	                key[i] = a - b;
 	                break;
 	            default:
 	                break;
@@ -100,12 +105,17 @@ function g1First10AorS(grade, type, pt) {
     }
 
     that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return 0;
@@ -117,7 +127,7 @@ function g1First10AorS(grade, type, pt) {
 function g1First10DulAorS(grade, type, pt) {
     let a = 0, b = 0, c = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -132,14 +142,14 @@ function g1First10DulAorS(grade, type, pt) {
 	                b = util.rangeRand(1, 9 - a)
 	                c = util.rangeRand(1, 9 - a - b);
 	                arr = [a, '+', b, '+', c];
-	                ans = a + b + c;
+	                key[i] = a + b + c;
 	                break;
 	            case 2: // a - b - c
 	                a = util.rangeRand(7, 9);
 	                b = util.rangeRand(1, a - 2);
 	                c = util.rangeRand(1, a - b);
 	                arr = [a, '-', b, '-', c];
-	                ans = a - b - c;
+	                key[i] = a - b - c;
 	                break;
 	            default:
 	                break;
@@ -152,12 +162,17 @@ function g1First10DulAorS(grade, type, pt) {
     }
 
     that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return 0;
@@ -169,7 +184,7 @@ function g1First10DulAorS(grade, type, pt) {
 function g1First10AandS(grade, type, pt) {
     let a = 0, b = 0, c = 0, i=0;
     let arr = [];
-    let ans = 0;
+    let key = [];
     let ques = [];
     let optType;
     let that = pt;
@@ -184,14 +199,14 @@ function g1First10AandS(grade, type, pt) {
 	                b = util.rangeRand(1, 9 - a);
 	                c = util.rangeRand(1, a + b)
 	                arr = [a, '+', b, '-', c];
-	                ans = a + b - c;
+	                key[i] = a + b - c;
 	                break;
 	            case 2:     //a-b+c
 	                a = util.rangeRand(1, 9);
 	                b = util.rangeRand(1, a - 1);
 	                c = util.rangeRand(1, 9 - a + b)
 	                arr = [a, '-', b, '+', c];
-	                ans = a - b + c;
+	                key[i] = a - b + c;
 	                break;
 	            default:
 	                return -1;
@@ -203,12 +218,17 @@ function g1First10AandS(grade, type, pt) {
     }
 
 	that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return 0;
@@ -220,8 +240,8 @@ function g1First10AandS(grade, type, pt) {
 function g1First10A1b(grade, type, pt) {
     let b = 0, i=0;
     let arr = [];
-    let ans;
     let ques = [];
+    let key = [];
     let that = pt;
 
     if (grade == 0 && type == 4) {
@@ -229,7 +249,7 @@ function g1First10A1b(grade, type, pt) {
 	        b = util.rangeRand(1, 9);
 
 	        arr = [10, '+', b];
-	        ans = 10 + b;
+	        key[i] = 10 + b;
 			ques[i] = arr.join(' ');
 	    }
 
@@ -238,12 +258,17 @@ function g1First10A1b(grade, type, pt) {
 	}
 
 	that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return 0;
@@ -253,7 +278,7 @@ function g1First10A1b(grade, type, pt) {
 function g1First20ACarry(grade, type, pt) {
     let a = 0, b = 0, m = 0, i=0;
     let arr = [];
-    let ans;
+    let key = [];
     let ques = [];
     let that = pt;
 
@@ -264,7 +289,7 @@ function g1First20ACarry(grade, type, pt) {
 	        b = util.rangeRand((10 - m), 9);
 	    
 		    arr = [a, '+', b];
-		    ans = a + b;
+		    key[i] = a + b;
 
 		    ques[i] = arr.join(' ');
 		}
@@ -274,12 +299,17 @@ function g1First20ACarry(grade, type, pt) {
 
 
 	that.setData({
+		quesType: 0,
+		keyType: 0,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
 		ques3: ques[3],
 		ques4: ques[4],
-		ques5: ques[5]
+		ques5: ques[5],
+
+		keys: key
 	});
 
     return ques;

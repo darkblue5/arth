@@ -192,3 +192,24 @@
     /* height: 40rpx; */
     border-top: 4rpx solid black;
 }
+
+/* answer input */
+.inp-ans {
+    height: 100rpx;
+    font-size: 40rpx;
+    font-weight: bold;
+    font-style: oblique;
+    text-align: center;
+    color: dodgerblue;
+    border-bottom: 1rpx solid #d9d9d9;
+}
+
+.in-mod {
+    height: 100rpx;
+    font-size: 40rpx;
+    font-weight: bold;
+    font-style: oblique;
+    text-align: center;
+    color: gray;
+    border: 1rpx solid lightgreen;
+}
