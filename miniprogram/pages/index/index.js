@@ -24,6 +24,13 @@ const db = wx.cloud.database({});
 
 Page({
     data: {
+        avatarUrl: './user-unlogin.png',
+        userInfo: {},
+        logged: false,
+        takeSession: false,
+        requestResult: '',
+        openID: '',
+
         enMusic: false,
         enTimer: false,
         enSwitch: false,
@@ -33,6 +40,9 @@ Page({
         second: 0,
 
         mp3: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',
+
+        wdQues: 12,         //  24格栅模型中，试题占宽
+        wdAns: 5,           //  24格栅模型中，答案占宽
 
         tickColor0: 'white',
         tickColor1: 'white',
@@ -66,6 +76,9 @@ Page({
         keyFz: [],
         keyFm: [],
         fraJudg: [0, 0, 0], //  0：错 1：对，一整数，二分子，三分母
+
+        errQues: [],        //  当前入错题集错题
+        errRec: [],         //  错题集中该型错题
         
         curRecord: [0, 0],
         dayRecord: [0, 0],
@@ -103,6 +116,30 @@ Page({
     onLoad: function (e) {
         let that = this;
 
+        if (!wx.cloud) {
+            wx.redirectTo({
+                url: '../chooseLib/chooseLib',
+            })
+            return
+        }
+
+        // 获取用户信息
+        wx.getSetting({
+            success: res => {
+                if (res.authSetting['scope.userInfo']) {
+                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                    wx.getUserInfo({
+                        success: res => {
+                            this.setData({
+                                avatarUrl: res.userInfo.avatarUrl,
+                                userInfo: res.userInfo
+                            })
+                        }
+                    })
+                }
+            }
+        })
+
         clearInterval(init); // 计时器归零
         that.data.minute = 0;
         that.data.second = 0;
@@ -124,7 +161,13 @@ Page({
     },
 
     onGetUserInfo: function (e) {
-        
+        if (!this.data.logged && e.detail.userInfo) {
+            this.setData({
+                logged: true,
+                avatarUrl: e.detail.userInfo.avatarUrl,
+                userInfo: e.detail.userInfo
+            })
+        }
     },
 
     onGetOpenid: function () {
@@ -169,12 +212,12 @@ Page({
             tickColor4: 'white',
             tickColor5: 'white',
 
-            ans0: ' ',
-            ans1: ' ',
-            ans2: ' ',
-            ans3: ' ',
-            ans4: ' ',
-            ans5: ' ',
+            ans0: '',
+            ans1: '',
+            ans2: '',
+            ans3: '',
+            ans4: '',
+            ans5: '',
 
             modJudg: [0, 0],
             fraJudg: [0, 0, 0]
@@ -184,6 +227,8 @@ Page({
     //  button SUBMIT click
     onBtnSubmit: function (e) {
         let that = this;
+        let i = 0;
+        let finishCount = 0, correctCount = 0;
 
         // stop timer
         if (that.data.enTimer) 
@@ -194,6 +239,19 @@ Page({
             audio.pause();
 
         // updata answer data
+        if (that.data.ans0 != '') finishCount++;
+        if (that.data.ans1 != '') finishCount++;
+        if (that.data.ans2 != '') finishCount++;
+        if (that.data.ans3 != '') finishCount++;
+        if (that.data.ans4 != '') finishCount++;
+        if (that.data.ans5 != '') finishCount++;
+
+        if (that.data.tickColor0 == 'red') correctCount++;
+        if (that.data.tickColor1 == 'red') correctCount++;
+        if (that.data.tickColor2 == 'red') correctCount++;
+        if (that.data.tickColor3 == 'red') correctCount++;
+        if (that.data.tickColor4 == 'red') correctCount++;
+        if (that.data.tickColor5 == 'red') correctCount++;
 
         that.setData({
             enSwitch: false,
@@ -205,12 +263,12 @@ Page({
             tickColor4: 'white',
             tickColor5: 'white',
 
-            ans0: ' ',
-            ans1: ' ',
-            ans2: ' ',
-            ans3: ' ',
-            ans4: ' ',
-            ans5: ' ',
+            ans0: '',
+            ans1: '',
+            ans2: '',
+            ans3: '',
+            ans4: '',
+            ans5: '',
         });
     },
 
@@ -236,7 +294,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(that.data.ans[0] - that.data.key0) <= FLOTERR) {
+                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
                     this.setData({
                         tickColor0: 'red',
                     });
@@ -285,18 +343,29 @@ Page({
     },
 
     onTapVwGrade: function (e) {
-        // let that = this;
+        let that = this;
 
-        // if (!that.data.showGrade) {
-        //     that.setData({
-        //         showGrade: true
-        //     });
-        // } else {
-        //     that.setData({
-        //         showGrade: false
-        //     });
-        // }
-        this.setData({ showGrade: true });
+        // 获取用户 OpenID
+        wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+                //console.log('[云函数] [login] user openid: ', res.result.openid);
+                app.globalData.openid = res.result.openid;
+                that.data.openID = res.result.openid;
+                // wx.navigateTo({
+                //     url: '../userConsole/userConsole',
+                // })
+            },
+            fail: err => {
+                console.error('[云函数] [login] 调用失败', err);
+                // wx.navigateTo({
+                //     url: '../deployFunctions/deployFunctions',
+                // })
+            }
+        })
+
+        that.setData({ showGrade: true });
     },
 
     onPopTypeClose() {

@@ -46,6 +46,9 @@ function f110M1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -100,6 +103,9 @@ function f110D1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -149,6 +155,9 @@ function f3b2bD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -197,6 +206,9 @@ function f2bD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -255,6 +267,9 @@ function f3bMorD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -317,6 +332,9 @@ function f3bMandD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],

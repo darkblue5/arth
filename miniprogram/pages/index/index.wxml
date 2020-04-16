@@ -38,7 +38,8 @@
                 </van-col>
                 <van-col span="2">
                     <view class="vw-d-rr">
-                        <van-button round type="default">登陆</van-button>
+                        <!-- <van-button round type="default">登陆</van-button> -->
+                        <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
                     </view>
                 </van-col>
             </van-row>
@@ -49,7 +50,7 @@
     <!--  middle area -->
     <view class="mid_area top-50 bc-white">
         <van-row gutter="20">
-            <van-col span="11">
+            <van-col span="{{wdQues}}">
                 <block wx:if="{{quesType == 0 || quesType == 3}}">
                     <view class="vw-ques">
                         <text class="txt-ques">{{ques0}}\n</text>
@@ -60,7 +61,7 @@
                         <text class="txt-ques">{{ques5}}\n</text>
                     </view>
                 </block>
-                <block wx:elif="{{quesType == 1}}">
+                <block wx:elif="{{quesType == 1 || quesType == 4}}">
                     <view class="vw-ques-fraction">
                         <view class="shizi">
                             <view class="fenshu" wx:for="{{ques0}}" wx:key="index">
@@ -213,8 +214,8 @@
                 </van-cell-group> -->
             </van-col>
 
-            <van-col span="4">
-                <block wx:if="{{quesType == 0 || quesType == 1}}">
+            <block wx:if="{{quesType == 0 || quesType == 1}}">
+                <van-col span="1">
                     <view class="vw-col">
                         <text>=</text>
                         <text>=</text>
@@ -223,28 +224,36 @@
                         <text>=</text>
                         <text>=</text>
                     </view>
-                </block>
-                <block wx:elif="{{quesType == 3}}">
-                    <view class="vw-col">
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
+                </van-col>
+            </block>
+            <!-- <block wx:elif="{{quesType == 1}}">
+                <van-col span="1">
+                    <view class="vw-col-fra">
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
+                        <text>=</text>
                     </view>
-                </block>
-            </van-col>
-
-            <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
+                </van-col>
+            </block> -->
+            <block wx:elif="{{quesType == 3 || quesType == 4}}">
                 <van-col span="4">
                     <view class="vw-col">
-                        <!-- <van-field value="{{ ans0 }}" type="number" border="{{true}}" bind:blur="onBluAns0"/>
-                        <van-field value="{{ ans1 }}" border="{{true}}" />
-                        <van-field value="{{ ans2 }}" border="{{true}}" />
-                        <van-field value="{{ ans3 }}" border="{{true}}" />
-                        <van-field value="{{ ans4 }}" border="{{true}}" />
-                        <van-field value="{{ ans5 }}" border="{{true}}" /> -->
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                        <text> X =</text>
+                    </view>
+                </van-col>
+            </block>
+
+            <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
+                <van-col span="{{wdAns}}">
+                    <view class="vw-col">
                         <input class="inp-ans" type="number" value='{{ans0}}' bindblur="onBluAns0" />
                         <input class="inp-ans" type="number" value='{{ans1}}' bindblur="onBluAns1" />
                         <input class="inp-ans" type="number" value='{{ans2}}' bindblur="onBluAns2" />
@@ -253,6 +262,57 @@
                         <input class="inp-ans" type="number" value='{{ans5}}' bindblur="onBluAns5" />
                     </view>
                 </van-col>
+            </block>
+            <block wx:elif="{{keyType == 3}}">
+                <view class="vw-ans-fraction">
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
+                            <input class="in-answer-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                        </view>
+                    </view>
+
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans1Zs}}' bindblur="onInpBlurAns1Zs"/>
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans1Fz}}' bindblur="onInpBlurAns1Fz" />
+                            <input class="in-answer-fm" value='{{ans1Fm}}' bindblur="onInpBlurAns1Fm"/>
+                        </view>
+                    </view>
+
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans2Zs}}' bindblur="onInpBlurAns2Zs"/>
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans2Fz}}' bindblur="onInpBlurAns2Fz"/>
+                            <input class="in-answer-fm" value='{{ans2Fm}}' bindblur="onInpBlurAns2Fm"/>
+                        </view>
+                    </view>
+
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans3Zs}}' bindblur="onInpBlurAns3Zs"/>
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans3Fz}}' bindblur="onInpBlurAns3Fz"/>
+                            <input class="in-answer-fm" value='{{ans3Fm}}' bindblur="onInpBlurAns3Fm"/>
+                        </view>
+                    </view>
+
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans4Zs}}' bindblur="onInpBlurAns4Zs"/>
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans4Fz}}' bindblur="onInpBlurAns4Fz"/>
+                            <input class="in-answer-fm" value='{{ans4Fm}}' bindblur="onInpBlurAns4Fm"/>
+                        </view>
+                    </view>
+
+                    <view class="vw-answer-fs">
+                        <input class="in-answer-zs" value='{{ans5Zs}}' bindblur="onInpBlurAns5Zs"/>
+                        <view class="vw-answer-fsbufen">
+                            <input class="in-answer-fz" value='{{ans5Fz}}' bindblur="onInpBlurAns5Fz"/>
+                            <input class="in-answer-fm" value='{{ans5Fm}}' bindblur="onInpBlurAns5Fm"/>
+                        </view>
+                    </view>
+                </view>
             </block>
 
             <block wx:if="{{keyType == 1}}">
@@ -267,7 +327,7 @@
                     </view>
                 </van-col>
             </block>
-
+            
             <van-col span="3">
                 <view class="vw-col">
                     <van-icon name="success" color="{{tickColor0}}" />
@@ -287,12 +347,12 @@
         <van-row gutter="20">
             <van-col span="12">
                 <view class="btn-wrap">
-                    <van-button icon="upgrade" type="default" bind:click="onBtnStart" block> 开 始</van-button>
+                    <van-button icon="upgrade" bind:click="onBtnStart" block> 开 始</van-button>
                 </view>
             </van-col>
             <van-col span="12">
                 <view class="btn-wrap">
-                    <van-button icon="certificate" type="default" bind:click="onBtnSubmit" block> 提 交</van-button>
+                    <van-button icon="certificate" bind:click="onBtnSubmit" block> 提 交</van-button>
                 </view>
             </van-col>
         </van-row>

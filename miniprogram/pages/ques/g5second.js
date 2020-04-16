@@ -15,7 +15,7 @@ function f1pot(grade, type, pt) {
     let ptb, itb, b;
     let c;
 
-    let res;
+    let res = 0;
     let optType;    // 1:加 2:减 3:乘 4:除
     let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
     let ques = "";
@@ -36,8 +36,9 @@ function f1pot(grade, type, pt) {
                     itb = util.rangeRand(1, 20);
                     ptb = util.rangeRand(1, 9);
                     b = Number(itb + ptb / 10);
-                    ques = a.toString() + '+' + b.toString();
+
                     res = a + b;
+                    ques = a.toString() + '+' + b.toString();
                     break;
                 case 2:
                     ita = util.rangeRand(1, 9);
@@ -48,8 +49,8 @@ function f1pot(grade, type, pt) {
                     ptb = util.rangeRand(1, 9);
                     b = Number(itb + ptb / 10);
 
-                    ques = a.toString() + '-' + b.toString();
                     res = a - b;
+                    ques = a.toString() + '-' + b.toString();
                     break;
                 case 3:
                     ita = util.rangeRand(1, 9);
@@ -61,8 +62,8 @@ function f1pot(grade, type, pt) {
                     b = Number(itb + ptb / 10);
 
                     // FIXME:
+                    res = a * b
                     ques = a.toString() + '×' + b.toString();
-                    res = (a * b).toFixed(3);
                     break;
                 case 4:
                     ita = util.rangeRand(1, 9);
@@ -74,8 +75,9 @@ function f1pot(grade, type, pt) {
                     b = Number(itb + ptb / 10);
 
                     c = (a * b).toFixed(3);
+
+                    res = c / b
                     ques = c.toString() + '÷' + b.toString();
-                    res = (c / b).toFixed(2);
                     break;
                 default:
                     break;
@@ -113,7 +115,10 @@ function f1pot(grade, type, pt) {
 
         that.setData({            
             quesType: 0,
-            ansType: 1,
+            keyType: 2,
+
+        wdQues: 10,
+        wdAns: 7,
 
             ques0: sques0,
             ques1: sques1,
@@ -149,36 +154,39 @@ function fpotASMD(grade, type, db, pt) {
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques0 = col[i].ques;
-                key[0] = col[i].key;
+                key[0] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques1 = col[i].ques;
-                key[1] = col[i].key;
+                key[1] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques2 = col[i].ques;
-                key[2] = col[i].key;
+                key[2] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques3 = col[i].ques;
-                key[3] = col[i].key;
+                key[3] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques4 = col[i].ques;
-                key[4] = col[i].key;
+                key[4] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques5 = col[i].ques;
-				key[5] = col[i].key;
+				key[5] = Number(col[i].key);
 				
                 that.setData({                    
                     quesType: 0,
-                    ansType: 1,
+                    keyType: 2,
+
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: sques0,
                     ques1: sques1,
@@ -216,35 +224,39 @@ function fpotSimple(grade, type, db, pt) {
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques0 = col[i].ques;
-                key[0] = col[i].key;
+                key[0] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques1 = col[i].ques;
-                key[1] = col[i].key;
+                key[1] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques2 = col[i].ques;
-                key[2] = col[i].key;
+                key[2] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques3 = col[i].ques;
-                key[3] = col[i].key;
+                key[3] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques4 = col[i].ques;
-                key[4] = col[i].key;
+                key[4] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques5 = col[i].ques;
-                key[5] = col[i].key;
+                key[5] = Number(col[i].key);
 
                 that.setData({
                     quesType: 0,
+                    keyType: 2,
+
+                    wdQues: 16,
+                    wdAns: 3,
 
                     ques0: sques0,
                     ques1: sques1,
@@ -284,37 +296,41 @@ function f2formula(grade, type, db, pt) {
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques0 = col[i].ques;
-                key[0] = col[i].key;
+                key[0] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques1 = col[i].ques;
-                key[1] = col[i].key;
+                key[1] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques2 = col[i].ques;
-                key[2] = col[i].key;
+                key[2] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques3 = col[i].ques;
-                key[3] = col[i].key;
+                key[3] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques4 = col[i].ques;
-                key[4] = col[i].key;
+                key[4] = Number(col[i].key);
                 col.splice(i, 1);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques5 = col[i].ques;
-                key[5] = col[i].key;
+                key[5] = Number(col[i].key);
 
                 //console.log(sques0, sques1, sques2, sques3, sques4, sques5);
 
                 that.setData({
                     quesType: 3,
+                    keyType: 2,
+
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: sques0,
                     ques1: sques1,
@@ -405,6 +421,10 @@ function fsfAorS(grade, type, pt) {
 
         that.setData({
             quesType: 1,
+            keyType: 3,
+
+            wdQues: 12,
+            wdAns: 5,
 
             ques0: shizi[0],
             ques1: shizi[1],
@@ -596,6 +616,10 @@ function fdfAorS(grade, type, db, pt) {
 
                 that.setData({
                     quesType: 1,
+                    keyType: 3,
+
+        wdQues: 12,
+        wdAns: 5,
 
                     ques0: shizi[0],
                     ques1: shizi[1],

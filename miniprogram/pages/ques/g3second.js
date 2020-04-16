@@ -57,6 +57,9 @@ function f2bMorD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -117,6 +120,9 @@ function f3bMorD1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -169,6 +175,9 @@ function f110M1b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -212,6 +221,9 @@ function f2bM2b(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -254,6 +266,9 @@ function f2bDoulM(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -311,6 +326,9 @@ function f2bMandAorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -352,6 +370,9 @@ function f2bASMD2s(grade, type, db, pt) {
                     quesType: 0,
                     keyType: 0,
                     
+                    wdQues: 12,
+                    wdAns: 5,
+        
                     ques0: ques[0],
                     ques1: ques[1],
                     ques2: ques[2],

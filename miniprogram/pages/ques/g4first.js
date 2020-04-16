@@ -53,6 +53,9 @@ function f3bAorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -101,6 +104,9 @@ function f3b2bM1b(grade, type, pt) {
     that.setData({
         quesType: 0,
         keyType: 0,
+
+        wdQues: 12,
+        wdAns: 5,
 
         ques0: ques[0],
         ques1: ques[1],
@@ -155,6 +161,9 @@ function f3b2bD1b(grade, type, pt) {
     that.setData({
         quesType: 0,
         keyType: 0,
+
+        wdQues: 12,
+        wdAns: 5,
 
         ques0: ques[0],
         ques1: ques[1],
@@ -214,6 +223,9 @@ function f3b2bD10(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+         wdQues: 12,
+         wdAns: 5,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -261,6 +273,9 @@ function f3bD2b(grade, type, pt) {
      that.setData({
         quesType: 0,
         keyType: 0,
+
+         wdQues: 12,
+         wdAns: 5,
 
         ques0: ques[0],
         ques1: ques[1],
@@ -314,6 +329,9 @@ function f3b0D2b0(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -351,6 +369,9 @@ function f3b3bASMD2s(grade, type, db, pt) {
                 that.setData({
                     quesType: 0,
                     keyType: 0,
+
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: cques[0],
                     ques1: cques[1],
@@ -394,6 +415,9 @@ function f3b3bASMD3s(grade, type, db, pt) {
                 that.setData({
                     quesType: 0,
                     keyType: 0,
+
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: cques[0],
                     ques1: cques[1],

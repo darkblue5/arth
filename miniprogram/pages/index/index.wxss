@@ -1,5 +1,4 @@
 /**index.wxss**/
-
 @import "../../style/common.wxss";
 
 /* page {
@@ -8,7 +7,6 @@
   flex-direction: column;
   justify-content: flex-start;
 } */
-
 
 .top_frame {
     height: 100rpx;
@@ -26,9 +24,9 @@
 .top-screen2 {
     height: 100rpx;
     padding: 10rpx;
-    border-radius: 25rpx;
+    border-radius: 10rpx;
     border-style: solid;
-    box-shadow: 4rpx 4rpx 2rpx #888888;
+    box-shadow: 4rpx 4rpx 2rpx #888;
     background-color: #bcc6be;
     border: 1rpx solid whitesmoke;
 }
@@ -75,28 +73,28 @@
 }
 
 .vw-d-rr {
-    margin-top: 20rpx;
+    /* margin-top: 20rpx; */
 }
 
 .vw-d-mr {
-    margin-top: 30rpx;
+    margin-top: 15rpx;
     text-align: center;
     line-height: 70rpx;
     font-size: 28rpx;
     height: 60rpx;
     border-radius: 10rpx;
-    border: 2rpx solid #dddddd;
-    box-shadow:4rpx 4rpx 0rpx #888888 inset;
+    border: 2rpx solid #ddd;
+    box-shadow: 4rpx 4rpx 0rpx #888 inset;
     background-color: #e9eaea;
 }
 
 .vw-d-mm {
-
 }
 
 /* mid */
+
 .vw-ques {
-    height: 700rpx;
+    height: 750rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -104,7 +102,15 @@
 }
 
 .vw-col {
-    height: 700rpx;
+    height: 750rpx;
+    font-size: 40rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.vw-col-fra {
+    height: 750rpx;
     font-size: 40rpx;
     display: flex;
     flex-direction: column;
@@ -112,7 +118,7 @@
 }
 
 .vw-col-forum {
-    height: 700rpx;
+    height: 750rpx;
     font-size: 40rpx;
     display: flex;
     flex-direction: column;
@@ -127,19 +133,18 @@
 }
 
 .btn-wrap {
-    box-shadow:2px 2px 0px 0px #555555;
+    box-shadow: 2px 2px 0px 0px #555;
     background-color: #fdfdfd;
 }
 
 .pk_type {
-
 }
 
 .pk_grade {
-    
 }
 
 /* fraction question */
+
 .vw-ques-fraction {
     font-size: 15pt;
     height: 750rpx;
@@ -150,20 +155,21 @@
 }
 
 /* 分数部分 */
+
 .shizi {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-right: 5rpx;
-/*    border: 3rpx solid black;
-*/}
+    /*    border: 3rpx solid black;
+*/
+}
 
 .fenshu {
     display: flex;
     flex-direction: row;
     margin-right: 5rpx;
-    /* width: 200rpx; */
-    /* height: 80rpx; */
+    /* width: 200rpx; *//* height: 80rpx; */
 }
 
 .zsbufen {
@@ -171,9 +177,7 @@
     flex-direction: row-reverse;
     align-items: center;
     padding-right: 5rpx;
-    /* width: 100rpx; */
-    /* height: 80rpx; */
-
+    /* width: 100rpx; *//* height: 80rpx; */
 }
 
 .fsbufen {
@@ -182,8 +186,7 @@
 }
 
 .fenzi {
-    /* height: 40rpx; */
-    /* align-items: center; */
+    /* height: 40rpx; *//* align-items: center; */
     display: flex;
     justify-content: center;
 }
@@ -194,6 +197,7 @@
 }
 
 /* answer input */
+
 .inp-ans {
     height: 100rpx;
     font-size: 40rpx;
@@ -204,6 +208,50 @@
     border-bottom: 1rpx solid #d9d9d9;
 }
 
+.vw-ans-fraction {
+    font-size: 20pt;
+    height: 750rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.in-answer-zs {
+	display: flex;	
+	height: 90rpx;
+	width: 180rpx;
+	margin-right: 5rpx;
+    font-size: 15pt;
+    font-weight: bold;
+    font-style: oblique;
+    text-align: center;
+    color: gray;
+    border: 1rpx solid lightgreen;
+
+}
+
+.in-answer-fz {    
+    height: 55rpx;
+    font-size: 15pt;
+    font-weight: bold;
+    font-style: oblique;
+    text-align: center;
+    color: gray;
+    border: 1rpx solid lightgreen;
+
+}
+
+.in-answer-fm {    
+	height: 55rpx;
+    font-size: 15pt;
+    font-weight: bold;
+    font-style: oblique;
+    text-align: center;
+    color: gray;
+    border: 1rpx solid lightgreen;
+    border-top: 5rpx solid black;
+}
+
 .in-mod {
     height: 100rpx;
     font-size: 40rpx;
@@ -211,5 +259,47 @@
     font-style: oblique;
     text-align: center;
     color: gray;
-    border: 1rpx solid lightgreen;
+    border: 2rpx solid dodgerblue;
+}
+
+/* 用户登陆信息 */
+
+.userinfo-avatar {
+    width: 90rpx;
+    height: 90rpx;
+    /* margin: 20rpx; */
+    padding: 0rpx;
+    font-size: 30rpx;
+    border-radius: 50%;
+    background-size: cover;
+    /* background-color: white; */
+    border: 4rpx solid white;
+    box-shadow: 4rpx 4rpx 2rpx #888;
+
+}
+
+.userinfo-avatar[size] {
+    width: 90rpx;
+}
+
+.userinfo-avatar:after {
+    border: none;
+}
+
+.userinfo-nickname {
+    /* font-size: 32rpx;
+    color: #007aff;
+    background-color: white;
+    background-size: cover;
+    text-align: left;
+    padding-left: 0;
+    margin-left: 10px; */
+}
+
+.userinfo-nickname::after {
+    border: none;
+}
+
+.userinfo-nickname-wrapper {
+    flex: 1;
 }

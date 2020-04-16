@@ -57,6 +57,9 @@ function f110AorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -120,6 +123,9 @@ function f1100AorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -184,6 +190,9 @@ function f1100AorS110(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -241,6 +250,9 @@ function f3bAorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -310,6 +322,9 @@ function f2bAorSCarry(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -371,6 +386,9 @@ function f1bMorD(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -419,6 +437,9 @@ function f2bDMod(grade, type, pt) {
         quesType: 0,
         keyType: 1,
 
+        wdQues: 10,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -479,6 +500,9 @@ function f2bDulAandS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -534,6 +558,9 @@ function f2bAandS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],

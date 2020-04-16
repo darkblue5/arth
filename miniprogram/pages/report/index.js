@@ -199,6 +199,10 @@ Page({
 
         //   //  console.log(dayData);
 
+    },
+
+    onShow() {
+
     }
 
 })

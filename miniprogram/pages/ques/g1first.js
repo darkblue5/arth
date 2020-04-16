@@ -52,6 +52,9 @@ function g1First5AorS (grade, type, pt) {
 		quesType: 0,
 		keyType: 0,
 
+		wdQues: 12,
+		wdAns: 5,
+
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
@@ -107,6 +110,9 @@ function g1First10AorS(grade, type, pt) {
     that.setData({
 		quesType: 0,
 		keyType: 0,
+
+		wdQues: 12,
+		wdAns: 5,
 
 		ques0: ques[0],
 		ques1: ques[1],
@@ -165,6 +171,9 @@ function g1First10DulAorS(grade, type, pt) {
 		quesType: 0,
 		keyType: 0,
 
+		wdQues: 12,
+		wdAns: 5,
+		
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
@@ -221,6 +230,9 @@ function g1First10AandS(grade, type, pt) {
 		quesType: 0,
 		keyType: 0,
 
+		wdQues: 12,
+		wdAns: 5,
+		
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
@@ -261,6 +273,9 @@ function g1First10A1b(grade, type, pt) {
 		quesType: 0,
 		keyType: 0,
 
+		wdQues: 12,
+		wdAns: 5,
+		
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
@@ -297,11 +312,13 @@ function g1First20ACarry(grade, type, pt) {
     	return -1;
     }
 
-
 	that.setData({
 		quesType: 0,
 		keyType: 0,
 
+		wdQues: 12,
+		wdAns: 5,
+		
 		ques0: ques[0],
 		ques1: ques[1],
 		ques2: ques[2],
@@ -313,7 +330,6 @@ function g1First20ACarry(grade, type, pt) {
 	});
 
     return ques;
-
 }
 
 

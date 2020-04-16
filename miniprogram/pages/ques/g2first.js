@@ -72,6 +72,9 @@ function f2bAorS12bNoCarry(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -128,6 +131,9 @@ function f100DulAorS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -180,6 +186,9 @@ function f100AandS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -220,6 +229,9 @@ function f66M(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -256,6 +268,9 @@ function f99M(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -295,6 +310,9 @@ function f9D(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -357,6 +375,9 @@ function f100DoulMorD(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -417,6 +438,9 @@ function f100MandD(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -473,6 +497,9 @@ function f100MandAS(grade, type, pt) {
         quesType: 0,
         keyType: 0,
 
+        wdQues: 12,
+        wdAns: 5,
+        
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],

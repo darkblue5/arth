@@ -105,6 +105,7 @@ function f61Step(grade, type, db, point) {
 
                 that.setData({
                     quesType: 1,
+                    keyType: 3,
 
                     ques0: shizi[0],
                     ques1: shizi[1],
@@ -179,6 +180,8 @@ function f61Step(grade, type, db, point) {
                     }
 
                 that.setData({
+                    quesType: 1,
+                    keyType: 3,
                     ques2: shizi[2],
                 });
             }
@@ -306,6 +309,9 @@ function f61Step(grade, type, db, point) {
                }
 
                 that.setData({
+                    quesType: 1,
+                    keyType: 3,
+
                     ques3: shizi[0],
                     ques4: shizi[1],
                     ques5: shizi[2],
@@ -484,6 +490,7 @@ function f64Opt(grade, type, db, point) {
 
                 that.setData({
                     quesType: 1,
+                    keyType: 3,
                     
                     ques0: shizi[0],
                     ques1: shizi[1],
@@ -675,6 +682,9 @@ function f64Opt(grade, type, db, point) {
                 }
 
                 that.setData({
+                    quesType: 1,
+                    keyType: 3,
+
 					ques3: shizi[0],
                     ques4: shizi[1],
                     ques5: shizi[2],
@@ -895,6 +905,9 @@ function f6Simple(grade, type, db, point) {
                 }
 
                 that.setData({
+                    quesType: 1,
+                    keyType: 3,
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
@@ -1118,6 +1131,9 @@ function f6Formula(grade, type, db, point) {
                 }
 
                 that.setData({
+                    quesType: 4,
+                    keyType: 3,
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
@@ -1342,6 +1358,9 @@ function f6Scale(grade, type, db, point) {
                 }
 
                 that.setData({
+                    quesType: 4,
+                    keyType: 3,
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
