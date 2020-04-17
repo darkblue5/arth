@@ -17,11 +17,11 @@ function f61Step(grade, type, db, point) {
     let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let i = 0, j = 0, k = 0;
-	let cques = [], ckey = [];
-	let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
-	let node = [], ans = [], ansZs = [], ansFs = [];
-	let shizi = [];
-	let you = [], czs = [], cfz = [], cfm = [], cop = [];
+    let cques = [], ckey = [];
+    let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
+    let node = [], ans = [], ansZs = [], ansFs = [];
+    let shizi = [];
+    let you = [], czs = [], cfz = [], cfm = [], cop = [];
 
     let len = 0;
     let tmpQues, tmpAns;
@@ -43,16 +43,9 @@ function f61Step(grade, type, db, point) {
                 cques[1] = col1[i].ques;
                 nkey1 = col1[i].key;
 
-                //console.log(nkey0, nkey1);
-
                 for (j = 0; j < 2; j++) {
-                    //console.log(cques[j]);
-
                     node = cques[j].split(' ');
                     len = node.length;
-
-                    //console.log(node);
-                   // console.log(len);
 
                     for (i = 0; i < len; i++) {
 
@@ -69,8 +62,6 @@ function f61Step(grade, type, db, point) {
                             cfz[i] = 0;
                             cfm[i] = 0;
                         }
-
-                        //console.log(czs[i], cfz[i], cfm[i]); 
                     }
 
                     shizi[j] = [
@@ -92,7 +83,7 @@ function f61Step(grade, type, db, point) {
                             fz: cfz[2],
                             fm: cfm[2],
                         },
-                        
+
                     ];
 
                     for (i = 0; i < 3; i++) {
@@ -101,7 +92,10 @@ function f61Step(grade, type, db, point) {
                         cfz[i] = 0;
                         cfm[i] = 0;
                     }
-               }
+                }
+
+                cKeyFraType[0] = 4;
+                cKeyFraType[1] = 4;
 
                 that.setData({
                     quesType: 1,
@@ -121,67 +115,88 @@ function f61Step(grade, type, db, point) {
 
                 i = Math.floor(Math.random() * (col2.length - 1));
                 cques[0] = col2[i].ques;
-                //nkey2 = col2[i].key;
+                ckey[k] = col3[i].key;
 
-                //console.log(nkey2);
 
                 node = cques[0].split(' ');
                 len = node.length;
 
-                    //console.log(node);
-                   // console.log(len);
+                // parse key string
+                //for (k = 0; k < 3; k++) {
+                    k = 0;
+                    switch (ckey[k][0]) {
+                        case 'f':
+                            cKeyFraType[k + 2] = 2;
+                            tmpAns = (ckey[k]).substr(1);
 
-                    for (i = 0; i < len; i++) {
+                            cKeyZs[k + 2] = 0;
 
-                        if (node[i][0] == 'f') {
-                            you[i] = true;
-                            tmpQues = (node[i]).substr(1);
+                            ans = tmpAns.split('/');
+                            cKeyFz[k + 2] = parseInt(ans[0]);
+                            cKeyFm[k + 2] = parseInt(ans[1]);
+                            break;
+                        default:
+                            cKeyFraType[k + 2] = 4;
+                            tmpAns = ckey[k];
 
-                            fsfh = tmpQues.split('/');
-                            cfz[i] = fsfh[0];
-                            cfm[i] = fsfh[1];
-                        } else if (node[i][0] != 'f') {
-                            you[i] = false;
-                            czs[i] = node[i];
-                            cfz[i] = 0;
-                            cfm[i] = 0;
-                        }
-
-                        //console.log(czs[i], cfz[i], cfm[i]); 
+                            cKeyZs[k + 2] = parseInt(tmpAns);
+                            cKeyFz[k + 2] = 0;
+                            cKeyFm[k + 2] = 0;
+                            break;
                     }
+                //}
 
-                    shizi[2] = [
-                        {
-                            youfs: you[0],
-                            zs: czs[0],
-                            fz: cfz[0],
-                            fm: cfm[0],
-                        },
-                        {
-                            youfs: you[1],
-                            zs: czs[1],
-                            fz: cfz[1],
-                            fm: cfm[1],
-                        },
-                        {
-                            youfs: you[2],
-                            zs: czs[2],
-                            fz: cfz[2],
-                            fm: cfm[2],
-                        },
-                        
-                    ];
+                for (i = 0; i < len; i++) {
+                    if (node[i][0] == 'f') {
+                        you[i] = true;
+                        tmpQues = (node[i]).substr(1);
 
-                    for (i = 0; i < 3; i++) {
+                        fsfh = tmpQues.split('/');
+                        cfz[i] = fsfh[0];
+                        cfm[i] = fsfh[1];
+                    } else if (node[i][0] != 'f') {
                         you[i] = false;
-                        czs[i] = '';
+                        czs[i] = node[i];
                         cfz[i] = 0;
                         cfm[i] = 0;
                     }
+                }
+
+                shizi[2] = [
+                    {
+                        youfs: you[0],
+                        zs: czs[0],
+                        fz: cfz[0],
+                        fm: cfm[0],
+                    },
+                    {
+                        youfs: you[1],
+                        zs: czs[1],
+                        fz: cfz[1],
+                        fm: cfm[1],
+                    },
+                    {
+                        youfs: you[2],
+                        zs: czs[2],
+                        fz: cfz[2],
+                        fm: cfm[2],
+                    },
+
+                ];
+
+                for (i = 0; i < 3; i++) {
+                    you[i] = false;
+                    czs[i] = '';
+                    cfz[i] = 0;
+                    cfm[i] = 0;
+                }
+
+                cKeyFraType[2] = 4;
 
                 that.setData({
                     quesType: 1,
                     keyType: 3,
+
                     ques2: shizi[2],
                 });
             }
@@ -202,16 +217,6 @@ function f61Step(grade, type, db, point) {
                 // parse key string
                 for (k = 0; k < 3; k++) {
                     switch (ckey[k][0]) {
-                        // case 'i':
-                        //     cKeyFraType[k] = 1;
-                        //     tmpAns = (ckey[k]).substr(1);
-
-                        //     cKeyZs[k] = parseInt(tmpAns);
-                        //     cKeyFz[k] = 0;
-                        //     cKeyFm[k] = 0;
-
-                            //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                         //   break;
                         case 'f':
                             cKeyFraType[k + 3] = 2;
                             tmpAns = (ckey[k]).substr(1);
@@ -222,20 +227,7 @@ function f61Step(grade, type, db, point) {
                             cKeyFz[k + 3] = parseInt(ans[0]);
                             cKeyFm[k + 3] = parseInt(ans[1]);
 
-                           // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                             break;
-                        // case 'm':
-                        //     cKeyFraType[k] = 3;
-                        //     tmpAns = (ckey[k]).substr(1);
-
-                        //     ans = tmpAns.split('f');
-                        //     cKeyZs[k] = parseInt(ans[0]);
-
-                        //     ansFs = ans[1].split('/');
-                        //     cKeyFz[k] = parseInt(ansFs[0]);
-                        //     cKeyFm[k] = parseInt(ansFs[1]);
-                        //     //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                        //     break;
                         default:
                             cKeyFraType[k + 3] = 1;
                             tmpAns = ckey[k];
@@ -244,20 +236,14 @@ function f61Step(grade, type, db, point) {
                             cKeyFz[k + 3] = 0;
                             cKeyFm[k + 3] = 0;
 
-                           // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-
                             break;
                     }
                 }
 
-                for (j = 0; j < 3; j++) {
-                    //console.log(cques[j]);
+                for (j = 3; j < 6; j++) {
 
                     node = cques[j].split(' ');
                     len = node.length;
-
-                    //console.log(node);
-                   // console.log(len);
 
                     for (i = 0; i < len; i++) {
 
@@ -275,7 +261,6 @@ function f61Step(grade, type, db, point) {
                             cfm[i] = 0;
                         }
 
-                        //console.log(czs[i], cfz[i], cfm[i]); 
                     }
 
                     shizi[j] = [
@@ -297,7 +282,7 @@ function f61Step(grade, type, db, point) {
                             fz: cfz[2],
                             fm: cfm[2],
                         },
-                        
+
                     ];
 
                     for (i = 0; i < 3; i++) {
@@ -306,15 +291,15 @@ function f61Step(grade, type, db, point) {
                         cfz[i] = 0;
                         cfm[i] = 0;
                     }
-               }
+                }
 
                 that.setData({
                     quesType: 1,
                     keyType: 3,
 
-                    ques3: shizi[0],
-                    ques4: shizi[1],
-                    ques5: shizi[2],
+                    ques3: shizi[3],
+                    ques4: shizi[4],
+                    ques5: shizi[5],
 
                     keyZs: cKeyZs,
                     keyFz: cKeyFz,
@@ -322,7 +307,7 @@ function f61Step(grade, type, db, point) {
 
                     keyFraType: cKeyFraType
                 });
-             }
+            }
         });
 
     } else {
@@ -334,44 +319,44 @@ function f61Step(grade, type, db, point) {
 }
 
 function f64Opt(grade, type, db, point) {
-	let col1 = [];
+    let col1 = [];
     let col2 = [];
     let col3 = [];
     let that = point;
     let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
     let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
     let i = 0, j = 0, k = 0;
-	let cques = [], ckey = [];
-	let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
-	let node = [], ans = [], ansZs = [], ansFs = [];
-	let shizi = [];
-	let you = [], czs = [], cfz = [], cfm = [], cop = [];
+    let cques = [], ckey = [];
+    let cKeyZs = [], cKeyFz = [], cKeyFm = [], cKeyFraType = [];
+    let node = [], ans = [], ansZs = [], ansFs = [];
+    let shizi = [];
+    let you = [], czs = [], cfz = [], cfm = [], cop = [];
 
     let len = 0;
     let tmpQues, tmpAns;
     let fsfh = [];
 
-    if (grade = 11 &&  type == 1) {
+    if (grade = 11 && type == 1) {
         db.collection('q62').where({
             type: 6221
         }).get({
             success: res => {
                 col3 = res.data;
 
-//                 i = Math.floor(Math.random() * (col1.length - 1));
-//                 sques0 = col1[i].ques;
-//                 nkey0 = col1[i].key;
-//                 col1.splice(i, 1);
+                //                 i = Math.floor(Math.random() * (col1.length - 1));
+                //                 sques0 = col1[i].ques;
+                //                 nkey0 = col1[i].key;
+                //                 col1.splice(i, 1);
 
-// 				i = Math.floor(Math.random() * (col1.length - 1));
-//                 sques1 = col1[i].ques;
-//                 nkey1 = col1[i].key;
-//                 col1.splice(i, 1);
+                // 				i = Math.floor(Math.random() * (col1.length - 1));
+                //                 sques1 = col1[i].ques;
+                //                 nkey1 = col1[i].key;
+                //                 col1.splice(i, 1);
 
-//                 i = Math.floor(Math.random() * (col1.length - 1));
-//                 sques2 = col1[i].ques;
-//                 nkey2 = col1[i].key;
-// col3 = res.data;
+                //                 i = Math.floor(Math.random() * (col1.length - 1));
+                //                 sques2 = col1[i].ques;
+                //                 nkey2 = col1[i].key;
+                // col3 = res.data;
 
                 for (k = 0; k < 3; k++) {
                     i = Math.floor(Math.random() * (col3.length - 1));
@@ -390,8 +375,8 @@ function f64Opt(grade, type, db, point) {
                         //     cKeyFz[k] = 0;
                         //     cKeyFm[k] = 0;
 
-                            //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                         //   break;
+                        //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                        //   break;
                         case 'f':
                             cKeyFraType[k + 3] = 2;
                             tmpAns = (ckey[k]).substr(1);
@@ -402,7 +387,7 @@ function f64Opt(grade, type, db, point) {
                             cKeyFz[k + 3] = parseInt(ans[0]);
                             cKeyFm[k + 3] = parseInt(ans[1]);
 
-                           // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                            // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                             break;
                         // case 'm':
                         //     cKeyFraType[k] = 3;
@@ -424,7 +409,7 @@ function f64Opt(grade, type, db, point) {
                             cKeyFz[k + 3] = 0;
                             cKeyFm[k + 3] = 0;
 
-                           // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                            // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
 
                             break;
                     }
@@ -437,7 +422,7 @@ function f64Opt(grade, type, db, point) {
                     len = node.length;
 
                     //console.log(node);
-                   // console.log(len);
+                    // console.log(len);
 
                     for (i = 0; i < len; i++) {
 
@@ -477,7 +462,7 @@ function f64Opt(grade, type, db, point) {
                             fz: cfz[2],
                             fm: cfm[2],
                         },
-                        
+
                     ];
 
                     for (i = 0; i < 3; i++) {
@@ -486,12 +471,12 @@ function f64Opt(grade, type, db, point) {
                         cfz[i] = 0;
                         cfm[i] = 0;
                     }
-               }
+                }
 
                 that.setData({
                     quesType: 1,
                     keyType: 3,
-                    
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
@@ -533,8 +518,8 @@ function f64Opt(grade, type, db, point) {
                         //     cKeyFz[k] = 0;
                         //     cKeyFm[k] = 0;
 
-                             //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                            //break;
+                        //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                        //break;
                         case 'f':
                             cKeyFraType[k + 3] = 2;
                             tmpAns = (ckey[k]).substr(1);
@@ -560,7 +545,7 @@ function f64Opt(grade, type, db, point) {
 
                             //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
 
-                           break;
+                            break;
                         default:
                             cKeyFraType[k + 3] = 1;
                             tmpAns = ckey[k];
@@ -572,7 +557,7 @@ function f64Opt(grade, type, db, point) {
                             break;
                     }
 
-                   // console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
+                    // console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
 
                 }
 
@@ -685,7 +670,7 @@ function f64Opt(grade, type, db, point) {
                     quesType: 1,
                     keyType: 3,
 
-					ques3: shizi[0],
+                    ques3: shizi[0],
                     ques4: shizi[1],
                     ques5: shizi[2],
 
@@ -696,7 +681,7 @@ function f64Opt(grade, type, db, point) {
                     keyFraType: cKeyFraType
                 });
             }
-		});
+        });
     } else {
         return -1;
 
@@ -790,7 +775,7 @@ function f6Simple(grade, type, db, point) {
                         default:
                             cKeyFraType[k] = 1;
                             tmpAns = ckey[k];
-
+   
                             cKeyZs[k] = parseInt(tmpAns);
                             cKeyFz[k] = 0;
                             cKeyFm[k] = 0;
@@ -984,7 +969,7 @@ function f6Formula(grade, type, db, point) {
                         //     cKeyFz[k] = 0;
                         //     cKeyFm[k] = 0;
 
-                            //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                        //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                         //    break;
                         case 'f':
                             cKeyFraType[k] = 2;
@@ -1179,12 +1164,6 @@ function f6Scale(grade, type, db, point) {
 
 
     if (grade = 11 && type == 4) {
-        // ques[0] = "64 + f3/5 - f2/7";
-        // ques[1] = "f8/11 + 52 - f1/3";
-        // ques[2] = "f8/11 + 52 - f1/3";
-        // ques[3] = "3 - ( f8/13 - f1/2 )";
-        // ques[4] = "( 4 + f2/5 ) - f2/7";
-        // ques[5] = "( 4 + f2/5 ) - f2/7";
 
         db.collection('q62').where({
             type: 6251
@@ -1213,8 +1192,8 @@ function f6Scale(grade, type, db, point) {
                         //     cKeyFz[k] = 0;
                         //     cKeyFm[k] = 0;
 
-                            //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                            //break;
+                        //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                        //break;
                         case 'f':
                             cKeyFraType[k] = 2;
                             tmpAns = (ckey[k]).substr(1);
@@ -1249,7 +1228,7 @@ function f6Scale(grade, type, db, point) {
                             cKeyFm[k] = 0;
                             break;
                     }
-                    console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                    //console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                 }
 
                 for (j = 0; j < 6; j++) {
@@ -1376,8 +1355,6 @@ function f6Scale(grade, type, db, point) {
                 });
             }
         });
-
-
     }
 
     return 0;

@@ -423,7 +423,7 @@ function fsfAorS(grade, type, pt) {
             quesType: 1,
             keyType: 3,
 
-            wdQues: 12,
+            wdQues: 10,
             wdAns: 5,
 
             ques0: shizi[0],

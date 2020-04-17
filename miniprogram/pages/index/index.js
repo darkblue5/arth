@@ -76,8 +76,11 @@ Page({
         keyFz: [],
         keyFm: [],
         fraJudg: [0, 0, 0], //  0：错 1：对，一整数，二分子，三分母
+        keyFraType: [],     //  1:整数 2：分数  3：带分数   4: 小数
+        isDisabled: false,  //  分子分母输入框不可用
+        curJudg: [0, 0, 0, 0, 0,0],     //  0 未完成 1 正确 2 错误
 
-        errQues: [],        //  当前入错题集错题
+        errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
         
         curRecord: [0, 0],
@@ -212,6 +215,9 @@ Page({
             tickColor4: 'white',
             tickColor5: 'white',
 
+            //inpBorder: '2rpx solid lightgreen',
+            isDisabled: false,
+
             ans0: '',
             ans1: '',
             ans2: '',
@@ -219,8 +225,34 @@ Page({
             ans4: '',
             ans5: '',
 
-            modJudg: [0, 0],
-            fraJudg: [0, 0, 0]
+            mod0: '',
+
+            ans0Zs: '',
+            ans0Fz: '',
+            ans0Fm: '',
+
+            ans1Zs: '',
+            ans1Fz: '',
+            ans1Fm: '',
+
+            ans2Zs: '',
+            ans2Fz: '',
+            ans2Fm: '',
+
+            ans3Zs: '',
+            ans3Fz: '',
+            ans3Fm: '',
+
+            ans4Zs: '',
+            ans4Fz: '',
+            ans4Fm: '',
+
+            ans5Zs: '',
+            ans5Fz: '',
+            ans5Fm: '',
+
+            modJudg: [0, 0],    //  余数判定记录
+            fraJudg: [0, 0, 0]  //  分数判定记录
         });
     },
 
@@ -272,6 +304,7 @@ Page({
         });
     },
 
+//  integer and float judgement
     onBluAns0: function(e) {
         let that = this;
         
@@ -302,7 +335,7 @@ Page({
                     //  console.log(that.data.key[0]);
                 }
                 break;
-            case 2:
+            case 3:
                 break;
             default:
                 break;
@@ -310,6 +343,202 @@ Page({
 
         return 0;
     },
+
+    onBluAns1: function (e) {
+        let that = this;
+
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[1]) {
+                    that.setData({
+                        tickColor1: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[1]) {
+                    that.data.modJudg[2] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[3] == 1) {
+                        this.setData({
+                            tickColor1: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(e.detail.value - that.data.keys[1]) <= FLOTERR) {
+                    this.setData({
+                        tickColor1: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
+    onBluAns2: function (e) {
+        let that = this;
+
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[2]) {
+                    that.setData({
+                        tickColor2: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[2]) {
+                    that.data.modJudg[4] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[5] == 1) {
+                        this.setData({
+                            tickColor2: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                    this.setData({
+                        tickColor2: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
+    onBluAns3: function (e) {
+        let that = this;
+
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[3]) {
+                    that.setData({
+                        tickColor3: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[3]) {
+                    that.data.modJudg[6] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[7] == 1) {
+                        this.setData({
+                            tickColor3: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                    this.setData({
+                        tickColor3: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
+    onBluAns4: function (e) {
+        let that = this;
+
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[4]) {
+                    that.setData({
+                        tickColor4: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[4]) {
+                    that.data.modJudg[8] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[9] == 1) {
+                        this.setData({
+                            tickColor4: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(e.detail.value - that.data.keys[4]) <= FLOTERR) {
+                    this.setData({
+                        tickColor4: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
+    onBluAns5: function (e) {
+        let that = this;
+
+        switch (that.data.keyType) {
+            case 0:
+                if (e.detail.value == that.data.keys[5]) {
+                    that.setData({
+                        tickColor5: 'red',
+                    });
+                }
+            case 1:
+                if (e.detail.value == that.data.keys[5]) {
+                    that.data.modJudg[10] = 1;         //整数部分判断结果
+
+                    if (that.data.modJudg[11] == 1) {
+                        this.setData({
+                            tickColor0: 'red',
+                        });
+                    }
+                }
+                break;
+            case 2:
+                if (Math.abs(e.detail.value - that.data.keys[5]) <= FLOTERR) {
+                    this.setData({
+                        tickColor5: 'red',
+                    });
+                } else {
+                    //  console.log(that.data.key[0]);
+                }
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+
+        return 0;
+    },
+
 
     onBluMod0: function(e) {
         let that = this;
@@ -320,6 +549,689 @@ Page({
                 this.setData({
                     tickColor0: 'red',
                 });
+            }
+        }
+    },
+
+    onBluMod1: function (e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[1]) {
+            that.data.modJudg[3] = 1        //余数部分判定
+            if (that.data.modJudg[2] == 1) {
+                this.setData({
+                    tickColor1: 'red',
+                });
+            }
+        }
+    },
+
+    onBluMod2: function (e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[2]) {
+            that.data.modJudg[5] = 1        //余数部分判定
+            if (that.data.modJudg[4] == 1) {
+                this.setData({
+                    tickColor2: 'red',
+                });
+            }
+        }
+    },
+
+    onBluMod3: function (e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[3]) {
+            that.data.modJudg[7] = 1        //余数部分判定
+            if (that.data.modJudg[6] == 1) {
+                this.setData({
+                    tickColor3: 'red',
+                });
+            }
+        }
+    },
+
+    onBluMod4: function (e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[4]) {
+            that.data.modJudg[9] = 1        //余数部分判定
+            if (that.data.modJudg[8] == 1) {
+                this.setData({
+                    tickColor4: 'red',
+                });
+            }
+        }
+    },
+
+    onBluMod5: function (e) {
+        let that = this;
+
+        if (e.detail.value == that.data.keyMods[5]) {
+            that.data.modJudg[11] = 1        //余数部分判定
+            if (that.data.modJudg[10] == 1) {
+                this.setData({
+                    tickColor5: 'red',
+                });
+            }
+        }
+    },
+
+    // fraction type answer judgement
+    //  check answer 0    
+    onInpBlurAns0Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[0]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[0] == 1) {
+                    that.setData({
+                        tickColor0: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor0: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[0]) {
+                    that.data.isKey0Zs = true;
+                    if (that.data.keyFraType[0] == 3) {
+                        if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
+                            that.setData({
+                                tickColor0: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns0Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[0]);
+
+        if (e.detail.value == that.data.keyFz[0]) {
+            that.data.isKey0Fz = true;
+        }
+
+        if (that.data.keyFraType[0] == 2) {
+            if (that.data.isKey0Fz && that.data.isKey0Fm) {
+                that.setData({
+                    tickColor0: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[0] == 3) {
+            if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
+                that.setData({
+                    tickColor0: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns0Fm: function (e) {
+        let that = this;
+
+        console.log(e.detail.value);
+        console.log(that.data.keyFm[0]);
+
+        if (e.detail.value == that.data.keyFm[0]) {
+            that.data.isKey0Fm = true;
+        }
+
+        if (that.data.keyFraType[0] == 2) {
+            if (that.data.isKey0Fz && that.data.isKey0Fm) {
+                that.setData({
+                    tickColor0: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[0] == 3) {
+            if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
+                that.setData({
+                    tickColor0: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    //  check answer 1   
+
+    onInpBlurAns1Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[1]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[1] == 1) {
+                    that.setData({
+                        tickColor1: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[1] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor1: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[1]) {
+                    that.data.isKey1Zs = true;
+                    if (that.data.keyFraType[1] == 3) {
+                        if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
+                            that.setData({
+                                tickColor1: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns1Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[1]);
+
+        if (e.detail.value == that.data.keyFz[1]) {
+            that.data.isKey1Fz = true;
+        }
+
+        if (that.data.keyFraType[1] == 2) {
+            if (that.data.isKey1Fz && that.data.isKey1Fm) {
+                that.setData({
+                    tickColor1: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[1] == 3) {
+            if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
+                that.setData({
+                    tickColor1: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns1Fm: function (e) {
+        let that = this;
+
+        console.log(e.detail.value);
+        console.log(that.data.keyFm[1]);
+
+        if (e.detail.value == that.data.keyFm[1]) {
+            that.data.isKey1Fm = true;
+        }
+
+        if (that.data.keyFraType[1] == 2) {
+            if (that.data.isKey1Fz && that.data.isKey1Fm) {
+                that.setData({
+                    tickColor1: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[1] == 3) {
+            if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
+                that.setData({
+                    tickColor1: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    //  check answer 2   
+
+    onInpBlurAns2Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[2]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[2] == 1) {
+                    that.setData({
+                        tickColor2: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor2: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[2]) {
+                    that.data.isKey2Zs = true;
+                    if (that.data.keyFraType[2] == 3) {
+                        if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
+                            that.setData({
+                                tickColor2: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns2Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[2]);
+
+        if (e.detail.value == that.data.keyFz[2]) {
+            that.data.isKey2Fz = true;
+        }
+
+        if (that.data.keyFraType[2] == 2) {
+            if (that.data.isKey2Fz && that.data.isKey2Fm) {
+                that.setData({
+                    tickColor2: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[2] == 3) {
+            if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
+                that.setData({
+                    tickColor2: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns2Fm: function (e) {
+        let that = this;
+
+        console.log(e.detail.value);
+        console.log(that.data.keyFm[2]);
+
+        if (e.detail.value == that.data.keyFm[2]) {
+            that.data.isKey2Fm = true;
+        }
+
+        if (that.data.keyFraType[2] == 2) {
+            if (that.data.isKey2Fz && that.data.isKey2Fm) {
+                that.setData({
+                    tickColor2: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[2] == 3) {
+            if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
+                that.setData({
+                    tickColor2: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    //  check answer 3   
+
+    onInpBlurAns3Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[3]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[3] == 1) {
+                    that.setData({
+                        tickColor3: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[3] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor3: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[3]) {
+                    that.data.isKey3Zs = true;
+                    if (that.data.keyFraType[3] == 3) {
+                        if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
+                            that.setData({
+                                tickColor3: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns3Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[3]);
+
+        if (e.detail.value == that.data.keyFz[3]) {
+            that.data.isKey3Fz = true;
+        }
+
+        if (that.data.keyFraType[3] == 2) {
+            if (that.data.isKey3Fz && that.data.isKey3Fm) {
+                that.setData({
+                    tickColor3: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[3] == 3) {
+            if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
+                that.setData({
+                    tickColor3: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns3Fm: function (e) {
+        let that = this;
+
+        console.log(e.detail.value);
+        console.log(that.data.keyFm[3]);
+
+        if (e.detail.value == that.data.keyFm[3]) {
+            that.data.isKey3Fm = true;
+        }
+
+        if (that.data.keyFraType[3] == 2) {
+            if (that.data.isKey3Fz && that.data.isKey3Fm) {
+                that.setData({
+                    tickColor3: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[3] == 3) {
+            if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
+                that.setData({
+                    tickColor3: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    //  check answer 4  
+
+    onInpBlurAns4Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[4]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[4] == 1) {
+                    that.setData({
+                        tickColor4: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[4] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor4: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[4]) {
+                    that.data.isKey4Zs = true;
+                    if (that.data.keyFraType[4] == 3) {
+                        if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
+                            that.setData({
+                                tickColor4: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns4Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[4]);
+
+        if (e.detail.value == that.data.keyFz[4]) {
+            that.data.isKey4Fz = true;
+        }
+
+        if (that.data.keyFraType[4] == 2) {
+            if (that.data.isKey4Fz && that.data.isKey4Fm) {
+                that.setData({
+                    tickColor4: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[4] == 3) {
+            if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
+                that.setData({
+                    tickColor4: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns4Fm: function (e) {
+        let that = this;
+
+        console.log(e.detail.value);
+        console.log(that.data.keyFm[4]);
+
+        if (e.detail.value == that.data.keyFm[4]) {
+            that.data.isKey4Fm = true;
+        }
+
+        if (that.data.keyFraType[4] == 2) {
+            if (that.data.isKey4Fz && that.data.isKey4Fm) {
+                that.setData({
+                    tickColor4: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[4] == 3) {
+            if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
+                that.setData({
+                    tickColor4: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    //  check answer 5
+
+    onInpBlurAns5Zs: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        switch (that.data.keyFraType[5]) {
+            case 1:     //答案为整数时，直接比对
+                if (that.data.keyFraType[5] == 1) {
+                    that.setData({
+                        tickColor5: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+
+                break;
+            case 4:     //答案为小数时，差值比对
+                if (Math.abs(that.data.keyZs[5] - e.detail.value) <= FLOTERR) {
+                    this.setData({
+                        tickColor5: 'red',
+                        isDisabled: true,
+                        //inpBorder: '3rpx solid gray'
+                    });
+                }
+                // 分数部分禁用输入
+                break;
+            default:    //答案为分数时，分别检测整数、分子、分母
+                if (e.detail.value == that.data.keyZs[5]) {
+                    that.data.isKey5Zs = true;
+                    if (that.data.keyFraType[5] == 3) {
+                        if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
+                            that.setData({
+                                tickColor5: 'red',
+                            });
+                        }
+                    }
+                }
+                break;
+        }
+
+        //console.log('input 1 lost focus');
+    },
+
+    onInpBlurAns5Fz: function (e) {
+        let that = this;
+
+        // console.log(e.detail.value);
+        //console.log(that.data.keyFz[5]);
+
+        if (e.detail.value == that.data.keyFz[5]) {
+            that.data.isKey5Fz = true;
+        }
+
+        if (that.data.keyFraType[5] == 2) {
+            if (that.data.isKey5Fz && that.data.isKey5Fm) {
+                that.setData({
+                    tickColor5: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[5] == 3) {
+            if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
+                that.setData({
+                    tickColor5: 'red',
+                });
+            } else {
+
+            }
+        }
+    },
+
+    onInpBlurAns5Fm: function (e) {
+        let that = this;
+
+       // console.log(e.detail.value);
+       // console.log(that.data.keyFm[5]);
+
+        if (e.detail.value == that.data.keyFm[5]) {
+            that.data.isKey5Fm = true;
+        }
+
+        if (that.data.keyFraType[5] == 2) {
+            if (that.data.isKey5Fz && that.data.isKey5Fm) {
+                that.setData({
+                    tickColor5: 'red',
+                });
+            } else {
+
+            }
+        } else if (that.data.keyFraType[5] == 3) {
+            if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
+                that.setData({
+                    tickColor5: 'red',
+                });
+            } else {
+
             }
         }
     },
@@ -359,9 +1271,6 @@ Page({
             },
             fail: err => {
                 console.error('[云函数] [login] 调用失败', err);
-                // wx.navigateTo({
-                //     url: '../deployFunctions/deployFunctions',
-                // })
             }
         })
 

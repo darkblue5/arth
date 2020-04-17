@@ -110,7 +110,7 @@
 }
 
 .vw-col-fra {
-    height: 750rpx;
+    height: 850rpx;
     font-size: 40rpx;
     display: flex;
     flex-direction: column;
@@ -147,28 +147,30 @@
 
 .vw-ques-fraction {
     font-size: 15pt;
-    height: 750rpx;
+    height: 850rpx;
     display: flex;
     align-items: flex-end;
     flex-direction: column;
-    justify-content: space-between;
-}
+	justify-content: space-around;
 
-/* 分数部分 */
+/*    justify-content: space-between;
+*/}
+
+/* 分数表达式 */
 
 .shizi {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-right: 5rpx;
-    /*    border: 3rpx solid black;
+/*    margin-right: 5rpx;
+*/    /*    border: 3rpx solid black;
 */
 }
 
 .fenshu {
     display: flex;
     flex-direction: row;
-    margin-right: 5rpx;
+    margin-right: 2rpx;
     /* width: 200rpx; *//* height: 80rpx; */
 }
 
@@ -176,13 +178,13 @@
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    padding-right: 5rpx;
+    padding-right: 2rpx;
     /* width: 100rpx; *//* height: 80rpx; */
 }
 
 .fsbufen {
     /* width: 100rpx; */
-    padding-right: 5rpx;
+    padding-right: 2rpx;
 }
 
 .fenzi {
@@ -216,39 +218,56 @@
     justify-content: space-between;
 }
 
-.in-answer-zs {
+.vw-ans-zs {
+	height: 850rpx;
+	width: 90rpx;
+    display: flex;
+    flex-direction: column;
+	justify-content: space-between;
+}
+
+.vw-ans-fs {
+	height: 850rpx;
+	width: 90rpx;
+    display: flex;
+    flex-direction: column;
+	justify-content: space-between;
+}
+
+.in-ans-zs {
 	display: flex;	
-	height: 90rpx;
-	width: 180rpx;
-	margin-right: 5rpx;
-    font-size: 15pt;
+	height: 110rpx;
+/*	width: 180rpx;*/	
+	width: 100%;
+/*margin-right: 5rpx;
+*/    font-size: 15pt;
     font-weight: bold;
     font-style: oblique;
     text-align: center;
     color: gray;
-    border: 1rpx solid lightgreen;
+    border: 2rpx solid lightgreen;
 
 }
 
-.in-answer-fz {    
+.in-ans-fz {    
     height: 55rpx;
     font-size: 15pt;
     font-weight: bold;
     font-style: oblique;
     text-align: center;
     color: gray;
-    border: 1rpx solid lightgreen;
+    border: 2rpx solid lightgreen;
 
 }
 
-.in-answer-fm {    
+.in-ans-fm {    
 	height: 55rpx;
     font-size: 15pt;
     font-weight: bold;
     font-style: oblique;
     text-align: center;
     color: gray;
-    border: 1rpx solid lightgreen;
+    border: 2rpx solid lightgreen;
     border-top: 5rpx solid black;
 }
 
