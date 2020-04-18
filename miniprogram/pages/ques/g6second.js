@@ -9,6 +9,8 @@
 
 let util = require("util.js");
 
+//        ['各类型数字一步运算',
+
 function f61Step(grade, type, db, point) {
     let col1 = [];
     let col2 = [];
@@ -31,80 +33,113 @@ function f61Step(grade, type, db, point) {
         db.collection('q62').where({
             type: 6211
         }).get({
-            success: res => {
-                col1 = res.data;
+           success: res => {
+               col1 = res.data;
 
-                i = Math.floor(Math.random() * (col1.length - 1));
-                cques[0] = col1[i].ques;
-                key0 = col1[i].key;
-                col1.splice(i, 1);
+               i = Math.floor(Math.random() * (col1.length - 1));
+               cques[0] = col1[i].ques;
+               ckey[0] = col1[i].key;
+               col1.splice(i, 1);
 
-                i = Math.floor(Math.random() * (col1.length - 1));
-                cques[1] = col1[i].ques;
-                nkey1 = col1[i].key;
+               i = Math.floor(Math.random() * (col1.length - 1));
+               cques[1] = col1[i].ques;
+               ckey[1] = col1[i].key;
 
-                for (j = 0; j < 2; j++) {
-                    node = cques[j].split(' ');
-                    len = node.length;
+               //console.logn(ckey[0], ckey[1]);
+               //console.log(cques[0], cques[1]);
 
-                    for (i = 0; i < len; i++) {
+               for (j = 0; j < 2; j++) {
+                   //console.log(cques[j]);
 
-                        if (node[i][0] == 'f') {
-                            you[i] = true;
-                            tmpQues = (node[i]).substr(1);
+                   node = cques[j].split(' ');
+                   len = node.length;
 
-                            fsfh = tmpQues.split('/');
-                            cfz[i] = fsfh[0];
-                            cfm[i] = fsfh[1];
-                        } else if (node[i][0] != 'f') {
-                            you[i] = false;
-                            czs[i] = node[i];
-                            cfz[i] = 0;
-                            cfm[i] = 0;
-                        }
-                    }
+                   // parse ques string
+                   for (i = 0; i < len; i++) {
+                       if (node[i][0] == 'f') {
+                           you[i] = true;
+                           node[i] = node[i].replace('f', '')
 
-                    shizi[j] = [
-                        {
-                            youfs: you[0],
-                            zs: czs[0],
-                            fz: cfz[0],
-                            fm: cfm[0],
-                        },
-                        {
-                            youfs: you[1],
-                            zs: czs[1],
-                            fz: cfz[1],
-                            fm: cfm[1],
-                        },
-                        {
-                            youfs: you[2],
-                            zs: czs[2],
-                            fz: cfz[2],
-                            fm: cfm[2],
-                        },
+                           fsfh = node[i].split('/');
+                           cfz[i] = fsfh[0];
+                           cfm[i] = fsfh[1];
+                       } else if (node[i][0] != 'f') {
+                           you[i] = false;
+                           czs[i] = node[i];
+                           cfz[i] = 0;
+                           cfm[i] = 0;
+                       }
+                   }
 
-                    ];
+                   shizi[j] = [
+                       {
+                           youfs: you[0],
+                           zs: czs[0],
+                           fz: cfz[0],
+                           fm: cfm[0],
+                       },
+                       {
+                           youfs: you[1],
+                           zs: czs[1],
+                           fz: cfz[1],
+                           fm: cfm[1],
+                       },
+                       {
+                           youfs: you[2],
+                           zs: czs[2],
+                           fz: cfz[2],
+                           fm: cfm[2],
+                       },
 
-                    for (i = 0; i < 3; i++) {
-                        you[i] = false;
-                        czs[i] = '';
-                        cfz[i] = 0;
-                        cfm[i] = 0;
-                    }
-                }
+                   ];
 
-                cKeyFraType[0] = 4;
-                cKeyFraType[1] = 4;
+                   for (i = 0; i < len; i++) {
+                       you[i] = false;
+                       czs[i] = '';
+                       cfz[i] = 0;
+                       cfm[i] = 0;
+                   }
+               }
 
-                that.setData({
-                    quesType: 1,
-                    keyType: 3,
+               console.log(shizi[0], shizi[1]);
 
-                    ques0: shizi[0],
-                    ques1: shizi[1],
-                });
-            }
+               // parse key string
+               for (k = 0; k < 2; k++) {
+                   //switch (ckey[k][0]) {
+                    //    case 'f':
+                    //        cKeyFraType[k] = 3;
+                    //        tmpAns = (ckey[k]).substr(1);
+
+                    //        cKeyZs[k] = 0;
+
+                    //        ans = tmpAns.split('/');
+                    //        cKeyFz[k] = parseInt(ans[0]);
+                    //        cKeyFm[k] = parseInt(ans[1]);
+                    //        break;
+                    //   default:
+                           cKeyFraType[k] = 2;
+                           tmpAns = ckey[k];
+
+                            console.parseInt(tmpAns);
+
+                           cKeyZs[k] = parseInt(tmpAns);
+                           cKeyFz[k] = 0;
+                           cKeyFm[k] = 0;
+                         //  break;
+                  // }
+                   //console.log(ckeyZs[k]);
+               }
+
+               //console(cKeyZs[0], cKeyZs[1]);
+
+               that.setData({
+                   quesType: 1,
+                   keyType: 3,
+
+                   ques0: shizi[0],
+                   ques1: shizi[1],
+               });
+           }
         });
 
         db.collection('q62').where({
@@ -115,7 +150,7 @@ function f61Step(grade, type, db, point) {
 
                 i = Math.floor(Math.random() * (col2.length - 1));
                 cques[0] = col2[i].ques;
-                ckey[k] = col3[i].key;
+                ckey[k] = col2[i].key;
 
 
                 node = cques[0].split(' ');
@@ -240,7 +275,7 @@ function f61Step(grade, type, db, point) {
                     }
                 }
 
-                for (j = 3; j < 6; j++) {
+                for (j = 0; j < 3; j++) {
 
                     node = cques[j].split(' ');
                     len = node.length;
@@ -263,7 +298,7 @@ function f61Step(grade, type, db, point) {
 
                     }
 
-                    shizi[j] = [
+                    shizi[j + 3] = [
                         {
                             youfs: you[0],
                             zs: czs[0],
@@ -318,6 +353,7 @@ function f61Step(grade, type, db, point) {
     return 0;
 }
 
+// 各类型数字四则运算
 function f64Opt(grade, type, db, point) {
     let col1 = [];
     let col2 = [];
@@ -378,14 +414,14 @@ function f64Opt(grade, type, db, point) {
                         //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                         //   break;
                         case 'f':
-                            cKeyFraType[k + 3] = 2;
+                            cKeyFraType[k] = 2;
                             tmpAns = (ckey[k]).substr(1);
 
-                            cKeyZs[k + 3] = 0;
+                            cKeyZs[k] = 0;
 
                             ans = tmpAns.split('/');
-                            cKeyFz[k + 3] = parseInt(ans[0]);
-                            cKeyFm[k + 3] = parseInt(ans[1]);
+                            cKeyFz[k] = parseInt(ans[0]);
+                            cKeyFm[k] = parseInt(ans[1]);
 
                             // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                             break;
@@ -402,17 +438,18 @@ function f64Opt(grade, type, db, point) {
                         //     //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                         //     break;
                         default:
-                            cKeyFraType[k + 3] = 1;
+                            cKeyFraType[k] = 4;     // 无分数全部采用浮点型进行比对
                             tmpAns = ckey[k];
 
-                            cKeyZs[k + 3] = parseInt(tmpAns);
-                            cKeyFz[k + 3] = 0;
-                            cKeyFm[k + 3] = 0;
+                            cKeyZs[k] = parseFloat(tmpAns);
+                            cKeyFz[k] = 0;
+                            cKeyFm[k] = 0;
 
                             // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
 
                             break;
                     }
+                    //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                 }
 
                 for (j = 0; j < 3; j++) {
@@ -481,11 +518,15 @@ function f64Opt(grade, type, db, point) {
                     ques1: shizi[1],
                     ques2: shizi[2],
 
-                    // keyZs: cKeyZs,
-                    // keyFz: cKeyFz,
-                    // keyFm: cKeyFm,
+                    keyZs: cKeyZs,
+                    keyFz: cKeyFz,
+                    keyFm: cKeyFm,
 
-                    // keyFraType: cKeyFraType
+                   // keyZs0: cKeyZs[0],
+                   // keyZs1: cKeyZs[1],
+                   // keyZs2: cKeyZs[2],
+
+                    keyFraType: cKeyFraType
                 });
 
             }
@@ -544,20 +585,19 @@ function f64Opt(grade, type, db, point) {
                             cKeyFm[k + 3] = parseInt(ansFs[1]);
 
                             //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-
                             break;
                         default:
-                            cKeyFraType[k + 3] = 1;
+                            cKeyFraType[k + 3] = 4;
                             tmpAns = ckey[k];
 
-                            cKeyZs[k + 3] = parseInt(tmpAns);
+                            cKeyZs[k + 3] = parseFloat(tmpAns);
                             cKeyFz[k + 3] = 0;
                             cKeyFm[k + 3] = 0;
 
                             break;
                     }
 
-                    // console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
+                    console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
 
                 }
 
@@ -689,6 +729,8 @@ function f64Opt(grade, type, db, point) {
 
     return 0;
 }
+
+//            '各类型数字简便运算',
 
 function f6Simple(grade, type, db, point) {
     let that = point;
@@ -913,6 +955,8 @@ function f6Simple(grade, type, db, point) {
     return 0;
 
 }
+
+//            '解方程',
 
 function f6Formula(grade, type, db, point) {
     let that = point;
@@ -1141,6 +1185,8 @@ function f6Formula(grade, type, db, point) {
     return 0;
 
 }
+
+//            '解比例']
 
 function f6Scale(grade, type, db, point) {
 

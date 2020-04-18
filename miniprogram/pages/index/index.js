@@ -71,13 +71,27 @@ Page({
 
         keys: [],
         keyMods: [],
-        modJudg: [0, 0],   //  0：错 1：对，前整数，后余数        
+        modJudg: [0, 0],   //  0：错 1：对，前整数，后余数 
+
         keyZs: [],
         keyFz: [],
         keyFm: [],
-        fraJudg: [0, 0, 0], //  0：错 1：对，一整数，二分子，三分母
+
+        fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
+		fraJudg1: [0, 0, 0], 
+		fraJudg2: [0, 0, 0], 
+		fraJudg3: [0, 0, 0], 
+		fraJudg4: [0, 0, 0],
+		fraJudg5: [0, 0, 0], 
+		
         keyFraType: [],     //  1:整数 2：分数  3：带分数   4: 小数
-        isDisabled: false,  //  分子分母输入框不可用
+        isDisabled0: false,  //  分子分母输入框不可用
+        isDisabled1: false,
+        isDisabled2: false,
+        isDisabled3: false,
+        isDisabled4: false,
+        isDisabled5: false,
+
         curJudg: [0, 0, 0, 0, 0,0],     //  0 未完成 1 正确 2 错误
 
         errQues: [],        //  当前错题集错题
@@ -216,7 +230,13 @@ Page({
             tickColor5: 'white',
 
             //inpBorder: '2rpx solid lightgreen',
-            isDisabled: false,
+            isDisabled0: false,
+            isDisabled1: false,
+            isDisabled2: false,
+            isDisabled3: false,
+            isDisabled4: false,
+            isDisabled5: false,
+
 
             ans0: '',
             ans1: '',
@@ -252,7 +272,14 @@ Page({
             ans5Fm: '',
 
             modJudg: [0, 0],    //  余数判定记录
-            fraJudg: [0, 0, 0]  //  分数判定记录
+            //fraJudg: [0, 0, 0]  //  分数判定记录
+
+            fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
+            fraJudg1: [0, 0, 0],
+            fraJudg2: [0, 0, 0],
+            fraJudg3: [0, 0, 0],
+            fraJudg4: [0, 0, 0],
+            fraJudg5: [0, 0, 0], 
         });
     },
 
@@ -539,7 +566,6 @@ Page({
         return 0;
     },
 
-
     onBluMod0: function(e) {
         let that = this;
 
@@ -618,7 +644,7 @@ Page({
         }
     },
 
-    // fraction type answer judgement
+    //  fraction type answer judgement
     //  check answer 0    
     onInpBlurAns0Zs: function (e) {
         let that = this;
@@ -629,7 +655,7 @@ Page({
                 if (that.data.keyFraType[0] == 1) {
                     that.setData({
                         tickColor0: 'red',
-                        isDisabled: true,
+                        isDisabled0: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
@@ -638,25 +664,28 @@ Page({
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
+                //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
+
                     this.setData({
                         tickColor0: 'red',
-                        isDisabled: true,
+                        isDisabled0: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[0]) {
-                    that.data.isKey0Zs = true;
-                    if (that.data.keyFraType[0] == 3) {
-                        if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
-                            that.setData({
-                                tickColor0: 'red',
-                            });
-                        }
+            case 2 :    //答案为纯分数时，整数部分为空
+                if (e.detail.value == '' && that.data.keyZs[0] == 0)
+                    fraJudg0[0] = 1;                
+                break;
+            case 3 :
+                if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+                        that.setData({
+                            tickColor0: 'red',
+                        });
                     }
-                }
+                break;
+            default:
                 break;
         }
 
@@ -670,19 +699,18 @@ Page({
         //console.log(that.data.keyFz[0]);
 
         if (e.detail.value == that.data.keyFz[0]) {
-            that.data.isKey0Fz = true;
+            //that.data.isKey0Fz = true;
+            fraJudg0[1] = 1;
         }
 
         if (that.data.keyFraType[0] == 2) {
-            if (that.data.isKey0Fz && that.data.isKey0Fm) {
+            if (fraJudg0[1] == 1 && fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[0] == 3) {
-            if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
+            if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -695,15 +723,16 @@ Page({
     onInpBlurAns0Fm: function (e) {
         let that = this;
 
-        console.log(e.detail.value);
-        console.log(that.data.keyFm[0]);
+        //console.log(e.detail.value);
+        //console.log(that.data.keyFm[0]);
 
         if (e.detail.value == that.data.keyFm[0]) {
-            that.data.isKey0Fm = true;
+           // that.data.isKey0Fm = true;
+            fraJudg0[2] = 1;
         }
 
         if (that.data.keyFraType[0] == 2) {
-            if (that.data.isKey0Fz && that.data.isKey0Fm) {
+            if (fraJudg0[1] == 1 && fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -711,7 +740,7 @@ Page({
 
             }
         } else if (that.data.keyFraType[0] == 3) {
-            if (that.data.isKey0Zs && that.data.isKey0Fz && that.data.isKey0Fm) {
+            if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -722,7 +751,6 @@ Page({
     },
 
     //  check answer 1   
-
     onInpBlurAns1Zs: function (e) {
         let that = this;
 
@@ -732,7 +760,7 @@ Page({
                 if (that.data.keyFraType[1] == 1) {
                     that.setData({
                         tickColor1: 'red',
-                        isDisabled: true,
+                        isDisabled1: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
@@ -743,54 +771,60 @@ Page({
                 if (Math.abs(that.data.keyZs[1] - e.detail.value) <= FLOTERR) {
                     this.setData({
                         tickColor1: 'red',
-                        isDisabled: true,
+                        isDisabled1: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[1]) {
-                    that.data.isKey1Zs = true;
-                    if (that.data.keyFraType[1] == 3) {
-                        if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
-                            that.setData({
-                                tickColor1: 'red',
-                            });
-                        }
-                    }
+            case 2:    //答案为纯分数时，整数部分为空
+                //console.log('index input 3 ZS type 2');
+                if (e.detail.value == '' && that.data.keyZs[1] == 0) {
+                    that.data.fraJudg1[0] = 1;
+                } else {
+                    that.data.fraJudg1[0] = 0;
+                }
+
+                break;
+            case 3:
+                //console.log('index input 3 ZS type 3');
+                if (that.data.keyZs[1] == e.detail.value) {
+                    that.data.fraJudg1[0] = 1;
+                } else {
+                    that.data.fraJudg1[0] = 0;
+                }
+
+                if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                    that.setData({
+                        tickColor1: 'red',
+                    });
                 }
                 break;
+            default:
+                break;
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns1Fz: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[1]);
-
         if (e.detail.value == that.data.keyFz[1]) {
-            that.data.isKey1Fz = true;
+            that.data.fraJudg1[1] = 1;
+        } else {
+            that.data.fraJudg1[1] = 0;
         }
 
         if (that.data.keyFraType[1] == 2) {
-            if (that.data.isKey1Fz && that.data.isKey1Fm) {
+            if (that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
                 that.setData({
                     tickColor1: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[1] == 3) {
-            if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
+            if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
                 that.setData({
                     tickColor1: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -798,34 +832,28 @@ Page({
     onInpBlurAns1Fm: function (e) {
         let that = this;
 
-        console.log(e.detail.value);
-        console.log(that.data.keyFm[1]);
-
         if (e.detail.value == that.data.keyFm[1]) {
-            that.data.isKey1Fm = true;
+            that.data.fraJudg1[2] = 1;
+        } else {
+            that.data.fraJudg1[2] = 0;
         }
 
         if (that.data.keyFraType[1] == 2) {
-            if (that.data.isKey1Fz && that.data.isKey1Fm) {
+            if (that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
                 that.setData({
                     tickColor1: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[1] == 3) {
-            if (that.data.isKey1Zs && that.data.isKey1Fz && that.data.isKey1Fm) {
+            if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
                 that.setData({
                     tickColor1: 'red',
                 });
-            } else {
-
             }
         }
     },
 
     //  check answer 2   
-
     onInpBlurAns2Zs: function (e) {
         let that = this;
 
@@ -835,7 +863,7 @@ Page({
                 if (that.data.keyFraType[2] == 1) {
                     that.setData({
                         tickColor2: 'red',
-                        isDisabled: true,
+                        isDisabled2: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
@@ -846,54 +874,60 @@ Page({
                 if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
                     this.setData({
                         tickColor2: 'red',
-                        isDisabled: true,
+                        isDisabled2: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[2]) {
-                    that.data.isKey2Zs = true;
-                    if (that.data.keyFraType[2] == 3) {
-                        if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
-                            that.setData({
-                                tickColor2: 'red',
-                            });
-                        }
-                    }
+            case 2:    //答案为纯分数时，整数部分为空
+                //console.log('index input 3 ZS type 2');
+                if (e.detail.value == '' && that.data.keyZs[2] == 0) {
+                    that.data.fraJudg2[0] = 1;
+                } else {
+                    that.data.fraJudg2[0] = 0;
+                }
+
+                break;
+            case 3:
+                //console.log('index input 3 ZS type 3');
+                if (that.data.keyZs[2] == e.detail.value) {
+                    that.data.fraJudg2[0] = 1;
+                } else {
+                    that.data.fraJudg2[0] = 0;
+                }
+
+                if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                    that.setData({
+                        tickColor2: 'red',
+                    });
                 }
                 break;
+            default:
+                break;
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns2Fz: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[2]);
-
         if (e.detail.value == that.data.keyFz[2]) {
-            that.data.isKey2Fz = true;
+            that.data.fraJudg2[1] = 1;
+        } else {
+            that.data.fraJudg2[1] = 0;
         }
 
         if (that.data.keyFraType[2] == 2) {
-            if (that.data.isKey2Fz && that.data.isKey2Fm) {
+            if (that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
                 that.setData({
                     tickColor2: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[2] == 3) {
-            if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
+            if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
                 that.setData({
                     tickColor2: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -901,28 +935,23 @@ Page({
     onInpBlurAns2Fm: function (e) {
         let that = this;
 
-        console.log(e.detail.value);
-        console.log(that.data.keyFm[2]);
-
         if (e.detail.value == that.data.keyFm[2]) {
-            that.data.isKey2Fm = true;
+            that.data.fraJudg2[2] = 1;
+        } else {
+            that.data.fraJudg2[2] = 0;
         }
 
         if (that.data.keyFraType[2] == 2) {
-            if (that.data.isKey2Fz && that.data.isKey2Fm) {
+            if (that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
                 that.setData({
                     tickColor2: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[2] == 3) {
-            if (that.data.isKey2Zs && that.data.isKey2Fz && that.data.isKey2Fm) {
+            if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
                 that.setData({
                     tickColor2: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -938,7 +967,7 @@ Page({
                 if (that.data.keyFraType[3] == 1) {
                     that.setData({
                         tickColor3: 'red',
-                        isDisabled: true,
+                        isDisabled3: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
@@ -949,89 +978,88 @@ Page({
                 if (Math.abs(that.data.keyZs[3] - e.detail.value) <= FLOTERR) {
                     this.setData({
                         tickColor3: 'red',
-                        isDisabled: true,
+                        isDisabled3: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[3]) {
-                    that.data.isKey3Zs = true;
-                    if (that.data.keyFraType[3] == 3) {
-                        if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
-                            that.setData({
-                                tickColor3: 'red',
-                            });
-                        }
-                    }
+            case 2 :    //答案为纯分数时，整数部分为空
+                console.log('index input 3 ZS type 2');
+                if (e.detail.value == '' && that.data.keyZs[3] == 0) {
+                    that.data.fraJudg3[0] = 1;
+                } else {
+                    that.data.fraJudg3[0] = 0;
+                }
+
+                break;
+            case 3 :
+                console.log('index input 3 ZS type 3');
+                if (that.data.keyZs[3] == e.detail.value) {
+                    that.data.fraJudg3[0] = 1;
+                } else {
+                    that.data.fraJudg3[0] = 0;
+                }
+
+                if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                    that.setData({
+                        tickColor3: 'red',
+                    });
                 }
                 break;
+            default:
+                break;        
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns3Fz: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[3]);
-
         if (e.detail.value == that.data.keyFz[3]) {
-            that.data.isKey3Fz = true;
+            that.data.fraJudg3[1] = 1;
+        } else {
+            that.data.fraJudg3[1] = 0;
         }
 
         if (that.data.keyFraType[3] == 2) {
-            if (that.data.isKey3Fz && that.data.isKey3Fm) {
+           if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[3] == 3) {
-            if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
+            if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
-            } else {
-
             }
         }
     },
 
     onInpBlurAns3Fm: function (e) {
         let that = this;
-
-        console.log(e.detail.value);
-        console.log(that.data.keyFm[3]);
-
         if (e.detail.value == that.data.keyFm[3]) {
-            that.data.isKey3Fm = true;
+            that.data.fraJudg3[2] = 1;
+        } else {
+            that.data.fraJudg3[2] = 0;
         }
 
         if (that.data.keyFraType[3] == 2) {
-            if (that.data.isKey3Fz && that.data.isKey3Fm) {
+           if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[3] == 3) {
-            if (that.data.isKey3Zs && that.data.isKey3Fz && that.data.isKey3Fm) {
+            if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
-            } else {
-
             }
         }
     },
 
     //  check answer 4  
-
     onInpBlurAns4Zs: function (e) {
         let that = this;
 
@@ -1041,8 +1069,7 @@ Page({
                 if (that.data.keyFraType[4] == 1) {
                     that.setData({
                         tickColor4: 'red',
-                        isDisabled: true,
-                        //inpBorder: '3rpx solid gray'
+                        isDisabled4: true,
                     });
                 }
                 // 分数部分禁用输入
@@ -1052,54 +1079,60 @@ Page({
                 if (Math.abs(that.data.keyZs[4] - e.detail.value) <= FLOTERR) {
                     this.setData({
                         tickColor4: 'red',
-                        isDisabled: true,
+                        isDisabled4: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[4]) {
-                    that.data.isKey4Zs = true;
-                    if (that.data.keyFraType[4] == 3) {
-                        if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
-                            that.setData({
-                                tickColor4: 'red',
-                            });
-                        }
-                    }
+            case 2:    //答案为纯分数时，整数部分为空
+                //console.log('index input 3 ZS type 2');
+                if (e.detail.value == '' && that.data.keyZs[4] == 0) {
+                    that.data.fraJudg4[0] = 1;
+                } else {
+                    that.data.fraJudg4[0] = 0;
+                }
+
+                break;
+            case 3:
+                //console.log('index input 3 ZS type 3');
+                if (that.data.keyZs[4] == e.detail.value) {
+                    that.data.fraJudg4[0] = 1;
+                } else {
+                    that.data.fraJudg4[0] = 0;
+                }
+
+                if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                    that.setData({
+                        tickColor4: 'red',
+                    });
                 }
                 break;
+            default:
+                break;
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns4Fz: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[4]);
-
         if (e.detail.value == that.data.keyFz[4]) {
-            that.data.isKey4Fz = true;
+            that.data.fraJudg4[1] = 1;
+        } else {
+            that.data.fraJudg4[1] = 0;
         }
 
         if (that.data.keyFraType[4] == 2) {
-            if (that.data.isKey4Fz && that.data.isKey4Fm) {
+            if (that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
                 that.setData({
                     tickColor4: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[4] == 3) {
-            if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
+            if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
                 that.setData({
                     tickColor4: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -1107,34 +1140,28 @@ Page({
     onInpBlurAns4Fm: function (e) {
         let that = this;
 
-        console.log(e.detail.value);
-        console.log(that.data.keyFm[4]);
-
         if (e.detail.value == that.data.keyFm[4]) {
-            that.data.isKey4Fm = true;
+            that.data.fraJudg4[2] = 1;
+        } else {
+            that.data.fraJudg4[2] = 0;
         }
 
         if (that.data.keyFraType[4] == 2) {
-            if (that.data.isKey4Fz && that.data.isKey4Fm) {
+            if (that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
                 that.setData({
                     tickColor4: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[4] == 3) {
-            if (that.data.isKey4Zs && that.data.isKey4Fz && that.data.isKey4Fm) {
+            if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
                 that.setData({
                     tickColor4: 'red',
                 });
-            } else {
-
             }
         }
     },
 
     //  check answer 5
-
     onInpBlurAns5Zs: function (e) {
         let that = this;
 
@@ -1144,7 +1171,7 @@ Page({
                 if (that.data.keyFraType[5] == 1) {
                     that.setData({
                         tickColor5: 'red',
-                        isDisabled: true,
+                        isDisabled5: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
@@ -1155,54 +1182,60 @@ Page({
                 if (Math.abs(that.data.keyZs[5] - e.detail.value) <= FLOTERR) {
                     this.setData({
                         tickColor5: 'red',
-                        isDisabled: true,
+                        isDisabled5: true,
                         //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
                 break;
-            default:    //答案为分数时，分别检测整数、分子、分母
-                if (e.detail.value == that.data.keyZs[5]) {
-                    that.data.isKey5Zs = true;
-                    if (that.data.keyFraType[5] == 3) {
-                        if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
-                            that.setData({
-                                tickColor5: 'red',
-                            });
-                        }
-                    }
+            case 2:    //答案为纯分数时，整数部分为空
+                //console.log('index input 3 ZS type 2');
+                if (e.detail.value == '' && that.data.keyZs[5] == 0) {
+                    that.data.fraJudg5[0] = 1;
+                } else {
+                    that.data.fraJudg5[0] = 0;
+                }
+
+                break;
+            case 3:
+                //console.log('index input 3 ZS type 3');
+                if (that.data.keyZs[5] == e.detail.value) {
+                    that.data.fraJudg5[0] = 1;
+                } else {
+                    that.data.fraJudg5[0] = 0;
+                }
+
+                if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                    that.setData({
+                        tickColor5: 'red',
+                    });
                 }
                 break;
+            default:
+                break;
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns5Fz: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[5]);
-
         if (e.detail.value == that.data.keyFz[5]) {
-            that.data.isKey5Fz = true;
+            that.data.fraJudg5[1] = 1;
+        } else {
+            that.data.fraJudg5[1] = 0;
         }
 
         if (that.data.keyFraType[5] == 2) {
-            if (that.data.isKey5Fz && that.data.isKey5Fm) {
+            if (that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
                 that.setData({
                     tickColor5: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[5] == 3) {
-            if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
+            if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
                 that.setData({
                     tickColor5: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -1210,28 +1243,23 @@ Page({
     onInpBlurAns5Fm: function (e) {
         let that = this;
 
-       // console.log(e.detail.value);
-       // console.log(that.data.keyFm[5]);
-
         if (e.detail.value == that.data.keyFm[5]) {
-            that.data.isKey5Fm = true;
+            that.data.fraJudg5[2] = 1;
+        } else {
+            that.data.fraJudg5[2] = 0;
         }
 
         if (that.data.keyFraType[5] == 2) {
-            if (that.data.isKey5Fz && that.data.isKey5Fm) {
+            if (that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
                 that.setData({
                     tickColor5: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[5] == 3) {
-            if (that.data.isKey5Zs && that.data.isKey5Fz && that.data.isKey5Fm) {
+            if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
                 that.setData({
                     tickColor5: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -1723,9 +1751,9 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keyZs);
-                console.log(that.data.keyFz);
-                console.log(that.data.keyFm);
+                console.log("index key:", that.data.keyZs);
+                //console.log(that.data.keyFz);
+                //console.log(that.data.keyFm);
                 break;
             default:
                 return -1;

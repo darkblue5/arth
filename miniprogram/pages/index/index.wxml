@@ -272,38 +272,38 @@
                 <van-col span="4">
                     <view class="vw-ans-zs">
                         <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans0Zs}}' bindblur="onInpBlurAns0Zs" />
+                        <input class="in-ans-zs" value='{{ans1Zs}}' bindblur="onInpBlurAns1Zs" />
+                        <input class="in-ans-zs" value='{{ans2Zs}}' bindblur="onInpBlurAns2Zs" />
+                        <input class="in-ans-zs" value='{{ans3Zs}}' bindblur="onInpBlurAns3Zs" />
+                        <input class="in-ans-zs" value='{{ans4Zs}}' bindblur="onInpBlurAns4Zs" />
+                        <input class="in-ans-zs" value='{{ans5Zs}}' bindblur="onInpBlurAns5Zs" />
                     </view>
                 </van-col>
                 <van-col span="4">
                     <view class="vw-ans-fs">
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled0}}' bindblur="onInpBlurAns0Fz" />
+                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled0}}' bindblur="onInpBlurAns0Fm" />
                         </view>
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans1Fz}}' disabled='{{isDisabled1}}' bindblur="onInpBlurAns1Fz" />
+                            <input class="in-ans-fm" value='{{ans1Fm}}' disabled='{{isDisabled1}}' bindblur="onInpBlurAns1Fm" />
                         </view>
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans2Fz}}' disabled='{{isDisabled2}}' bindblur="onInpBlurAns2Fz" />
+                            <input class="in-ans-fm" value='{{ans2Fm}}' disabled='{{isDisabled2}}' bindblur="onInpBlurAns2Fm" />
                         </view>
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans3Fz}}' disabled='{{isDisabled3}}' bindblur="onInpBlurAns3Fz" />
+                            <input class="in-ans-fm" value='{{ans3Fm}}' disabled='{{isDisabled3}}' bindblur="onInpBlurAns3Fm" />
                         </view>
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans4Fz}}' disabled='{{isDisabled4}}' bindblur="onInpBlurAns4Fz" />
+                            <input class="in-ans-fm" value='{{ans4Fm}}' disabled='{{isDisabled4}}' bindblur="onInpBlurAns4Fm" />
                         </view>
                         <view>
-                            <input class="in-ans-fz" value='{{ans0Fz}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fz" />
-                            <input class="in-ans-fm" value='{{ans0Fm}}' disabled='{{isDisabled}}' style="border: {{inpBorder}}" bindblur="onInpBlurAns0Fm" />
+                            <input class="in-ans-fz" value='{{ans5Fz}}' disabled='{{isDisabled5}}' bindblur="onInpBlurAns5Fz" />
+                            <input class="in-ans-fm" value='{{ans5Fm}}' disabled='{{isDisabled5}}' bindblur="onInpBlurAns5Fm" />
                         </view>
                     </view>
                 </van-col>
