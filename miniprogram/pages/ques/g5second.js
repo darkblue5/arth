@@ -394,6 +394,8 @@ function fsfAorS(grade, type, pt) {
                 cKeyFm[j] = cfm[0];
             }
 
+            console.log(cKeyZs[j], cKeyFz[j], cKeyFm[j]);
+
             shizi[j] = [
                 {
                     youfs: you[0],

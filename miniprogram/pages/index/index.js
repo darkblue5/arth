@@ -71,7 +71,14 @@ Page({
 
         keys: [],
         keyMods: [],
-        modJudg: [0, 0],   //  0：错 1：对，前整数，后余数 
+
+        modJudg0: [0, 0],   //  0：错 1：对，前整数，后余数
+        modJudg1: [0, 0],
+        modJudg2: [0, 0],
+        modJudg3: [0, 0],
+        modJudg4: [0, 0],
+        modJudg5: [0, 0],
+        
 
         keyZs: [],
         keyFz: [],
@@ -246,6 +253,12 @@ Page({
             ans5: '',
 
             mod0: '',
+            mod1: '',
+            mod2: '',
+            mod3: '',
+            mod4: '',
+            mod5: '',
+
 
             ans0Zs: '',
             ans0Fz: '',
@@ -271,9 +284,14 @@ Page({
             ans5Fz: '',
             ans5Fm: '',
 
-            modJudg: [0, 0],    //  余数判定记录
-            //fraJudg: [0, 0, 0]  //  分数判定记录
+            modJudg0: [0, 0],    //  余数判定记录
+            modJudg1: [0, 0],
+            modJudg2: [0, 0],
+            modJudg3: [0, 0],
+            modJudg4: [0, 0],
+            modJudg5: [0, 0],
 
+           //  分数判定记录
             fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
             fraJudg1: [0, 0, 0],
             fraJudg2: [0, 0, 0],
@@ -344,9 +362,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[0]) {
-                    that.data.modJudg[0] = 1;         //整数部分判断结果
+                    that.data.modJudg0[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[1] == 1) {
+                    if (that.data.modJudg0[1] == 1) {
                         this.setData({
                             tickColor0: 'red',
                         });
@@ -383,9 +401,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[1]) {
-                    that.data.modJudg[2] = 1;         //整数部分判断结果
+                    that.data.modJudg1[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[3] == 1) {
+                    if (that.data.modJudg1[1] == 1) {
                         this.setData({
                             tickColor1: 'red',
                         });
@@ -422,9 +440,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[2]) {
-                    that.data.modJudg[4] = 1;         //整数部分判断结果
+                    that.data.modJudg2[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[5] == 1) {
+                    if (that.data.modJudg2[1] == 1) {
                         this.setData({
                             tickColor2: 'red',
                         });
@@ -461,9 +479,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[3]) {
-                    that.data.modJudg[6] = 1;         //整数部分判断结果
+                    that.data.modJudg3[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[7] == 1) {
+                    if (that.data.modJudg3[1] == 1) {
                         this.setData({
                             tickColor3: 'red',
                         });
@@ -500,9 +518,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[4]) {
-                    that.data.modJudg[8] = 1;         //整数部分判断结果
+                    that.data.modJudg4[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[9] == 1) {
+                    if (that.data.modJudg4[1] == 1) {
                         this.setData({
                             tickColor4: 'red',
                         });
@@ -539,9 +557,9 @@ Page({
                 }
             case 1:
                 if (e.detail.value == that.data.keys[5]) {
-                    that.data.modJudg[10] = 1;         //整数部分判断结果
+                    that.data.modJudg5[0] = 1;         //整数部分判断结果
 
-                    if (that.data.modJudg[11] == 1) {
+                    if (that.data.modJudg5[1] == 1) {
                         this.setData({
                             tickColor0: 'red',
                         });
@@ -570,8 +588,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[0]) {
-            that.data.modJudg[1] = 1        //余数部分判定
-            if (that.data.modJudg[0] == 1) {
+            that.data.modJudg0[1] = 1        //余数部分判定
+            if (that.data.modJudg0[0] == 1) {
                 this.setData({
                     tickColor0: 'red',
                 });
@@ -583,8 +601,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[1]) {
-            that.data.modJudg[3] = 1        //余数部分判定
-            if (that.data.modJudg[2] == 1) {
+            that.data.modJudg1[1] = 1        //余数部分判定
+            if (that.data.modJudg1[0] == 1) {
                 this.setData({
                     tickColor1: 'red',
                 });
@@ -596,8 +614,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[2]) {
-            that.data.modJudg[5] = 1        //余数部分判定
-            if (that.data.modJudg[4] == 1) {
+            that.data.modJudg2[1] = 1        //余数部分判定
+            if (that.data.modJudg2[0] == 1) {
                 this.setData({
                     tickColor2: 'red',
                 });
@@ -609,8 +627,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[3]) {
-            that.data.modJudg[7] = 1        //余数部分判定
-            if (that.data.modJudg[6] == 1) {
+            that.data.modJudg3[1] = 1        //余数部分判定
+            if (that.data.modJudg3[0] == 1) {
                 this.setData({
                     tickColor3: 'red',
                 });
@@ -622,8 +640,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[4]) {
-            that.data.modJudg[9] = 1        //余数部分判定
-            if (that.data.modJudg[8] == 1) {
+            that.data.modJudg4[1] = 1        //余数部分判定
+            if (that.data.modJudg4[0] == 1) {
                 this.setData({
                     tickColor4: 'red',
                 });
@@ -635,8 +653,8 @@ Page({
         let that = this;
 
         if (e.detail.value == that.data.keyMods[5]) {
-            that.data.modJudg[11] = 1        //余数部分判定
-            if (that.data.modJudg[10] == 1) {
+            that.data.modJudg5[1] = 1        //余数部分判定
+            if (that.data.modJudg5[0] == 1) {
                 this.setData({
                     tickColor5: 'red',
                 });
@@ -676,10 +694,10 @@ Page({
                 break;
             case 2 :    //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[0] == 0)
-                    fraJudg0[0] = 1;                
+                    that.data.fraJudg0[0] = 1;                
                 break;
             case 3 :
-                if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+                if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                         that.setData({
                             tickColor0: 'red',
                         });
@@ -700,17 +718,17 @@ Page({
 
         if (e.detail.value == that.data.keyFz[0]) {
             //that.data.isKey0Fz = true;
-            fraJudg0[1] = 1;
+            that.data.fraJudg0[1] = 1;
         }
 
         if (that.data.keyFraType[0] == 2) {
-            if (fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+            if (that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
             }
         } else if (that.data.keyFraType[0] == 3) {
-            if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+            if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -728,11 +746,11 @@ Page({
 
         if (e.detail.value == that.data.keyFm[0]) {
            // that.data.isKey0Fm = true;
-            fraJudg0[2] = 1;
+            that.data.fraJudg0[2] = 1;
         }
 
         if (that.data.keyFraType[0] == 2) {
-            if (fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+            if (that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -740,7 +758,7 @@ Page({
 
             }
         } else if (that.data.keyFraType[0] == 3) {
-            if (fraJudg0[0] == 1 && fraJudg0[1] == 1 && fraJudg0[2] == 1) {
+            if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
@@ -1476,7 +1494,7 @@ Page({
                     default:
                         break;                    
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
                 break;
             case 2:             //  二年级上
                 switch (idxType[1]) {
@@ -1510,7 +1528,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
                 break;
             case 3:             //  二年级下
                 switch (idxType[1]) {
@@ -1544,7 +1562,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
 
                 break;
             case 4:             //  三年级上
@@ -1570,7 +1588,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
 
                 break;
             case 5:             //  三年级下
@@ -1599,7 +1617,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
 
                 break;
             case 6:             //  四年级上
@@ -1631,7 +1649,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
 
                 break;
             case 7:             //  四年级下
@@ -1660,7 +1678,7 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
+                // console.log(that.data.keys);
 
                 break;
             case 8:             //  五年级上
@@ -1706,10 +1724,10 @@ Page({
                     default:
                         break;
                 }
-                console.log(that.data.keys);
-                console.log(that.data.keyZs);
-                console.log(that.data.keyFz);
-                console.log(that.data.keyFm);
+                // console.log(that.data.keys);
+                // console.log(that.data.keyZs);
+                // console.log(that.data.keyFz);
+                // console.log(that.data.keyFm);
                 break;
             case 10:            //  六年级上
                 switch (idxType[1]) {
@@ -1751,7 +1769,7 @@ Page({
                     default:
                         break;
                 }
-                console.log("index key:", that.data.keyZs);
+                //console.log("index key:", that.data.keyZs);
                 //console.log(that.data.keyFz);
                 //console.log(that.data.keyFm);
                 break;
