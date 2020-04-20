@@ -6,83 +6,118 @@
 
     <!-- <view class="top-50"> -->
     <van-row>
-        <view class="pad-50"> </view>
+        <view class="top-50 ques_title">{{nickName}} @ {{grades[ recGrade ]}} </view>
     </van-row>
 
-    <van-row>
-        <van-col span="6">
+    <view class="top-10">
+        <van-row>
+            <van-col span="8">
+                <van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
+                    <block wx:for="{{ types }}" wx:key="index">
+                        <van-sidebar-item title="{{item}}" custom-class="sb-width" info="5" />
+                    </block>
+                </van-sidebar>
+            </van-col>
 
-            <!-- <view class="lFrame"> -->
-            <van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
-                <van-sidebar-item title="分数加减" dot />
-                <van-sidebar-item title="四则混合" info="5" />
-                <van-sidebar-item title="带括号的计算" info="99+" />
-            </van-sidebar>
-            <!-- </view> -->
-        </van-col>
-
-        <van-col span="18">
-            <!-- <view class="rFrame"> -->
-
-            <view wx:if="{{activeKey == 0}}" class="ques_panel">
-                <van-swipe-cell right-width="{{ 65 }}">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-                <van-swipe-cell right-width="{{ 65 }}">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-                <van-swipe-cell right-width="{{ 65 }}">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-                <van-swipe-cell right-width="{{ 65 }}">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-                <van-swipe-cell right-width="{{ 65 }}">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-                <van-swipe-cell right-width="{{ 65 }}" async-close bind:close="onClose">
-                    <van-cell-group>
-                        <van-cell title="1342 + 221412 =" />
-                    </van-cell-group>
-                    <view slot="right" class="bc-red">删除</view>
-                </van-swipe-cell>
-            </view>
-
-            <view wx:if="{{activeKey == 1}}" class="ques_panel">
-                <button bindtap='onTapAdd'>添加input组件</button>
-                <button bindtap='onTapDel'>删除Input组件</button>
-                <block wx:for="{{obj}}" wx:key="index">
-                    <!-- <input value="{{item}}"></input> -->
-                    <van-swipe-cell right-width="{{ 65 }}" async-close bind:close="onClose">
-                        <van-cell-group>
-                            <van-cell title="1342 + 221412 =" />
-                        </van-cell-group>
-                        <view slot="right" class="bc-red">删除</view>
-                    </van-swipe-cell>
+            <van-col span="16">
+                <!-- <view class="rFrame"> -->
+                <block wx:for="{{ types }}" wx:key="index">
+                    <view wx:if="{{activeKey == index}}" class="ques_panel">
+                        <block wx:if="{{index == 0}}">
+                            <block wx:for="{{ wrong0 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 1}}">
+                            <block wx:for="{{ wrong1 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 2}}">
+                            <block wx:for="{{ wrong2 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 3}}">
+                            <block wx:for="{{ wrong3 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 4}}">
+                            <block wx:for="{{ wrong4 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 5}}">
+                            <block wx:for="{{ wrong5 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 6}}">
+                            <block wx:for="{{ wrong6 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 7}}">
+                            <block wx:for="{{ wrong7 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                        <block wx:if="{{index == 8}}">
+                            <block wx:for="{{ wrong8 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{ 65 }}">
+                                    <van-cell-group>
+                                        <van-cell title='{{item.ques}}' />
+                                    </van-cell-group>
+                                    <view slot="right" class="bc-red">删除</view>
+                                </van-swipe-cell>
+                            </block>
+                        </block>
+                    </view>
                 </block>
-            </view>
-
-            <view wx:if="{{activeKey == 2}}" class="ques_panel">
-                第三页
-            </view>
-        </van-col>
-    </van-row>
-    <!-- </view> -->
+            </van-col>
+        </van-row>
+    </view>
 
     <van-notify id="van-notify" />
 </view>

@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "../../style/common.wxss";
 
 .containerRep {
     position: absolute;

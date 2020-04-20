@@ -299,9 +299,9 @@ function g1First20ACarry(grade, type, pt) {
 
     if (grade == 0 && type == 5) {
     	for (i=0; i<6; i++) {
-	        a = util.rangeRand(1, 20 - 11);
-	        m = a % 10;
-	        b = util.rangeRand((10 - m), 9);
+	        a = util.rangeRand(1, 7);
+	        m = 10 - a;
+	        b = util.rangeRand(m, 9);
 	    
 		    arr = [a, '+', b];
 		    key[i] = a + b;

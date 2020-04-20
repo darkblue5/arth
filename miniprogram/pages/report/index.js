@@ -3,20 +3,40 @@
 const app = getApp()
 import * as echarts from '../../miniprogram_npm/ec-canvas/echarts';
 
+const db = wx.cloud.database({});
+
 let chart = null;
+let sevenRate = [99, 99, 99, 99, 99, 99, 99]; //  7日正确率
 
 Page({
 
     data: {
-        compCount: 63,
-        crrCount: 12,
-        lastCount: 5,
-        totalCount: 2355,
+        tdyCorrt: 55,    //  本日正确
+        tdyFinih: 22,    //  本日完成
+        tdyRate: sevenRate[6],
+        sumCorrt: 5555,    //  累计正确
+        sumFinih: 2355,    //  累计完成
+
+        // tdyCorrt: '',    //  本日正确
+        // tdyFinih: '',    //  本日完成
+        // tdyRate: '',
+        // sumCorrt: '',    //  累计正确
+
+        nickName: '王大',
+        grade: '一',       //  用户所处年级
+        firstUser: '赵一',
+        firstPoint: 44,
+        secondUser: '钱二',
+        secondPoint: 33,
+        thirdUser: '孙三',
+        thirdPoint: 22,
+        fourthUser: '李四',
+        fourthPoint: 11,
 
         //dayData: [],
         ecBar: {
             onInit: function (canvas, width, height) {
-                let rate = 0;
+                let todayRate = 0;
                 const chart = echarts.init(canvas, null, {
                     width: width,
                     height: height
@@ -24,8 +44,7 @@ Page({
 
                 canvas.setChart(chart);
 
-                rate = Math.round(Math.random() * 90);
-
+                todayRate = sevenRate[6];
 
                 var option = {
                     backgroundColor: "#ffffff",
@@ -53,7 +72,7 @@ Page({
                             }
                         },
                         data: [{
-                            value: rate,
+                            value: todayRate,
                             //name: '完成率',
                         }]
 
@@ -80,22 +99,12 @@ Page({
                 var day = now.getDate();
                 let i = 0;
                 let dayData = [];
-                let crrRate = [];
+                let crrRate;
+                //let crrRate = this.data.sevenRate;
 
-                for (i = 8; i > 0; i--) {
-                    // dayData[i] = day + 2;
+                for (i = 7; i > 0; i--) {
                     dayData[i - 1] = day - 7 + i;
-                    //onsole.log(i);
                 }
-
-                for (i = 0; i < 9; i++) {
-                    crrRate[i] = Math.round(Math.random() * 90);
-                }
-                crrRate[9] = 100;
-
-                //console.log(dayData);
-
-                //  console.log(dayData);
 
                 var option = {
                     title: {
@@ -176,7 +185,8 @@ Page({
                         //data: [15, 2, 30, 16, 10, 17, 15, 22, 27, 9]
                         //data: [72, 65, 38, 90, 27, 83, 66, 79, 100]
                         //data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                        data: crrRate
+                        data: sevenRate
+                        //data: this.data.sevenRate
                     }]
 
                 };
@@ -199,176 +209,56 @@ Page({
 
         //   //  console.log(dayData);
 
+        // db.collection('rank').where({
+        //     _id: '1d1104975e9857c80046d4761cf635d4'
+        // }).get({
+        //     success: res => {
+        //         let usrInfo = [];
+
+        //         usrInfo = res.data;
+
+        //         console.log(res.data);
+        //         console.log(usrInfo);
+
+        //         this.setData({
+        //             // tdyCorrt: usrInfo.tdycorrt,    //  本日正确
+        //             // tdyFinih: usrInfo.tdyfinih,    //  本日完成
+        //             // tdyRate: usrInfo.sevenrate[6],
+        //             // sumCorrt: usrInfo.sumcorrt,    //  累计正确
+        //             // nickName: usrInfo.usr
+        //             tdyCorrt: res.data.tdycorrt,    //  本日正确
+        //             tdyFinih: res.data.tdyfinih,    //  本日完成
+        //             tdyRate: res.data.sevenrate[6],
+        //             sumCorrt: res.data.sumcorrt,    //  累计正确
+        //             nickName: res.data.usr
+        //         })
+        //     }
+        // })
+
     },
 
-    onShow() {
+    onShow: function(e) {
+        let that = this;
+
+        db.collection('rank').where({
+            _id: '1d1104975e9857c80046d4761cf635d4'
+        }).get({
+            success: (res) => {
+
+                console.log(res.data);
+                //console.log(typeof(res.data));
+                sevenRate = res.data[0].sevenrate;
+
+                that.setData({
+                    tdyCorrt: res.data[0].tdycorrt,    //  本日正确
+                    tdyFinih: res.data[0].tdyfinih,    //  本日完成
+                    tdyRate: res.data[0].sevenrate[6],
+                    sumCorrt: res.data[0].sumfinih,    //  累计正确
+                    nickName: res.data[0].usr
+                })
+            }
+        })
 
     }
 
 })
-
-// function getBarOption() {
-//     return {
-//         color: ['#37a2da', '#32c5e9', '#67e0e3'],
-//         tooltip: {
-//             trigger: 'axis',
-//             axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-//                 type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-//             }
-//         },
-//         legend: {
-//             data: ['热度', '正面', '负面']
-//         },
-//         grid: {
-//             left: 20,
-//             right: 20,
-//             bottom: 15,
-//             top: 40,
-//             containLabel: true
-//         },
-//         xAxis: [
-//             {
-//                 type: 'value',
-//                 axisLine: {
-//                     lineStyle: {
-//                         color: '#999'
-//                     }
-//                 },
-//                 axisLabel: {
-//                     color: '#666'
-//                 }
-//             }
-//         ],
-//         yAxis: [
-//             {
-//                 type: 'category',
-//                 axisTick: { show: false },
-//                 data: ['汽车之家', '今日头条', '百度贴吧', '一点资讯', '微信', '微博', '知乎'],
-//                 axisLine: {
-//                     lineStyle: {
-//                         color: '#999'
-//                     }
-//                 },
-//                 axisLabel: {
-//                     color: '#666'
-//                 }
-//             }
-//         ],
-//         series: [
-//             {
-//                 name: '热度',
-//                 type: 'bar',
-//                 label: {
-//                     normal: {
-//                         show: true,
-//                         position: 'inside'
-//                     }
-//                 },
-//                 data: [300, 270, 340, 344, 300, 320, 310]
-//             },
-//             {
-//                 name: '正面',
-//                 type: 'bar',
-//                 stack: '总量',
-//                 label: {
-//                     normal: {
-//                         show: true
-//                     }
-//                 },
-//                 data: [120, 102, 141, 174, 190, 250, 220]
-//             },
-//             {
-//                 name: '负面',
-//                 type: 'bar',
-//                 stack: '总量',
-//                 label: {
-//                     normal: {
-//                         show: true,
-//                         position: 'left'
-//                     }
-//                 },
-//                 data: [-20, -32, -21, -34, -90, -130, -110]
-//             }
-//         ]
-//     };
-// }
-
-// function getScatterOption() {
-
-//     var data = [];
-//     var data2 = [];
-
-//     for (var i = 0; i < 10; i++) {
-//         data.push(
-//             [
-//                 Math.round(Math.random() * 100),
-//                 Math.round(Math.random() * 100),
-//                 Math.round(Math.random() * 40)
-//             ]
-//         );
-//         data2.push(
-//             [
-//                 Math.round(Math.random() * 100),
-//                 Math.round(Math.random() * 100),
-//                 Math.round(Math.random() * 100)
-//             ]
-//         );
-//     }
-
-//     var axisCommon = {
-//         axisLabel: {
-//             textStyle: {
-//                 color: '#C8C8C8'
-//             }
-//         },
-//         axisTick: {
-//             lineStyle: {
-//                 color: '#fff'
-//             }
-//         },
-//         axisLine: {
-//             lineStyle: {
-//                 color: '#C8C8C8'
-//             }
-//         },
-//         splitLine: {
-//             lineStyle: {
-//                 color: '#C8C8C8',
-//                 type: 'solid'
-//             }
-//         }
-//     };
-
-//     return {
-//         color: ["#FF7070", "#60B6E3"],
-//         backgroundColor: '#eee',
-//         xAxis: axisCommon,
-//         yAxis: axisCommon,
-//         legend: {
-//             data: ['aaaa', 'bbbb']
-//         },
-//         visualMap: {
-//             show: false,
-//             max: 100,
-//             inRange: {
-//                 symbolSize: [20, 70]
-//             }
-//         },
-//         series: [{
-//             type: 'scatter',
-//             name: 'aaaa',
-//             data: data
-//         },
-//         {
-//             name: 'bbbb',
-//             type: 'scatter',
-//             data: data2
-//         }
-//         ],
-//         animationDelay: function (idx) {
-//             return idx * 50;
-//         },
-//         animationEasing: 'elasticOut'
-//     };
-// }
-
