@@ -37,6 +37,16 @@
     width: 230rpx;
 }
 
+.cel-del-btn {
+    height: 100%;
+    /* width: 300rpx; */
+    width: 160rpx;
+    text-align: center;
+    line-height: 90rpx;
+    color: whitesmoke;
+    background-color: crimson;
+}
+
 .top-50 {
     margin-top: 50rpx;
 }

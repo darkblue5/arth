@@ -116,9 +116,11 @@ Page({
         txtScreenType: '5以内的加法或减法',
         txtButtonGrade: '一年级',
 
-        userGrade: 1,           //  用户所在年级
+        userGrade: -1,          //  用户所在年级
         indexType: [],          //  picker 控件试题类型索引
         txtType: [],            //  picker 控件題型字符串 
+
+        usrExist: false,        //  排名表中用户记录是否存在
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
         type: [
@@ -161,6 +163,19 @@ Page({
                             })
                         }
                     })
+                } else {
+                    //Toast.fail('请登陆并选择所在年级');
+                    wx.showModal({
+                        //title: '提示',
+                        content: '请 登陆 并 选择所在年级',
+                        showCancel: false,
+                        //confirmText: '返回',
+                        success: function (res) {
+                            if (res.confirm) {
+                                console.log('用户点击了“返回授权”')
+                            }
+                        }
+                    })
                 }
             }
         })
@@ -179,6 +194,21 @@ Page({
         ret = that.initQues(0);
         if (ret == -1)
             return -1;
+
+        if (that.data.userGrade == -1) {
+            wx.showModal({
+                //title: '提示',
+                content: '选择所在年级',
+                showCancel: false,
+                //confirmText: '返回',
+                success: function (res) {
+                    if (res.confirm) {
+                        console.log('用户点击了“返回授权”')
+                    }
+                }
+            })
+        }
+
     },
 
     onUnload() {
@@ -193,10 +223,6 @@ Page({
                 userInfo: e.detail.userInfo
             })
         }
-    },
-
-    onGetOpenid: function () {
-        
     },
 
     //  button START click
@@ -307,8 +333,10 @@ Page({
         let that = this;
         let i = 0;
         let finishCount = 0, correctCount = 0, errorCount = 0;
+        let tdyRate = 0, tdyFinish = 0;
         let len;
         let val1, val2, val3;
+        let usrExist = false;
 
         // stop timer
         if (that.data.enTimer) 
@@ -425,24 +453,9 @@ Page({
                 complete: console.log
             })
         }
-
-        //finishCount = correctCount + errorCount;
         
-        //console.log(finishCount, correctCount, errorCount);
-        //console.log(that.data.openID, that.data.ques0);
-
-        // db.collection('errcol').add({
-        //     data: {
-        //         uid: that.data.openID,
-        //         type: 1115,
-        //         ques: that.data.ques0
-        //     }
-        // })
-        //     .then(res => {
-        //         console.log(res)
-        //     })
-        //     .catch(console.error)
-
+        //  更新用户积分记录
+        that.updateRank( );
 
         that.setData({
             enSwitch: false,
@@ -461,6 +474,56 @@ Page({
             ans4: '',
             ans5: '',
         });
+    },
+
+    //  add or update user RANK record
+    updateRank: async function( ) {
+        let that = this;
+        let usrData;
+        const _ = db.command
+        let curRate = 0;
+
+        //  更新答题积分记录
+        usrData = await db.collection('rank').where({
+            uid: that.data.openID
+        }).get();
+
+        if (usrData.data.length) {  //   有 则更新记录
+            //更新记录
+            curRate = Math.round(that.data.correctCount / 6);
+
+            await db.collection('rank').where({
+                uid: that.data.openID
+            })
+                .update({
+                    data: {
+                        tdycorrt: that.data.correctCount,
+                        tdyfinih: _.inc(6),
+                        point: _.inc(that.data.correctCount * 2 + 3),
+                        sevenrate: [0, 0, 0, 0, 0, 0, curRate]
+                    },
+                })
+
+        } else {    //  积分库内无该用户则新增
+            curRate = Math.round(that.data.correctCount / 6);
+
+            await db.collection('rank').add({
+                data: {
+                    uid: that.data.openID,
+                    nickname: that.data.userInfo.nickName,
+                    grade: that.data.userGrade,
+                    tdycorrt: that.data.correctCount,
+                    tdyfinih: 6,
+                    point: that.data.correctCount * 2 + 6,
+                    sevenrate: [0, 0, 0, 0, 0, 0, curRate]
+                },
+                success: function (res) {
+                    //console.log(res)
+                },
+                fail: console.error,
+                complete: console.log
+            })
+        }
     },
 
 //  integer and float judgement

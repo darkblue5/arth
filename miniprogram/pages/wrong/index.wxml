@@ -24,14 +24,14 @@
                 <block wx:for="{{ types }}" wx:key="index">
                     <view wx:if="{{activeKey == index}}" class="ques_panel">
                         <block wx:if="{{index == 0}}">
-                            <block wx:for="{{ wrong0 }}" wx:key="index2">
-                                <van-swipe-cell right-width="{{ 65 }}">
+                            <view wx:for="{{ wrong0 }}" wx:key="index2">
+                                <van-swipe-cell right-width="{{100}}">
                                     <van-cell-group>
                                         <van-cell title='{{item.ques}}' />
                                     </van-cell-group>
-                                    <view slot="right" class="bc-red">删除</view>
+                                    <view slot="right" class="cel-del-btn" data-quesid="{{item._id}}"  bindtap="onDelQues">删除</view>
                                 </van-swipe-cell>
-                            </block>
+                            </view>
                         </block>
                         <block wx:if="{{index == 1}}">
                             <block wx:for="{{ wrong1 }}" wx:key="index2">
@@ -89,7 +89,7 @@
                                     <van-cell-group>
                                         <van-cell title='{{item.ques}}' />
                                     </van-cell-group>
-                                    <view slot="right" class="bc-red">删除</view>
+                                    <view slot="right" class="bc-red" bindtap="onDelQues">删除</view>
                                 </van-swipe-cell>
                             </block>
                         </block>
