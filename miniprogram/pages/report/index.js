@@ -16,6 +16,7 @@ Page({
         tdyRate: sevenRate[6],
         sumCorrt: 5555,    //  累计正确
         sumFinih: 2355,    //  累计完成
+        rank: [],
 
         // tdyCorrt: '',    //  本日正确
         // tdyFinih: '',    //  本日完成
@@ -197,43 +198,30 @@ Page({
         }
     },
 
-    onLoad() {
-        //     var now = new Date();
-        //     var day = now.getDate();
-        //     let i = 0;
-        //    // let dayData = [];
+    async onLoad() {
+        let that = this;
+        const db = wx.cloud.database();
 
-        //     for (i=0; i<8; i++) {
-        //         this.data.dayData[i] = day - i + 1;
-        //     }
+        try {
+            let res = await db.collection('rank')
+                .aggregate()
+                .match({
+                    grade: 1
+                })
+                .sort({
+                    point: -1
+                })
+                .limit(4)
+                .end();
+            //console.log(res.list[2]);
+            //console.log( typeof(res.list));
 
-        //   //  console.log(dayData);
-
-        // db.collection('rank').where({
-        //     _id: '1d1104975e9857c80046d4761cf635d4'
-        // }).get({
-        //     success: res => {
-        //         let usrInfo = [];
-
-        //         usrInfo = res.data;
-
-        //         console.log(res.data);
-        //         console.log(usrInfo);
-
-        //         this.setData({
-        //             // tdyCorrt: usrInfo.tdycorrt,    //  本日正确
-        //             // tdyFinih: usrInfo.tdyfinih,    //  本日完成
-        //             // tdyRate: usrInfo.sevenrate[6],
-        //             // sumCorrt: usrInfo.sumcorrt,    //  累计正确
-        //             // nickName: usrInfo.usr
-        //             tdyCorrt: res.data.tdycorrt,    //  本日正确
-        //             tdyFinih: res.data.tdyfinih,    //  本日完成
-        //             tdyRate: res.data.sevenrate[6],
-        //             sumCorrt: res.data.sumcorrt,    //  累计正确
-        //             nickName: res.data.usr
-        //         })
-        //     }
-        // })
+            that.setData({
+                rank: res.list
+            });
+        } catch (error) {
+            return error;
+        }
 
     },
 
@@ -245,7 +233,7 @@ Page({
         }).get({
             success: (res) => {
 
-                console.log(res.data);
+                //console.log(res.data);
                 //console.log(typeof(res.data));
                 sevenRate = res.data[0].sevenrate;
 

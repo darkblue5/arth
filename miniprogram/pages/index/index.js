@@ -150,6 +150,25 @@ Page({
             return
         }
 
+        // 获取用户 OpenID
+        wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+                console.log('onload get id', res.result.openid);
+                app.globalData.openid = res.result.openid;
+                that.data.openID = res.result.openid;
+                // wx.navigateTo({
+                //     url: '../userConsole/userConsole',
+                // })
+            },
+            fail: err => {
+                console.error('[云函数] [login] 调用失败', err);
+            }
+        })
+
+        //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+
         // 获取用户信息
         wx.getSetting({
             success: res => {
@@ -167,13 +186,13 @@ Page({
                     //Toast.fail('请登陆并选择所在年级');
                     wx.showModal({
                         //title: '提示',
-                        content: '请 登陆 并 选择所在年级',
+                        content: '请登陆微信并选择所在年级',
                         showCancel: false,
                         //confirmText: '返回',
                         success: function (res) {
-                            if (res.confirm) {
-                                console.log('用户点击了“返回授权”')
-                            }
+                            // if (res.confirm) {
+                            //     console.log('用户点击了“返回授权”')
+                            // }
                         }
                     })
                 }
@@ -203,7 +222,7 @@ Page({
                 //confirmText: '返回',
                 success: function (res) {
                     if (res.confirm) {
-                        console.log('用户点击了“返回授权”')
+                        //console.log('用户点击了“返回授权”')
                     }
                 }
             })
