@@ -1,0 +1,2 @@
+<view class="index">{{prop}}</view>
+<comp1 wx:if="{{hasChild}}" prop="inner"></comp1>
