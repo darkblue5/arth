@@ -9,7 +9,7 @@ const db = wx.cloud.database({});
 Page({
     data: {
         activeKey: 0,
-        recGrade: 11,       //  当前用户所在年级
+        recGrade: 1,       //  当前用户所在年级
         nickName: '小明',
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
@@ -126,6 +126,32 @@ Page({
         this.setData({
             activeKey: e.detail
         })
-    }
+    },
 
+    onDelQues: function (e) {
+        console.log('delete data');
+
+        let that = this;
+        let index = e.currentTarget.dataset.quesid;
+        let list = that.data.wrong0;
+
+        console.log(e.currentTarget.dataset.quesid);
+        wx.cloud.callFunction({
+            name: 'del',
+            data: {
+                quesId: e.currentTarget.dataset.quesid
+            },
+            success: res => {
+                console.log('[云函数] [bookAdd] 删除信息成功！！ ', res);
+            },
+            fail: err => {
+                console.error('[云函数] [bookAdd] 调用失败', err)
+            }
+        })
+
+        list.splice(index, 1);       //截取指定的内容
+        that.setData({               //重新渲染列表
+            wrong0: list
+        })
+    }
 })
