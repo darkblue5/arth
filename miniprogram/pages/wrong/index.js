@@ -1,9 +1,9 @@
 //index.js
 //获取应用实例
-const app = getApp()
 import Notify from '@vant/weapp/notify/notify';
 import * as config from '../config/config.js';
 
+const app = getApp();
 const db = wx.cloud.database({});
 
 Page({
@@ -29,6 +29,7 @@ Page({
         //   if (that.data.recGrade == 0) {
 
         //   }
+
         db.collection('errcol').where({
             type: 0
         }).get({
@@ -118,6 +119,11 @@ Page({
         that.setData({
             types: config.types[that.data.gradesDetail[grade]]
         })
+
+    },
+
+    onShow (e) {
+        console.log(app.globalData.userGrade);
 
     },
 

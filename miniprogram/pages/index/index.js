@@ -1,10 +1,6 @@
 //index.js
-const app = getApp()
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import * as config from '../config/config.js';
-
-let init;   // timer
-const audio = wx.createInnerAudioContext({}); //  audio
 
 let g1First = require('../ques/g1first.js');
 let g1Second = require('../ques/g1second.js');
@@ -17,14 +13,22 @@ let g4Second = require('../ques/g4second.js');
 let g5Second = require('../ques/g5second.js');
 let g6Second = require('../ques/g6second.js');
 
+const app = getApp();
+const audio = wx.createInnerAudioContext(); //  audio
+
 const QCOUNT = 6; //1组6道题
 const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
 const db = wx.cloud.database({});
 
+let init;   // timer
+
 Page({
     data: {
         avatarUrl: './user-unlogin.png',
+        hasUserInfo: false,     //  用户登状态标识
+        //canIUse: wx.canIUse('button.open-type.getUserInfo'),    //  开放式授权检测
+
         userInfo: {},
         logged: false,
         takeSession: false,
@@ -100,7 +104,7 @@ Page({
         isDisabled4: false,
         isDisabled5: false,
 
-        curJudg: [0, 0, 0, 0, 0,0],     //  0 未完成 1 正确 2 错误
+        curJudg: [0, 0, 0, 0, 0, 0],     //  0 未完成 1 正确 2 错误
 
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
@@ -116,7 +120,7 @@ Page({
         txtScreenType: '5以内的加法或减法',
         txtButtonGrade: '一年级',
 
-        userGrade: -1,          //  用户所在年级
+        //userGrade: -1,          //  用户所在年级
         indexType: [],          //  picker 控件试题类型索引
         txtType: [],            //  picker 控件題型字符串 
 
@@ -137,74 +141,98 @@ Page({
         ]
     },
 
-
-// functions
-
+//
+// functions area
+//
     onLoad: function (e) {
         let that = this;
 
         if (!wx.cloud) {
             wx.redirectTo({
-                url: '../chooseLib/chooseLib',
+                //url: '../chooseLib/chooseLib',
             })
-            return
+            return -1;
         }
 
-        // 获取用户 OpenID
-        wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-                console.log('onload get id', res.result.openid);
-                app.globalData.openid = res.result.openid;
-                that.data.openID = res.result.openid;
-                // wx.navigateTo({
-                //     url: '../userConsole/userConsole',
-                // })
-            },
-            fail: err => {
-                console.error('[云函数] [login] 调用失败', err);
-            }
-        })
-
-        //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-
-        // 获取用户信息
-        wx.getSetting({
-            success: res => {
-                if (res.authSetting['scope.userInfo']) {
-                    // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-                    wx.getUserInfo({
-                        success: res => {
-                            this.setData({
-                                avatarUrl: res.userInfo.avatarUrl,
-                                userInfo: res.userInfo
+        wx.checkSession({
+            success: function(res) {
+                wx.getSetting({
+                    success: res => {
+                        if (res.authSetting['scope.userInfo']) {
+                            wx.getUserInfo({
+                                success: res => {
+                                    this.setData({
+                                        avatarUrl: res.userInfo.avatarUrl,
+                                        userInfo: res.userInfo
+                                    })
+                                }
                             })
                         }
-                    })
-                } else {
-                    //Toast.fail('请登陆并选择所在年级');
-                    wx.showModal({
-                        //title: '提示',
-                        content: '请登陆微信并选择所在年级',
-                        showCancel: false,
-                        //confirmText: '返回',
-                        success: function (res) {
-                            // if (res.confirm) {
-                            //     console.log('用户点击了“返回授权”')
-                            // }
-                        }
-                    })
-                }
+
+                        // 获取用户 OpenID
+                        wx.cloud.callFunction({
+                            name: 'login',
+                            data: {},
+                            success: res => {
+                                console.log('onload get id', res.result.openid);
+                                //app.globalData.openid = res.result.openid;
+                                that.data.openID = res.result.openid;
+
+                                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+                                db.collection('rank').where({
+                                    uid: that.data.openID
+                                }).get({
+                                    success: res => {
+                                        //console.log(res.data)
+                                        //初始化用户所在年级
+                                        app.globalData.userGrade = res.data.grade;
+                                    }
+                                })
+
+                            },
+                            fail: err => {
+                                console.error('[云函数] [login] 调用失败', err);
+
+                            }
+                        })
+                    }
+                })
+
+            },
+            fail: function(res) {
+                wx.showModal({
+                    content: '请登陆微信并选择所在年级',
+                    showCancel: false,
+                    success: function (res) {
+
+                    }
+                })
             }
-        })
+        });
+
+        //  若为新用户，提示选择年级
+        //  与读取旧用户记录的异步问题
+
+        // if (that.data.userGrade == -1) {
+        //     wx.showModal({
+        //         //title: '提示',
+        //         content: '选择所在年级',
+        //         showCancel: false,
+        //         //confirmText: '返回',
+        //         success: function (res) {
+        //             if (res.confirm) {
+        //                 //console.log('用户点击了“返回授权”')
+        //             }
+        //         }
+        //     })
+        // }
 
         clearInterval(init); // 计时器归零
         that.data.minute = 0;
         that.data.second = 0;
     },
 
-    onReady() {
+    async onReady() {
         let that = this;
         let ret = 0;
 
@@ -214,20 +242,35 @@ Page({
         if (ret == -1)
             return -1;
 
-        if (that.data.userGrade == -1) {
-            wx.showModal({
-                //title: '提示',
-                content: '选择所在年级',
-                showCancel: false,
-                //confirmText: '返回',
-                success: function (res) {
-                    if (res.confirm) {
-                        //console.log('用户点击了“返回授权”')
-                    }
-                }
-            })
-        }
+        await db.collection('rank').where({
+            nickname: "王老师@文升教育",
+            grade: 1
+        }).get({
+            success: (res) => {
+                console.log(res.data);
+                // that.setData({
+                //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
+                //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
+                //     tdyRate: res.data[0].sevenrate[6],
+                //     sevenRate: res.data[0].sevenrate
+                // })
+                if ( res.data.length ) {
+                    app.globalData.tdyCorrt = res.data[0].tdycorrt;
+                    app.globalData.tdyFinih = res.data[0].tdyfinih;
+                    app.globalData.tdyRate = res.data[0].sevenrate[6];
+                    app.globalData.sevenRate = res.data[0].sevenrate;
+                    app.globalData.userGrade = res.data[0].grade;
+                    app.globalData.nickName = res.data[0].nickname;
 
+                    //console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
+                    //console.log( app.globalData.userGrade );
+                } else {
+                    console.log('no match user!');
+                }
+            }
+        });
+
+        app.globalData.testID = 520;
     },
 
     onUnload() {
@@ -242,6 +285,53 @@ Page({
                 userInfo: e.detail.userInfo
             })
         }
+    },
+
+    onBtnLogin: function(e) {
+        console.log('user login');
+        let that = this;
+
+        // 获取用户 OpenID
+        wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+                console.log('onload get id', res.result.openid);
+                //app.globalData.openid = res.result.openid;
+                that.data.openID = res.result.openid;
+
+                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+                db.collection('rank').where({
+                    uid: that.data.openID
+                }).get({
+                    success: res => {
+                        console.log(res.data)
+                        //初始化用户所在年级
+                        //app.globalData.userGrade = res.data.grade;
+                        app.globalData.userGrade = 2;
+
+                        // db.collection('rank').add({
+                        //     data: {
+                        //         uid: that.data.openID,
+                        //     },
+                        //     success: function (res) {
+                        //         //console.log(res)
+                        //     },
+                        //     fail: console.error,
+                        //     complete: console.log
+                        // })     
+
+                    }
+                })
+
+            },
+            fail: err => {
+                console.error('[云函数] [login] 调用失败', err);
+
+            }
+        });
+
+        console.log(app.globalData.userGrade);
     },
 
     //  button START click
@@ -1630,6 +1720,29 @@ Page({
 
     onCancelType() {
         this.setData({ showType: false });
+    },
+
+    onHide() {
+        // db.collection('rank').where({
+        //     nickname: "王老师@文升教育",
+        //     grade: 1
+        // }).get({
+        //     success: (res) => {
+        //         console.log(res.data);
+        //         // that.setData({
+        //         //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
+        //         //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
+        //         //     tdyRate: res.data[0].sevenrate[6],
+        //         //     sevenRate: res.data[0].sevenrate
+        //         // })
+        //         app.globalData.tdyCorrt = res.data[0].tdycorrt;
+        //         app.globalData.tdyFinih = res.data[0].tdyfinih;
+        //         app.globalData.tdyRate = res.data[0].sevenrate[6];
+        //         app.globalData.sevenRate = res.data[0].sevenrate;
+
+        //         console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
+        //     }
+        // });
     },
 
     // timer function

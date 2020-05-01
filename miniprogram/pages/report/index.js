@@ -1,19 +1,21 @@
 //index.js
 //获取应用实例
-const app = getApp()
 import * as echarts from '../../miniprogram_npm/ec-canvas/echarts';
 
-const db = wx.cloud.database({});
+let app = getApp();
+const db = wx.cloud.database( );
 
 let chart = null;
-let sevenRate = [99, 99, 99, 99, 99, 99, 99]; //  7日正确率
+let sevenRate = app.globalData.sevenRate; //  7日正确率
+// let tdcr = app.globalData.tdycorrt;
+// let tdfh = app.globalData.tdyfinih;
 
 Page({
 
     data: {
-        tdyCorrt: 55,    //  本日正确
-        tdyFinih: 22,    //  本日完成
-        tdyRate: sevenRate[6],
+        tdyCorrt: 0,    //  本日正确
+        tdyFinih: 0,    //  本日完成
+        //tdyRate: app.globalData.sevenrate[6],
         sumCorrt: 5555,    //  累计正确
         sumFinih: 2355,    //  累计完成
         rank: [],
@@ -45,7 +47,7 @@ Page({
 
                 canvas.setChart(chart);
 
-                todayRate = sevenRate[6];
+                todayRate = app.globalData.sevenRate[6];
 
                 var option = {
                     backgroundColor: "#ffffff",
@@ -186,7 +188,7 @@ Page({
                         //data: [15, 2, 30, 16, 10, 17, 15, 22, 27, 9]
                         //data: [72, 65, 38, 90, 27, 83, 66, 79, 100]
                         //data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                        data: sevenRate
+                        data: app.globalData.sevenRate
                         //data: this.data.sevenRate
                     }]
 
@@ -198,15 +200,56 @@ Page({
         }
     },
 
-    async onLoad() {
+    onLoad() {
         let that = this;
-        const db = wx.cloud.database();
+        // try {
+        //     let res = await db.collection('rank')
+        //         .aggregate()
+        //         .match({
+        //             grade: 1
+        //         })
+        //         .sort({
+        //             point: -1
+        //         })
+        //         .limit(4)
+        //         .end();
+        //     //console.log(res.list[2]);
+        //     //console.log( typeof(res.list));
+
+        //     that.setData({
+        //        rank: res.list
+        //        //rank: res.data
+        //     });
+        // } catch (error) {
+        //     return error;
+        // }
+
+	   // console.log('on load', app.globalData.tdycorrt, app.globalData.tdyfinih);
+    //    console.log('on load', app.globalData.tdyCorrt, app.globalData.tdyFinih);
+    //    console.log(app.globalData.testID);
+    //     console.log(app.globalData.userGrade);
+        that.setData ({
+            nickName: app.globalData.nickName + ' ',
+            grade: app.globalData.userGrade + ' '
+        });
+
+    },
+
+    async onShow( ) {
+        let that = this;
+        console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
+
+        that.setData ({
+            tdyCorrt: app.globalData.tdyCorrt,    //  本日正确
+            tdyFinih: app.globalData.tdyFinih,    //  本日完成
+            tdyRate: app.globalData.sevenRate[6]
+        });
 
         try {
             let res = await db.collection('rank')
                 .aggregate()
                 .match({
-                    grade: 1
+                    grade: app.globalData.userGrade
                 })
                 .sort({
                     point: -1
@@ -218,34 +261,43 @@ Page({
 
             that.setData({
                 rank: res.list
+                //rank: res.data
             });
         } catch (error) {
             return error;
         }
 
-    },
+        // let sevenRate = app.globalData.sevenRate; //  7日正确率
+        // let tdcr = app.globalData.tdycorrt;
+        // let tdfh = app.globalData.tdyfinih;
+        // let grade = app.globalData.userGrade;
 
-    onShow: function(e) {
-        let that = this;
+        // console.log(grade);
 
-        db.collection('rank').where({
-            _id: '1d1104975e9857c80046d4761cf635d4'
-        }).get({
-            success: (res) => {
+        // db.collection('rank').where({
+        //     //_id: '1d1104975e9857c80046d4761cf635d4'
+        //     nickname: "王老师@文升教育",
+        //     grade: 1
+        // }).get({
+        //     success: (res) => {
+        //         // let ret = JSON.parse(res.data)
+        //          console.log(res.data);
+        //         //console.log(typeof(res.data));
+        //         // sevenRate = res.data[0].sevenrate;
 
-                //console.log(res.data);
-                //console.log(typeof(res.data));
-                sevenRate = res.data[0].sevenrate;
-
-                that.setData({
-                    tdyCorrt: res.data[0].tdycorrt,    //  本日正确
-                    tdyFinih: res.data[0].tdyfinih,    //  本日完成
-                    tdyRate: res.data[0].sevenrate[6],
-                    sumCorrt: res.data[0].sumfinih,    //  累计正确
-                    nickName: res.data[0].usr
-                })
-            }
-        })
+        //         that.setData({
+        //             tdyCorrt: res.data[0].tdycorrt,    //  本日正确
+        //             tdyFinih: res.data[0].tdyfinih,    //  本日完成
+        //             tdyRate: res.data[0].sevenrate[6],
+        //             sevenRate: res.data[0].sevenrate
+        //         //     sumCorrt: res.data[0].sumfinih,    //  累计正确
+        //         //     nickName: res.data[0].usr
+        //          })
+        //         // if (ret.code == 0) {
+        //         //     console.log(ret.data.usr)
+        //         // }
+        //     }
+        // })
 
     }
 
