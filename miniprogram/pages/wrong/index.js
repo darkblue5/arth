@@ -123,7 +123,18 @@ Page({
     },
 
     onShow (e) {
-        console.log(app.globalData.userGrade);
+        //console.log(app.globalData.userGrade);
+
+    },
+
+    onReady() {
+        let that = this;
+
+        console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
+        that.setData({
+            nickName: app.globalData.nickName + ' ',
+            recGrade: app.globalData.userGrade
+        });
 
     },
 
@@ -139,9 +150,73 @@ Page({
 
         let that = this;
         let index = e.currentTarget.dataset.quesid;
-        let list = that.data.wrong0;
+        let quesIndex = e.currentTarget.dataset.qindex;
 
-        console.log(e.currentTarget.dataset.quesid);
+        console.log('ques index:', quesIndex);
+
+        switch (that.data.activeKey) {
+            case 0:
+                let list0 = that.data.wrong0;
+                list0.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong0: list0
+                })
+                break;
+            case 1:
+                let list1 = that.data.wrong1;
+                list0.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong1: list1
+                })
+                break;
+            case 2:
+                let list2 = that.data.wrong2;
+                list2.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong2: list2
+                })
+                break;
+            case 3:
+                let list3 = that.data.wrong3;
+                list3.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong3: list3
+                })
+                break;
+            case 4:
+                let list4 = that.data.wrong4;
+                list4.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong4: list4
+                })
+                break;
+            case 5:
+                let list5 = that.data.wrong5;
+                list5.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong5: list5
+                })
+                break;
+            case 6:
+                let list6 = that.data.wrong6;
+                list6.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong6: list6
+                })
+                break;
+            case 7:
+                let list7 = that.data.wrong7;
+                list7.splice(quesIndex, 1);       //截取指定的内容
+                that.setData({               //重新渲染列表
+                    wrong7: list7
+                })
+                break;
+            default:
+                break;
+        }
+
+        console.log('index id:', e.currentTarget.dataset.quesid);
+
         wx.cloud.callFunction({
             name: 'del',
             data: {
@@ -155,9 +230,12 @@ Page({
             }
         })
 
-        list.splice(index, 1);       //截取指定的内容
-        that.setData({               //重新渲染列表
-            wrong0: list
-        })
-    }
+
+    },
+
+    onHide() {
+
+        //console.log('in wrong: 使用完整功能选择年级，登陆用户');
+    },
+
 })

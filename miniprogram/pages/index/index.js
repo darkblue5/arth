@@ -1723,27 +1723,9 @@ Page({
     },
 
     onHide() {
-        // db.collection('rank').where({
-        //     nickname: "王老师@文升教育",
-        //     grade: 1
-        // }).get({
-        //     success: (res) => {
-        //         console.log(res.data);
-        //         // that.setData({
-        //         //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
-        //         //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
-        //         //     tdyRate: res.data[0].sevenrate[6],
-        //         //     sevenRate: res.data[0].sevenrate
-        //         // })
-        //         app.globalData.tdyCorrt = res.data[0].tdycorrt;
-        //         app.globalData.tdyFinih = res.data[0].tdyfinih;
-        //         app.globalData.tdyRate = res.data[0].sevenrate[6];
-        //         app.globalData.sevenRate = res.data[0].sevenrate;
-
-        //         console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
-        //     }
-        // });
+        console.log('in index: 使用完整功能选择年级，登陆用户');
     },
+
 
     // timer function
     timerClear: function (e) { //计时归零

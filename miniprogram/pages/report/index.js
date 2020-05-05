@@ -235,6 +235,10 @@ Page({
 
     },
 
+    onReady() {
+        console.log('in report ready: 使用完整功能选择年级，登陆用户');
+    },
+
     async onShow( ) {
         let that = this;
         console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
