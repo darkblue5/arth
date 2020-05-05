@@ -25,7 +25,7 @@ let init;   // timer
 
 Page({
     data: {
-        avatarUrl: './user-unlogin.png',
+        avatarUrl: '../../images/user-unlogin.png',
         hasUserInfo: false,     //  用户登状态标识
         //canIUse: wx.canIUse('button.open-type.getUserInfo'),    //  开放式授权检测
 
@@ -77,27 +77,26 @@ Page({
         keys: [],
         keyMods: [],
 
-        modJudg0: [0, 0],   //  0：错 1：对，前整数，后余数
+        modJudg0: [0, 0],       //  0：错 1：对，前整数，后余数
         modJudg1: [0, 0],
         modJudg2: [0, 0],
         modJudg3: [0, 0],
         modJudg4: [0, 0],
         modJudg5: [0, 0],
         
-
         keyZs: [],
         keyFz: [],
         keyFm: [],
 
-        fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
+        fraJudg0: [0, 0, 0],    //  0：错 1：对，一整数部分，二分子部分，三分母部分
 		fraJudg1: [0, 0, 0], 
 		fraJudg2: [0, 0, 0], 
 		fraJudg3: [0, 0, 0], 
 		fraJudg4: [0, 0, 0],
 		fraJudg5: [0, 0, 0], 
 		
-        keyFraType: [],     //  1:整数 2：分数  3：带分数   4: 小数
-        isDisabled0: false,  //  分子分母输入框不可用
+        keyFraType: [],         //  1:整数 2：分数  3：带分数   4: 小数
+        isDisabled0: false,     //  分子分母输入框不可用
         isDisabled1: false,
         isDisabled2: false,
         isDisabled3: false,
@@ -120,11 +119,11 @@ Page({
         txtScreenType: '5以内的加法或减法',
         txtButtonGrade: '一年级',
 
-        //userGrade: -1,          //  用户所在年级
-        indexType: [],          //  picker 控件试题类型索引
-        txtType: [],            //  picker 控件題型字符串 
+        curGrade: -1,            //  用户所在年级
+        indexType: [],              //  picker 控件试题类型索引
+        txtType: [],                //  picker 控件題型字符串 
 
-        usrExist: false,        //  排名表中用户记录是否存在
+        usrExist: false,            //  排名表中用户记录是否存在
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
         type: [
@@ -200,13 +199,6 @@ Page({
 
             },
             fail: function(res) {
-                wx.showModal({
-                    content: '请登陆微信并选择所在年级',
-                    showCancel: false,
-                    success: function (res) {
-
-                    }
-                })
             }
         });
 
@@ -586,53 +578,56 @@ Page({
     },
 
     //  add or update user RANK record
-    updateRank: async function( ) {
+    updateRank: function () {
         let that = this;
         let usrData;
-        const _ = db.command
+        //const _ = db.command
         let curRate = 0;
 
         //  更新答题积分记录
-        usrData = await db.collection('rank').where({
+        usrData = db.collection('rank').where({
             uid: that.data.openID
-        }).get();
+        }).get({
+            success: res => {
 
-        if (usrData.data.length) {  //   有 则更新记录
-            //更新记录
-            curRate = Math.round(that.data.correctCount / 6);
+                if (res.data.length) {  //   有 则更新记录
+                    //更新记录
+                    curRate = Math.round(that.data.correctCount / 6);
 
-            await db.collection('rank').where({
-                uid: that.data.openID
-            })
-                .update({
-                    data: {
-                        tdycorrt: that.data.correctCount,
-                        tdyfinih: _.inc(6),
-                        point: _.inc(that.data.correctCount * 2 + 3),
-                        sevenrate: [0, 0, 0, 0, 0, 0, curRate]
-                    },
-                })
+                    db.collection('rank').where({
+                        uid: that.data.openID
+                    })
+                        .update({
+                            data: {
+                                tdycorrt: that.data.correctCount,
+                                tdyfinih: _.inc(6),
+                                point: _.inc(that.data.correctCount * 2 + 3),
+                                sevenrate: [0, 0, 0, 0, 0, 0, curRate]
+                            },
+                        })
 
-        } else {    //  积分库内无该用户则新增
-            curRate = Math.round(that.data.correctCount / 6);
+                } else {    //  积分库内无该用户则新增
+                    curRate = Math.round(that.data.correctCount / 6);
 
-            await db.collection('rank').add({
-                data: {
-                    uid: that.data.openID,
-                    nickname: that.data.userInfo.nickName,
-                    grade: that.data.userGrade,
-                    tdycorrt: that.data.correctCount,
-                    tdyfinih: 6,
-                    point: that.data.correctCount * 2 + 6,
-                    sevenrate: [0, 0, 0, 0, 0, 0, curRate]
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
+                    db.collection('rank').add({
+                        data: {
+                            uid: that.data.openID,
+                            nickname: that.data.userInfo.nickName,
+                            grade: that.data.userGrade,
+                            tdycorrt: that.data.correctCount,
+                            tdyfinih: 6,
+                            point: that.data.correctCount * 2 + 6,
+                            sevenrate: [0, 0, 0, 0, 0, 0, curRate]
+                        },
+                        success: res => {
+                            //console.log(res)
+                        },
+                        fail: console.error,
+                        complete: console.log
+                    })
+                }
+            }
+        })
     },
 
 //  integer and float judgement
@@ -1724,6 +1719,14 @@ Page({
 
     onHide() {
         console.log('in index: 使用完整功能选择年级，登陆用户');
+
+        wx.showModal({
+            content: '完整功能请登陆微信',
+            showCancel: false,
+            success: function (res) {
+
+            }
+        })
     },
 
 

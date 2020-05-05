@@ -236,7 +236,14 @@ Page({
     },
 
     onReady() {
-        console.log('in report ready: 使用完整功能选择年级，登陆用户');
+        //console.log('in report ready: 使用完整功能选择年级，登陆用户');
+        wx.showModal({
+            content: '完整功能请登陆微信',
+            showCancel: false,
+            success: function (res) {
+
+            }
+        })
     },
 
     async onShow( ) {

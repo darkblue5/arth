@@ -9,7 +9,7 @@ const db = wx.cloud.database({});
 Page({
     data: {
         activeKey: 0,
-        recGrade: 1,       //  当前用户所在年级
+        recGrade: 3,       //  当前用户所在年级
         nickName: '小明',
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
@@ -32,9 +32,16 @@ Page({
         let that = this;
         let grade = that.data.recGrade;
         let worngCount = [];
+        let quesType = [];
+        let i = 0;
+        let quesCount = config.typeIndex[that.data.recGrade].length;
 
+        for ( i=0; i<quesCount; i++ ) {
+            quesType[i] = config.typeIndex[that.data.recGrade][i];
+        }
+      
         db.collection('errcol').where({
-            type: 0
+            type: quesType[0]
         }).get({
             success: res => {
                 that.setData({
@@ -45,7 +52,7 @@ Page({
         })
 
         db.collection('errcol').where({
-            type: 1
+            type: quesType[1]
         }).get({
             success: res => {
                 that.setData({
@@ -56,7 +63,7 @@ Page({
         })
 
         db.collection('errcol').where({
-            type: 2
+            type: quesType[2]
         }).get({
             success: res => {
                 that.setData({
@@ -67,7 +74,7 @@ Page({
         })
 
         db.collection('errcol').where({
-            type: 3
+            type: quesType[3]
         }).get({
             success: res => {
                 that.setData({
@@ -78,7 +85,7 @@ Page({
         })
 
         db.collection('errcol').where({
-            type: 4
+            type: quesType[4]
         }).get({
             success: res => {
                 that.setData({
@@ -89,12 +96,45 @@ Page({
         })
 
         db.collection('errcol').where({
-            type: 5
+            type: quesType[5]
         }).get({
             success: res => {
                 that.setData({
                     wrong5: res.data,
                     count5: res.data.length
+                })
+            }
+        })
+
+        db.collection('errcol').where({
+            type: quesType[6]
+        }).get({
+            success: res => {
+                that.setData({
+                    wrong6: res.data,
+                    count6: res.data.length
+                })
+            }
+        })
+
+        db.collection('errcol').where({
+            type: quesType[7]
+        }).get({
+            success: res => {
+                that.setData({
+                    wrong7: res.data,
+                    count7: res.data.length
+                })
+            }
+        })
+
+        db.collection('errcol').where({
+            type: quesType[8]
+        }).get({
+            success: res => {
+                that.setData({
+                    wrong8: res.data,
+                    count8: res.data.length
                 })
             }
         })
@@ -114,7 +154,7 @@ Page({
     onReady() {
         let that = this;
 
-        console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
+        //console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
         that.setData({
             nickName: app.globalData.nickName + ' ',
             recGrade: app.globalData.userGrade
@@ -220,6 +260,13 @@ Page({
     onHide() {
 
         //console.log('in wrong: 使用完整功能选择年级，登陆用户');
+        wx.showModal({
+            content: '完整功能请登陆微信',
+            showCancel: false,
+            success: function (res) {
+
+            }
+        })
     },
 
 })
