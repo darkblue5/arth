@@ -14,7 +14,30 @@
             <van-col span="8">
                 <van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
                     <block wx:for="{{ types }}" wx:key="index">
-                        <van-sidebar-item title="{{item}}" custom-class="sb-width" info="5" />
+                        <block wx:if="{{index == 0}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count0}}" />
+                        </block>
+                        <block wx:elif="{{index == 1}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count1 }}" />
+                        </block>
+                        <block wx:elif="{{index == 2}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count2 }}" />
+                        </block>
+                        <block wx:elif="{{index == 3}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count3 }}" />
+                        </block>
+                        <block wx:elif="{{index == 4}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count4}}" />
+                        </block>
+                        <block wx:elif="{{index == 5}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count5 }}" />
+                        </block>
+                        <block wx:elif="{{index == 6}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count6}}" />
+                        </block>
+                        <block wx:elif="{{index == 7}}">
+                            <van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count7}}" />
+                        </block>
                     </block>
                 </van-sidebar>
             </van-col>

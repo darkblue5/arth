@@ -16,30 +16,30 @@ Page({
         gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
 
         types: [],
+        count: [],
 
         wrong0: [],
-        wrong1: []
+        wrong1: [],
+        wrong2: [],
+        wrong3: [],
+        wrong4: [],
+        wrong5: [],
+        wrong6: [],
+        wrong7: [],
     },
 
     onLoad: function () {
         let that = this;
         let grade = that.data.recGrade;
-        //let cwrong0 = [], cwrong1 = [], worng2 = [], worng3 = [], worng4 = [], worng5 = [], worng6 = [];
-
-        //   if (that.data.recGrade == 0) {
-
-        //   }
+        let worngCount = [];
 
         db.collection('errcol').where({
             type: 0
         }).get({
             success: res => {
-                //cwrong0 = res.data;
-                //console.log(wrong0);
-                //console.log(res.data);
-
                 that.setData({
-                    wrong0: res.data
+                    wrong0: res.data,
+                    count0: res.data.length
                 })
             }
         })
@@ -48,12 +48,9 @@ Page({
             type: 1
         }).get({
             success: res => {
-                // cwrong1 = res.data;
-                //console.log(wrong0);
-                // console.log(res.data);
-
                 that.setData({
-                    wrong1: res.data
+                    wrong1: res.data,
+                    count1: res.data.length
                 })
             }
         })
@@ -62,12 +59,9 @@ Page({
             type: 2
         }).get({
             success: res => {
-                //cwrong0 = res.data;
-                //console.log(wrong0);
-                //console.log(res.data);
-
                 that.setData({
-                    wrong2: res.data
+                    wrong2: res.data,
+                    count2: res.data.length
                 })
             }
         })
@@ -76,12 +70,9 @@ Page({
             type: 3
         }).get({
             success: res => {
-                //cwrong0 = res.data;
-                //console.log(wrong0);
-                //console.log(res.data);
-
                 that.setData({
-                    wrong3: res.data
+                    wrong3: res.data,
+                    count3: res.data.length
                 })
             }
         })
@@ -90,12 +81,9 @@ Page({
             type: 4
         }).get({
             success: res => {
-                //cwrong0 = res.data;
-                //console.log(wrong0);
-                //console.log(res.data);
-
                 that.setData({
-                    wrong4: res.data
+                    wrong4: res.data,
+                    count4: res.data.length
                 })
             }
         })
@@ -104,20 +92,16 @@ Page({
             type: 5
         }).get({
             success: res => {
-                //cwrong0 = res.data;
-                //console.log(wrong0);
-                //console.log(res.data);
-
                 that.setData({
-                    wrong5: res.data
+                    wrong5: res.data,
+                    count5: res.data.length
                 })
             }
         })
 
-
-        //   console.log(config.types[ that.data.gradesDetail[grade] ]);
         that.setData({
-            types: config.types[that.data.gradesDetail[grade]]
+            types: config.types[that.data.gradesDetail[grade]],
+            //count: worngCount
         })
 
     },
