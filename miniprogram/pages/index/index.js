@@ -56,7 +56,7 @@ Page({
         tickColor5: 'white',
 
         quesType: 0,        //  0: 整数、小数四则   1: 分数四则     2：3题整数3题分数 
-                            //  3：整数小数方程和比例   4: 分数方程
+        //  3：整数小数方程和比例   4: 分数方程
         keyType: 0,         //  0： 整数    1：整数带余数   2：浮点数   3：分数
         typeDetail: 0,      //  试題细分类型 与picker初始化数组对应
 
@@ -83,18 +83,18 @@ Page({
         modJudg3: [0, 0],
         modJudg4: [0, 0],
         modJudg5: [0, 0],
-        
+
         keyZs: [],
         keyFz: [],
         keyFm: [],
 
         fraJudg0: [0, 0, 0],    //  0：错 1：对，一整数部分，二分子部分，三分母部分
-		fraJudg1: [0, 0, 0], 
-		fraJudg2: [0, 0, 0], 
-		fraJudg3: [0, 0, 0], 
-		fraJudg4: [0, 0, 0],
-		fraJudg5: [0, 0, 0], 
-		
+        fraJudg1: [0, 0, 0],
+        fraJudg2: [0, 0, 0],
+        fraJudg3: [0, 0, 0],
+        fraJudg4: [0, 0, 0],
+        fraJudg5: [0, 0, 0],
+
         keyFraType: [],         //  1:整数 2：分数  3：带分数   4: 小数
         isDisabled0: false,     //  分子分母输入框不可用
         isDisabled1: false,
@@ -107,7 +107,7 @@ Page({
 
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
-        
+
         curRecord: [0, 0],
         dayRecord: [0, 0],
         talRecord: [0, 0],
@@ -130,7 +130,7 @@ Page({
             {
                 values: Object.keys(config.types),
                 className: 'column1'
-                
+
             },
             {
                 values: config.types['一年级上'],
@@ -140,9 +140,9 @@ Page({
         ]
     },
 
-//
-// functions area
-//
+    //
+    // functions area
+    //
     onLoad: function (e) {
         let that = this;
 
@@ -154,7 +154,7 @@ Page({
         }
 
         wx.checkSession({
-            success: function(res) {
+            success: function (res) {
                 wx.getSetting({
                     success: res => {
                         if (res.authSetting['scope.userInfo']) {
@@ -198,7 +198,7 @@ Page({
                 })
 
             },
-            fail: function(res) {
+            fail: function (res) {
             }
         });
 
@@ -234,35 +234,35 @@ Page({
         if (ret == -1)
             return -1;
 
-        await db.collection('rank').where({
-            nickname: "王老师@文升教育",
-            grade: 1
-        }).get({
-            success: (res) => {
-                console.log(res.data);
-                // that.setData({
-                //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
-                //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
-                //     tdyRate: res.data[0].sevenrate[6],
-                //     sevenRate: res.data[0].sevenrate
-                // })
-                if ( res.data.length ) {
-                    app.globalData.tdyCorrt = res.data[0].tdycorrt;
-                    app.globalData.tdyFinih = res.data[0].tdyfinih;
-                    app.globalData.tdyRate = res.data[0].sevenrate[6];
-                    app.globalData.sevenRate = res.data[0].sevenrate;
-                    app.globalData.userGrade = res.data[0].grade;
-                    app.globalData.nickName = res.data[0].nickname;
+        // await db.collection('rank').where({
+        //     nickname: "王老师@文升教育",
+        //     grade: 1
+        // }).get({
+        //     success: (res) => {
+        //         console.log(res.data);
+        //         // that.setData({
+        //         //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
+        //         //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
+        //         //     tdyRate: res.data[0].sevenrate[6],
+        //         //     sevenRate: res.data[0].sevenrate
+        //         // })
+        //         if (res.data.length) {
+        //             app.globalData.tdyCorrt = res.data[0].tdycorrt;
+        //             app.globalData.tdyFinih = res.data[0].tdyfinih;
+        //             app.globalData.tdyRate = res.data[0].sevenrate[6];
+        //             app.globalData.sevenRate = res.data[0].sevenrate;
+        //             app.globalData.userGrade = res.data[0].grade;
+        //             app.globalData.nickName = res.data[0].nickname;
 
-                    //console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
-                    //console.log( app.globalData.userGrade );
-                } else {
-                    console.log('no match user!');
-                }
-            }
-        });
+        //             //console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
+        //             //console.log( app.globalData.userGrade );
+        //         } else {
+        //             console.log('no match user!');
+        //         }
+        //     }
+        // });
 
-        app.globalData.testID = 520;
+        // app.globalData.testID = 520;
     },
 
     onUnload() {
@@ -279,7 +279,7 @@ Page({
         }
     },
 
-    onBtnLogin: function(e) {
+    onBtnLogin: function (e) {
         console.log('user login');
         let that = this;
 
@@ -327,7 +327,7 @@ Page({
     },
 
     //  button START click
-    onBtnStart: function(e) {
+    onBtnStart: function (e) {
         let that = this;
         let type = 0, ret = 0;
 
@@ -417,13 +417,13 @@ Page({
             modJudg4: [0, 0],
             modJudg5: [0, 0],
 
-           //  分数判定记录
+            //  分数判定记录
             fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
             fraJudg1: [0, 0, 0],
             fraJudg2: [0, 0, 0],
             fraJudg3: [0, 0, 0],
             fraJudg4: [0, 0, 0],
-            fraJudg5: [0, 0, 0], 
+            fraJudg5: [0, 0, 0],
 
             curJudg: [0, 0, 0, 0, 0, 0]
         });
@@ -440,7 +440,7 @@ Page({
         let usrExist = false;
 
         // stop timer
-        if (that.data.enTimer) 
+        if (that.data.enTimer)
             that.timerClear();
 
         // stop music
@@ -474,16 +474,16 @@ Page({
             correctCount++;
         } else {
             db.collection('errcol').add({
-            data: {
-                uid: that.data.openID,
-                type: that.data.typeDetail,
-                ques: that.data.ques1,
-            },
-            success: function (res) {
-                //console.log(res)
-            },
-            fail: console.error,
-            complete: console.log
+                data: {
+                    uid: that.data.openID,
+                    type: that.data.typeDetail,
+                    ques: that.data.ques1,
+                },
+                success: function (res) {
+                    //console.log(res)
+                },
+                fail: console.error,
+                complete: console.log
             })
         }
 
@@ -504,7 +504,7 @@ Page({
             })
         }
 
-        if (that.data.tickColor3 == 'red') { 
+        if (that.data.tickColor3 == 'red') {
             correctCount++;
         } else {
             db.collection('errcol').add({
@@ -554,9 +554,9 @@ Page({
                 complete: console.log
             })
         }
-        
+
         //  更新用户积分记录
-        that.updateRank( );
+        that.updateRank(correctCount);
 
         that.setData({
             enSwitch: false,
@@ -578,45 +578,49 @@ Page({
     },
 
     //  add or update user RANK record
-    updateRank: function () {
+    updateRank: function (correctCount) {
         let that = this;
-        let usrData;
-        //const _ = db.command
         let curRate = 0;
 
         //  更新答题积分记录
-        usrData = db.collection('rank').where({
-            uid: that.data.openID
+        console.log(correctCount);
+
+        db.collection('rank').where({
+            _id: "f149f6775e9d9f37008ef0cc15204904",
         }).get({
             success: res => {
-
-                if (res.data.length) {  //   有 则更新记录
+                if (res.data.length) {
                     //更新记录
-                    curRate = Math.round(that.data.correctCount / 6);
+                    let curCorrt = correctCount;
+                    let preCorrt = res.data[0].tdycorrt;
+                    let preFinih = res.data[0].tdyfinih;
+                    let curRate = Math.round((preCorrt + curCorrt) / (preFinih + 6) * 100);
 
-                    db.collection('rank').where({
-                        uid: that.data.openID
+                    wx.cloud.callFunction({
+                        name: 'upRank',
+                        data: {
+                            id: "f149f6775e9d9f37008ef0cc15204904",
+                            correct: curCorrt,
+                            rate: curRate
+                        }
+                    }).then(res => {
+
                     })
-                        .update({
-                            data: {
-                                tdycorrt: that.data.correctCount,
-                                tdyfinih: _.inc(6),
-                                point: _.inc(that.data.correctCount * 2 + 3),
-                                sevenrate: [0, 0, 0, 0, 0, 0, curRate]
-                            },
-                        })
 
                 } else {    //  积分库内无该用户则新增
-                    curRate = Math.round(that.data.correctCount / 6);
+                    let curRate = Math.round(correctCount / 6 * 100);
 
                     db.collection('rank').add({
                         data: {
                             uid: that.data.openID,
                             nickname: that.data.userInfo.nickName,
                             grade: that.data.userGrade,
-                            tdycorrt: that.data.correctCount,
+
+                            tdycorrt: correctCount,
                             tdyfinih: 6,
-                            point: that.data.correctCount * 2 + 6,
+                            tolcorrt: correctCount,
+                            tolfinih: 6,
+                            point: correctCount * 2 + 6,
                             sevenrate: [0, 0, 0, 0, 0, 0, curRate]
                         },
                         success: res => {
@@ -630,13 +634,13 @@ Page({
         })
     },
 
-//  integer and float judgement
-    onBluAns0: function(e) {
+    //  integer and float judgement
+    onBluAns0: function (e) {
         let that = this;
-        
+
         switch (that.data.keyType) {
             case 0:
-                if (parseInt( e.detail.value ) === that.data.keys[0]) {
+                if (parseInt(e.detail.value) === that.data.keys[0]) {
                     that.setData({
                         tickColor0: 'red',
                     });
@@ -644,7 +648,7 @@ Page({
                     // that.data.curJudg[0] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[0]) {
+                if (parseInt(e.detail.value) === that.data.keys[0]) {
                     that.data.modJudg0[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg0[1] == 1) {
@@ -678,7 +682,7 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 //console.log(typeof (e.detail.value), typeof (that.data.keys[1]))
-                if (parseInt( e.detail.value ) === that.data.keys[1]) {
+                if (parseInt(e.detail.value) === that.data.keys[1]) {
                     that.setData({
                         tickColor1: 'red',
                     });
@@ -686,7 +690,7 @@ Page({
                     // that.data.curJudg[1] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[1]) {
+                if (parseInt(e.detail.value) === that.data.keys[1]) {
                     that.data.modJudg1[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg1[1] == 1) {
@@ -721,7 +725,7 @@ Page({
 
         switch (that.data.keyType) {
             case 0:
-                if (parseInt( e.detail.value ) === that.data.keys[2]) {
+                if (parseInt(e.detail.value) === that.data.keys[2]) {
                     that.setData({
                         tickColor2: 'red',
                     });
@@ -729,7 +733,7 @@ Page({
                     // that.data.curJudg[2] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[2]) {
+                if (parseInt(e.detail.value) === that.data.keys[2]) {
                     that.data.modJudg2[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg2[1] == 1) {
@@ -764,7 +768,7 @@ Page({
 
         switch (that.data.keyType) {
             case 0:
-                if (parseInt( e.detail.value ) === that.data.keys[3]) {
+                if (parseInt(e.detail.value) === that.data.keys[3]) {
                     that.setData({
                         tickColor3: 'red',
                     });
@@ -772,7 +776,7 @@ Page({
                     // that.data.curJudg[3] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[3]) {
+                if (parseInt(e.detail.value) === that.data.keys[3]) {
                     that.data.modJudg3[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg3[1] == 1) {
@@ -807,7 +811,7 @@ Page({
 
         switch (that.data.keyType) {
             case 0:
-                if (parseInt( e.detail.value ) === that.data.keys[4]) {
+                if (parseInt(e.detail.value) === that.data.keys[4]) {
                     that.setData({
                         tickColor4: 'red',
                     });
@@ -815,7 +819,7 @@ Page({
                     // that.data.curJudg[4] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[4]) {
+                if (parseInt(e.detail.value) === that.data.keys[4]) {
                     that.data.modJudg4[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg4[1] == 1) {
@@ -850,7 +854,7 @@ Page({
 
         switch (that.data.keyType) {
             case 0:
-                if (parseInt( e.detail.value ) === that.data.keys[5]) {
+                if (parseInt(e.detail.value) === that.data.keys[5]) {
                     that.setData({
                         tickColor5: 'red',
                     });
@@ -858,7 +862,7 @@ Page({
                     // that.data.curJudg[5] = 2;
                 }
             case 1:
-                if (parseInt( e.detail.value ) === that.data.keys[5]) {
+                if (parseInt(e.detail.value) === that.data.keys[5]) {
                     that.data.modJudg5[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg5[1] == 1) {
@@ -888,10 +892,10 @@ Page({
         return 0;
     },
 
-    onBluMod0: function(e) {
+    onBluMod0: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[0]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[0]) {
             that.data.modJudg0[1] = 1        //余数部分判定
             if (that.data.modJudg0[0] == 1) {
                 this.setData({
@@ -906,7 +910,7 @@ Page({
     onBluMod1: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[1]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[1]) {
             that.data.modJudg1[1] = 1        //余数部分判定
             if (that.data.modJudg1[0] == 1) {
                 this.setData({
@@ -921,7 +925,7 @@ Page({
     onBluMod2: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[2]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[2]) {
             that.data.modJudg2[1] = 1        //余数部分判定
             if (that.data.modJudg2[0] == 1) {
                 this.setData({
@@ -936,7 +940,7 @@ Page({
     onBluMod3: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[3]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[3]) {
             that.data.modJudg3[1] = 1        //余数部分判定
             if (that.data.modJudg3[0] == 1) {
                 this.setData({
@@ -951,7 +955,7 @@ Page({
     onBluMod4: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[4]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[4]) {
             that.data.modJudg4[1] = 1        //余数部分判定
             if (that.data.modJudg4[0] == 1) {
                 this.setData({
@@ -966,7 +970,7 @@ Page({
     onBluMod5: function (e) {
         let that = this;
 
-        if (parseInt( e.detail.value ) === that.data.keyMods[5]) {
+        if (parseInt(e.detail.value) === that.data.keyMods[5]) {
             that.data.modJudg5[1] = 1        //余数部分判定
             if (that.data.modJudg5[0] == 1) {
                 this.setData({
@@ -998,7 +1002,7 @@ Page({
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
-                //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
+                    //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
 
                     this.setData({
                         tickColor0: 'red',
@@ -1008,16 +1012,16 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2 :    //答案为纯分数时，整数部分为空
+            case 2:    //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[0] == 0)
-                    that.data.fraJudg0[0] = 1;                
+                    that.data.fraJudg0[0] = 1;
                 break;
-            case 3 :
+            case 3:
                 if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
-                        that.setData({
-                            tickColor0: 'red',
-                        });
-                    }
+                    that.setData({
+                        tickColor0: 'red',
+                    });
+                }
                 break;
             default:
                 break;
@@ -1061,7 +1065,7 @@ Page({
         //console.log(that.data.keyFm[0]);
 
         if (e.detail.value == that.data.keyFm[0]) {
-           // that.data.isKey0Fm = true;
+            // that.data.isKey0Fm = true;
             that.data.fraJudg0[2] = 1;
         }
 
@@ -1318,7 +1322,7 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2 :    //答案为纯分数时，整数部分为空
+            case 2:    //答案为纯分数时，整数部分为空
                 console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[3] == 0) {
                     that.data.fraJudg3[0] = 1;
@@ -1327,7 +1331,7 @@ Page({
                 }
 
                 break;
-            case 3 :
+            case 3:
                 console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[3] == e.detail.value) {
                     that.data.fraJudg3[0] = 1;
@@ -1342,7 +1346,7 @@ Page({
                 }
                 break;
             default:
-                break;        
+                break;
         }
     },
 
@@ -1356,7 +1360,7 @@ Page({
         }
 
         if (that.data.keyFraType[3] == 2) {
-           if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+            if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
@@ -1379,7 +1383,7 @@ Page({
         }
 
         if (that.data.keyFraType[3] == 2) {
-           if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+            if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
                 that.setData({
                     tickColor3: 'red',
                 });
@@ -1681,7 +1685,7 @@ Page({
                 break;
         }
 
-        this.setData({ 
+        this.setData({
             showGrade: false,
             txtScreenGrade: strGrade,
         });
@@ -1706,7 +1710,7 @@ Page({
 
         that.data.indexType = e.detail.index;
 
-        this.setData({ 
+        this.setData({
             txtScreenGrade: e.detail.value[0],
             txtScreenType: e.detail.value[1],
             showType: false
@@ -1749,14 +1753,14 @@ Page({
 
         if (sec < 10)
             secVal = '0' + sec;            // 少于10补零
-         else 
-            secVal = sec;        
+        else
+            secVal = sec;
 
         that.data.second = sec + 1;
 
         if (sec >= 60) {
             sec = 0,
-            that.data.second = 0;       // 满60归0
+                that.data.second = 0;       // 满60归0
             mutVal = mut + 1;
 
             if (mut >= 10)
@@ -1774,7 +1778,7 @@ Page({
         let ret;
         let idxType = that.data.indexType;
 
-        switch (idxType[0]){        //  FIXME: double switch
+        switch (idxType[0]) {        //  FIXME: double switch
             case 0:             //  一年级上
                 switch (idxType[1]) {
                     case 0:     // 5以内加法或减法
@@ -1833,7 +1837,7 @@ Page({
                         that.data.typeDetail = 15;
                         break;
                     default:
-                        break;                    
+                        break;
                 }
                 // console.log(that.data.keys);
                 break;
