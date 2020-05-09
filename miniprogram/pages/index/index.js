@@ -158,42 +158,42 @@ Page({
                 wx.getSetting({
                     success: res => {
                         if (res.authSetting['scope.userInfo']) {
-                            wx.getUserInfo({
-                                success: res => {
-                                    this.setData({
-                                        avatarUrl: res.userInfo.avatarUrl,
-                                        userInfo: res.userInfo
-                                    })
-                                }
-                            })
+                            // wx.getUserInfo({
+                            //     success: res => {
+                            //         this.setData({
+                            //             avatarUrl: res.userInfo.avatarUrl,
+                            //             userInfo: res.userInfo
+                            //         })
+                            //     }
+                            // })
                         }
 
                         // 获取用户 OpenID
-                        wx.cloud.callFunction({
-                            name: 'login',
-                            data: {},
-                            success: res => {
-                                console.log('onload get id', res.result.openid);
-                                //app.globalData.openid = res.result.openid;
-                                that.data.openID = res.result.openid;
+                        // wx.cloud.callFunction({
+                        //     name: 'login',
+                        //     data: {},
+                        //     success: res => {
+                        //         console.log('onload get id', res.result.openid);
+                        //         //app.globalData.openid = res.result.openid;
+                        //         that.data.openID = res.result.openid;
 
-                                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-                                db.collection('rank').where({
-                                    uid: that.data.openID
-                                }).get({
-                                    success: res => {
-                                        //console.log(res.data)
-                                        //初始化用户所在年级
-                                        app.globalData.userGrade = res.data.grade;
-                                    }
-                                })
+                        //         //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+                        //         db.collection('rank').where({
+                        //             uid: that.data.openID
+                        //         }).get({
+                        //             success: res => {
+                        //                 //console.log(res.data)
+                        //                 //初始化用户所在年级
+                        //                 app.globalData.userGrade = res.data.grade;
+                        //             }
+                        //         })
 
-                            },
-                            fail: err => {
-                                console.error('[云函数] [login] 调用失败', err);
+                        //     },
+                        //     fail: err => {
+                        //         console.error('[云函数] [login] 调用失败', err);
 
-                            }
-                        })
+                        //     }
+                        // })
                     }
                 })
 
@@ -224,7 +224,7 @@ Page({
         that.data.second = 0;
     },
 
-    async onReady() {
+    onReady() {
         let that = this;
         let ret = 0;
 
@@ -270,6 +270,8 @@ Page({
     },
 
     onGetUserInfo: function (e) {
+        let that = this;
+
         if (!this.data.logged && e.detail.userInfo) {
             this.setData({
                 logged: true,
@@ -277,6 +279,84 @@ Page({
                 userInfo: e.detail.userInfo
             })
         }
+
+        // wx.getSetting({
+        //     success: res => {
+        //         if (res.authSetting['scope.userInfo']) {
+        //             // wx.getUserInfo({
+        //             //     success: res => {
+        //             //         this.setData({
+        //             //             avatarUrl: res.userInfo.avatarUrl,
+        //             //             userInfo: res.userInfo
+        //             //         })
+        //             //     }
+        //             // })
+        //         }
+
+        //获取用户 OpenID
+        wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+                //console.log('onload get id', res.result.openid);
+
+                app.globalData.openid = res.result.openid;
+                //that.data.openID = res.result.openid;
+                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+                db.collection('rank').where({
+                    uid: res.result.openid,
+                    grade: 11,
+                    nickname: '王老师@文升教育'
+                }).get({
+                    success: res => {
+                        console.log(res.data)
+                        if (res.data.length == 1) {
+                            //用库中数据初始化用户所在年级
+                            app.globalData.userGrade = res.data[0].grade;
+
+                            switch (res.data[0].grade - 1) {
+                                case 0:
+                                    strGrade = '一年级';
+                                    break;
+                                case 1:
+                                    strGrade = '二年级';
+                                    break;
+                                case 2:
+                                    strGrade = '三年级';
+                                    break;
+                                case 3:
+                                    strGrade = '四年级';
+                                    break;
+                                case 4:
+                                    strGrade = '五年级';
+                                    break;
+                                case 5:
+                                    strGrade = '六年级';
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            this.setData({
+                                txtScreenGrade: strGrade,
+                            });
+
+                        } else {
+                            //pop窗口选择年级
+                            that.setData({ showGrade: true });
+                        }
+                    }
+                })
+
+            },
+            fail: err => {
+                console.error('[云函数] [login] 调用失败', err);
+
+            }
+        })
+        //     }
+        // })
+
     },
 
     onBtnLogin: function (e) {
@@ -1624,21 +1704,21 @@ Page({
         let that = this;
 
         // 获取用户 OpenID
-        wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-                //console.log('[云函数] [login] user openid: ', res.result.openid);
-                app.globalData.openid = res.result.openid;
-                that.data.openID = res.result.openid;
-                // wx.navigateTo({
-                //     url: '../userConsole/userConsole',
-                // })
-            },
-            fail: err => {
-                console.error('[云函数] [login] 调用失败', err);
-            }
-        })
+        // wx.cloud.callFunction({
+        //     name: 'login',
+        //     data: {},
+        //     success: res => {
+        //         //console.log('[云函数] [login] user openid: ', res.result.openid);
+        //         app.globalData.openid = res.result.openid;
+        //         that.data.openID = res.result.openid;
+        //         // wx.navigateTo({
+        //         //     url: '../userConsole/userConsole',
+        //         // })
+        //     },
+        //     fail: err => {
+        //         console.error('[云函数] [login] 调用失败', err);
+        //     }
+        // })
 
         that.setData({ showGrade: true });
     },
@@ -1692,6 +1772,17 @@ Page({
         that.data.userGrade = index + 1;
 
         //console.log(that.data.userGrade);
+        db.collection('rank').add({
+            data: {
+                uid: that.data.openID,
+                grade: that.data.userGrade
+            },
+            success: function (res) {
+                //console.log(res)
+            },
+            fail: console.error,
+            complete: console.log
+        })
     },
 
     onCancelGrade() {

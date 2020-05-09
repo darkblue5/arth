@@ -34,12 +34,13 @@
                     <view class="height-150"></view>
                 </van-col>
                 <van-col span="5">
-                    <view class="vw-d-mr" bindtap="onTapVwGrade">{{txtScreenGrade}}</view>
+                    <!-- <view class="vw-d-mr" bindtap="onTapVwGrade">{{txtScreenGrade}}</view> -->
+                    <view class="vw-d-mr" >{{txtScreenGrade}}</view>
                 </van-col>
                 <van-col span="2">
                     <view class="vw-d-rr">
                         <!-- <van-button round type="default">登陆</van-button> -->
-                        <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" bindtap="onBtnLogin" size="default"></button>
+                        <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
                     </view>
                 </van-col>
             </van-row>

@@ -1,10 +1,6 @@
 //app.js
 App({
-
-    // globalData: {
-
-    // },
-
+    
     onLaunch: function () {
 
         if (!wx.cloud) {
@@ -24,10 +20,9 @@ App({
             userGrade: -1,
             tdyCorrt: 0,    //  本日正确
             tdyFinih: 0,    //  本日完成
-            tdyRate: 0,
-            sevenRate: [],
+            //tdyRate: 0,
+            sevenRate: [],  //  本周正确率
             nickName: '',
-           // testID: 0
         }
     }
 })
