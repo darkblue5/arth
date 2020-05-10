@@ -5,13 +5,13 @@
         <view class="page-section page-section-spacing swiper">
             <swiper class="swp-pic" indicator-dots="true" autoplay="true" circular="true" interval="4000" duration="1000" previous-margin="0px" next-margin="0px">
                 <swiper-item>
-                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/gsmc.png" />
+                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/comp.png" />
                 </swiper-item>
                 <swiper-item>
                     <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/scp.png" />
                 </swiper-item>
                 <swiper-item>
-                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/yong.png" />
+                    <van-image width="320" height="180" src="cloud://ascpg.6173-ascpg-1301277680/newedu.png" />
                 </swiper-item>
             </swiper>
         </view>
