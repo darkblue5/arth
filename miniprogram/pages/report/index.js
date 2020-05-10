@@ -185,11 +185,8 @@ Page({
                         name: '正确率',
                         type: 'line',
                         smooth: false,
-                        //data: [15, 2, 30, 16, 10, 17, 15, 22, 27, 9]
-                        //data: [72, 65, 38, 90, 27, 83, 66, 79, 100]
-                        //data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
                         data: app.globalData.sevenRate
-                        //data: this.data.sevenRate
+                        //data: sevenRate
                     }]
 
                 };
@@ -224,10 +221,8 @@ Page({
         //     return error;
         // }
 
-	   // console.log('on load', app.globalData.tdycorrt, app.globalData.tdyfinih);
-    //    console.log('on load', app.globalData.tdyCorrt, app.globalData.tdyFinih);
-    //    console.log(app.globalData.testID);
-    //     console.log(app.globalData.userGrade);
+        console.log('REPORT, app.globalData.nickName', app.globalData.nickName);
+
         that.setData ({
             nickName: app.globalData.nickName + ' ',
             grade: app.globalData.userGrade + ' '
@@ -268,11 +263,9 @@ Page({
                 .limit(4)
                 .end();
             //console.log(res.list[2]);
-            //console.log( typeof(res.list));
 
             that.setData({
                 rank: res.list
-                //rank: res.data
             });
         } catch (error) {
             return error;

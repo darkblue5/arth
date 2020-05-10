@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-import Notify from '@vant/weapp/notify/notify';
+//import Notify from '@vant/weapp/notify/notify';
 import * as config from '../config/config.js';
 
 const app = getApp();
@@ -11,6 +11,7 @@ Page({
         activeKey: 0,
         recGrade: 3,       //  当前用户所在年级
         nickName: '小明',
+        openID: '',
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
         gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
@@ -36,11 +37,14 @@ Page({
         let i = 0;
         let quesCount = config.typeIndex[that.data.recGrade].length;
 
+        that.data.openID = app.globalData.openid;
+
         for ( i=0; i<quesCount; i++ ) {
             quesType[i] = config.typeIndex[that.data.recGrade][i];
         }
       
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[0]
         }).get({
             success: res => {
@@ -52,6 +56,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[1]
         }).get({
             success: res => {
@@ -63,6 +68,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[2]
         }).get({
             success: res => {
@@ -74,6 +80,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[3]
         }).get({
             success: res => {
@@ -85,6 +92,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[4]
         }).get({
             success: res => {
@@ -96,6 +104,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[5]
         }).get({
             success: res => {
@@ -107,6 +116,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[6]
         }).get({
             success: res => {
@@ -118,6 +128,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[7]
         }).get({
             success: res => {
@@ -129,6 +140,7 @@ Page({
         })
 
         db.collection('errcol').where({
+            _openid: that.data.openID,
             type: quesType[8]
         }).get({
             success: res => {

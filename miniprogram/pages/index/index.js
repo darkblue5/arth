@@ -26,11 +26,11 @@ let init;   // timer
 Page({
     data: {
         avatarUrl: '../../images/user-unlogin.png',
-        hasUserInfo: false,     //  用户登状态标识
+        hasUserInfo: false,     //  用户信息标识
         //canIUse: wx.canIUse('button.open-type.getUserInfo'),    //  开放式授权检测
 
         userInfo: {},
-        logged: false,
+        logged: false,          //  用户是否登陆
         takeSession: false,
         requestResult: '',
         openID: '',
@@ -60,7 +60,7 @@ Page({
         keyType: 0,         //  0： 整数    1：整数带余数   2：浮点数   3：分数
         typeDetail: 0,      //  试題细分类型 与picker初始化数组对应
 
-        ques0: '',
+        ques0: '',          //  无须编码部分试题字符串
         ques1: '',
         ques2: '',
         ques3: '',
@@ -74,28 +74,28 @@ Page({
         ans4: '',
         ans5: '',
 
-        keys: [],
-        keyMods: [],
+        keys: [],               //  整数答案承接数组
+        keyMods: [],            //  余数答案承接数组
 
-        modJudg0: [0, 0],       //  0：错 1：对，前整数，后余数
+        modJudg0: [0, 0],       //  整数答案判定结果数对，0：错 1：对，前整数，后余数
         modJudg1: [0, 0],
         modJudg2: [0, 0],
         modJudg3: [0, 0],
         modJudg4: [0, 0],
         modJudg5: [0, 0],
 
-        keyZs: [],
+        keyZs: [],              //  分数答案数组
         keyFz: [],
         keyFm: [],
 
-        fraJudg0: [0, 0, 0],    //  0：错 1：对，一整数部分，二分子部分，三分母部分
+        fraJudg0: [0, 0, 0],    //  分数答案判定结果数对，0：错 1：对，一整数部分，二分子部分，三分母部分
         fraJudg1: [0, 0, 0],
         fraJudg2: [0, 0, 0],
         fraJudg3: [0, 0, 0],
         fraJudg4: [0, 0, 0],
         fraJudg5: [0, 0, 0],
 
-        keyFraType: [],         //  1:整数 2：分数  3：带分数   4: 小数
+        keyFraType: [],         //  综合类答案类型标识，1:整数 2：分数  3：带分数   4: 小数
         isDisabled0: false,     //  分子分母输入框不可用
         isDisabled1: false,
         isDisabled2: false,
@@ -103,16 +103,16 @@ Page({
         isDisabled4: false,
         isDisabled5: false,
 
-        curJudg: [0, 0, 0, 0, 0, 0],     //  0 未完成 1 正确 2 错误
+        curJudg: [0, 0, 0, 0, 0, 0],     //  6道题最终正误判定结果，0 未完成 1 正确 2 错误
 
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
 
-        curRecord: [0, 0],
-        dayRecord: [0, 0],
-        talRecord: [0, 0],
+        // curRecord: [0, 0],
+        // dayRecord: [0, 0],
+        // talRecord: [0, 0],
 
-        showGrade: false,
+        showGrade: false,   //  pop弹窗开关
         showType: false,
 
         txtScreenGrade: '一年级上',
@@ -123,7 +123,7 @@ Page({
         indexType: [],              //  picker 控件试题类型索引
         txtType: [],                //  picker 控件題型字符串 
 
-        usrExist: false,            //  排名表中用户记录是否存在
+        //usrExist: false,            //  排名表中用户记录是否存在
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
         type: [
@@ -153,54 +153,54 @@ Page({
             return -1;
         }
 
-        wx.checkSession({
-            success: function (res) {
-                wx.getSetting({
-                    success: res => {
-                        if (res.authSetting['scope.userInfo']) {
-                            // wx.getUserInfo({
-                            //     success: res => {
-                            //         this.setData({
-                            //             avatarUrl: res.userInfo.avatarUrl,
-                            //             userInfo: res.userInfo
-                            //         })
-                            //     }
-                            // })
-                        }
+        // wx.checkSession({
+        //     success: function (res) {
+        //         wx.getSetting({
+        //             success: res => {
+        //                 if (res.authSetting['scope.userInfo']) {
+        //                     // wx.getUserInfo({
+        //                     //     success: res => {
+        //                     //         this.setData({
+        //                     //             avatarUrl: res.userInfo.avatarUrl,
+        //                     //             userInfo: res.userInfo
+        //                     //         })
+        //                     //     }
+        //                     // })
+        //                 }
 
-                        // 获取用户 OpenID
-                        // wx.cloud.callFunction({
-                        //     name: 'login',
-                        //     data: {},
-                        //     success: res => {
-                        //         console.log('onload get id', res.result.openid);
-                        //         //app.globalData.openid = res.result.openid;
-                        //         that.data.openID = res.result.openid;
+        //                 // 获取用户 OpenID
+        //                 // wx.cloud.callFunction({
+        //                 //     name: 'login',
+        //                 //     data: {},
+        //                 //     success: res => {
+        //                 //         console.log('onload get id', res.result.openid);
+        //                 //         //app.globalData.openid = res.result.openid;
+        //                 //         that.data.openID = res.result.openid;
 
-                        //         //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-                        //         db.collection('rank').where({
-                        //             uid: that.data.openID
-                        //         }).get({
-                        //             success: res => {
-                        //                 //console.log(res.data)
-                        //                 //初始化用户所在年级
-                        //                 app.globalData.userGrade = res.data.grade;
-                        //             }
-                        //         })
+        //                 //         //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+        //                 //         db.collection('rank').where({
+        //                 //             uid: that.data.openID
+        //                 //         }).get({
+        //                 //             success: res => {
+        //                 //                 //console.log(res.data)
+        //                 //                 //初始化用户所在年级
+        //                 //                 app.globalData.userGrade = res.data.grade;
+        //                 //             }
+        //                 //         })
 
-                        //     },
-                        //     fail: err => {
-                        //         console.error('[云函数] [login] 调用失败', err);
+        //                 //     },
+        //                 //     fail: err => {
+        //                 //         console.error('[云函数] [login] 调用失败', err);
 
-                        //     }
-                        // })
-                    }
-                })
+        //                 //     }
+        //                 // })
+        //             }
+        //         })
 
-            },
-            fail: function (res) {
-            }
-        });
+        //     },
+        //     fail: function (res) {
+        //     }
+        // });
 
         //  若为新用户，提示选择年级
         //  与读取旧用户记录的异步问题
@@ -234,34 +234,6 @@ Page({
         if (ret == -1)
             return -1;
 
-        // await db.collection('rank').where({
-        //     nickname: "王老师@文升教育",
-        //     grade: 1
-        // }).get({
-        //     success: (res) => {
-        //         console.log(res.data);
-        //         // that.setData({
-        //         //     tdyCorrt: res.data[0].tdycorrt,    //  本日正确
-        //         //     tdyFinih: res.data[0].tdyfinih,    //  本日完成
-        //         //     tdyRate: res.data[0].sevenrate[6],
-        //         //     sevenRate: res.data[0].sevenrate
-        //         // })
-        //         if (res.data.length) {
-        //             app.globalData.tdyCorrt = res.data[0].tdycorrt;
-        //             app.globalData.tdyFinih = res.data[0].tdyfinih;
-        //             app.globalData.tdyRate = res.data[0].sevenrate[6];
-        //             app.globalData.sevenRate = res.data[0].sevenrate;
-        //             app.globalData.userGrade = res.data[0].grade;
-        //             app.globalData.nickName = res.data[0].nickname;
-
-        //             //console.log(app.globalData.tdyCorrt, app.globalData.tdyFinih);
-        //             //console.log( app.globalData.userGrade );
-        //         } else {
-        //             console.log('no match user!');
-        //         }
-        //     }
-        // });
-
         // app.globalData.testID = 520;
     },
 
@@ -271,6 +243,8 @@ Page({
 
     onGetUserInfo: function (e) {
         let that = this;
+        let gradeIndex = -1;
+        let strGrade = '';
 
         if (!this.data.logged && e.detail.userInfo) {
             this.setData({
@@ -278,7 +252,11 @@ Page({
                 avatarUrl: e.detail.userInfo.avatarUrl,
                 userInfo: e.detail.userInfo
             })
+            //console.log('INDEX, app.globalData.nickName', e.detail.userInfo.nickName);
+
+            app.globalData.nickName = e.detail.userInfo.nickName;
         }
+        //console.log('INDEX, app.globalData.nickName', app.globalData.nickName);
 
         // wx.getSetting({
         //     success: res => {
@@ -298,22 +276,20 @@ Page({
             name: 'login',
             data: {},
             success: res => {
-                //console.log('onload get id', res.result.openid);
+                //console.log('INDEX, res.result.openid', res.result.openid);
 
                 app.globalData.openid = res.result.openid;
-                //that.data.openID = res.result.openid;
+                that.data.openID = res.result.openid;
                 //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
                 db.collection('rank').where({
-                    uid: res.result.openid,
-                    grade: 11,
-                    nickname: '王老师@文升教育'
+                    //_openid: that.data.openID
+                    _id: 'f149f6775e9d9f37008ef0cc15204904'
                 }).get({
                     success: res => {
-                        console.log(res.data)
-                        if (res.data.length == 1) {
+                        if (res.data.length != 0) {
                             //用库中数据初始化用户所在年级
                             app.globalData.userGrade = res.data[0].grade;
-
+                        
                             switch (res.data[0].grade - 1) {
                                 case 0:
                                     strGrade = '一年级';
@@ -338,9 +314,18 @@ Page({
                             }
 
                             this.setData({
-                                txtScreenGrade: strGrade,
+                                txtScreenGrade: strGrade,                                
                             });
 
+                            app.globalData.tdyCorrt = res.data[0].tdycorrt;
+                            app.globalData.tdyFinih = res.data[0].tdyfinih;
+                            app.globalData.tdyRate = res.data[0].sevenrate[6];
+                            app.globalData.sevenRate = res.data[0].sevenrate;
+                            app.globalData.userGrade = res.data[0].grade;
+                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+
+                            console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
+                            
                         } else {
                             //pop窗口选择年级
                             that.setData({ showGrade: true });
@@ -359,52 +344,52 @@ Page({
 
     },
 
-    onBtnLogin: function (e) {
-        console.log('user login');
-        let that = this;
+    // onBtnLogin: function (e) {
+    //     console.log('user login');
+    //     let that = this;
 
-        // 获取用户 OpenID
-        wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-                console.log('onload get id', res.result.openid);
-                //app.globalData.openid = res.result.openid;
-                that.data.openID = res.result.openid;
+    //     // 获取用户 OpenID
+    //     wx.cloud.callFunction({
+    //         name: 'login',
+    //         data: {},
+    //         success: res => {
+    //             console.log('onload get id', res.result.openid);
+    //             //app.globalData.openid = res.result.openid;
+    //             that.data.openID = res.result.openid;
 
-                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-                db.collection('rank').where({
-                    uid: that.data.openID
-                }).get({
-                    success: res => {
-                        console.log(res.data)
-                        //初始化用户所在年级
-                        //app.globalData.userGrade = res.data.grade;
-                        app.globalData.userGrade = 2;
+    //             //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
+    //             db.collection('rank').where({
+    //                 uid: that.data.openID
+    //             }).get({
+    //                 success: res => {
+    //                     console.log(res.data)
+    //                     //初始化用户所在年级
+    //                     //app.globalData.userGrade = res.data.grade;
+    //                     app.globalData.userGrade = 2;
 
-                        // db.collection('rank').add({
-                        //     data: {
-                        //         uid: that.data.openID,
-                        //     },
-                        //     success: function (res) {
-                        //         //console.log(res)
-                        //     },
-                        //     fail: console.error,
-                        //     complete: console.log
-                        // })     
+    //                     // db.collection('rank').add({
+    //                     //     data: {
+    //                     //         uid: that.data.openID,
+    //                     //     },
+    //                     //     success: function (res) {
+    //                     //         //console.log(res)
+    //                     //     },
+    //                     //     fail: console.error,
+    //                     //     complete: console.log
+    //                     // })     
 
-                    }
-                })
+    //                 }
+    //             })
 
-            },
-            fail: err => {
-                console.error('[云函数] [login] 调用失败', err);
+    //         },
+    //         fail: err => {
+    //             console.error('[云函数] [login] 调用失败', err);
 
-            }
-        });
+    //         }
+    //     });
 
-        console.log(app.globalData.userGrade);
-    },
+    //     console.log(app.globalData.userGrade);
+    // },
 
     //  button START click
     onBtnStart: function (e) {
@@ -517,7 +502,7 @@ Page({
         let tdyRate = 0, tdyFinish = 0;
         let len;
         let val1, val2, val3;
-        let usrExist = false;
+        //let usrExist = false;
 
         // stop timer
         if (that.data.enTimer)
@@ -538,7 +523,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques0,
                 },
@@ -555,7 +540,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques1,
                 },
@@ -572,7 +557,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques2,
                 },
@@ -589,7 +574,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques3,
                 },
@@ -606,7 +591,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques4,
                 },
@@ -623,7 +608,7 @@ Page({
         } else {
             db.collection('errcol').add({
                 data: {
-                    uid: that.data.openID,
+                    openID: that.data.openID,
                     type: that.data.typeDetail,
                     ques: that.data.ques5,
                 },
@@ -663,10 +648,11 @@ Page({
         let curRate = 0;
 
         //  更新答题积分记录
-        console.log(correctCount);
+        //console.log(correctCount);
 
         db.collection('rank').where({
-            _id: "f149f6775e9d9f37008ef0cc15204904",
+            _openid: that.data.openID
+            //uid: app.globalData.openid
         }).get({
             success: res => {
                 if (res.data.length) {
@@ -679,12 +665,10 @@ Page({
                     wx.cloud.callFunction({
                         name: 'upRank',
                         data: {
-                            id: "f149f6775e9d9f37008ef0cc15204904",
+                            openID: app.globalData.openid,
                             correct: curCorrt,
                             rate: curRate
                         }
-                    }).then(res => {
-
                     })
 
                 } else {    //  积分库内无该用户则新增
@@ -692,7 +676,7 @@ Page({
 
                     db.collection('rank').add({
                         data: {
-                            uid: that.data.openID,
+                            openID: that.data.openID,
                             nickname: that.data.userInfo.nickName,
                             grade: that.data.userGrade,
 
@@ -1374,8 +1358,7 @@ Page({
         }
     },
 
-    //  check answer 3   
-
+    //  check answer 3
     onInpBlurAns3Zs: function (e) {
         let that = this;
 
@@ -1701,7 +1684,7 @@ Page({
     },
 
     onTapVwGrade: function (e) {
-        let that = this;
+        //let that = this;
 
         // 获取用户 OpenID
         // wx.cloud.callFunction({
@@ -1720,7 +1703,7 @@ Page({
         //     }
         // })
 
-        that.setData({ showGrade: true });
+        //that.setData({ showGrade: true });
     },
 
     onPopTypeClose() {
@@ -1774,7 +1757,7 @@ Page({
         //console.log(that.data.userGrade);
         db.collection('rank').add({
             data: {
-                uid: that.data.openID,
+                openID: that.data.openID,
                 grade: that.data.userGrade
             },
             success: function (res) {
