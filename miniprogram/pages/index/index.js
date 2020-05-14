@@ -282,8 +282,8 @@ Page({
                 that.data.openID = res.result.openid;
                 //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
                 db.collection('rank').where({
-                    //_openid: that.data.openID
-                    _id: 'f149f6775e9d9f37008ef0cc15204904'
+                    _openid: that.data.openID
+                    //_id: 'f149f6775e9d9f37008ef0cc15204904'
                 }).get({
                     success: res => {
                         if (res.data.length != 0) {

@@ -32,6 +32,47 @@
     padding: 10rpx;
 }
 
+/* 分数表达式 */
+
+.shizi {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    height: 80rpx;
+}
+
+.fenshu {
+    display: flex;
+    flex-direction: row;
+    margin-right: 2rpx;
+    /* width: 200rpx; *//* height: 80rpx; */
+}
+
+.zsbufen {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-right: 2rpx;
+    /* width: 100rpx; *//* height: 80rpx; */
+}
+
+.fsbufen {
+    /* width: 100rpx; */
+    padding-right: 2rpx;
+}
+
+.fenzi {
+    /* height: 40rpx; *//* align-items: center; */
+    display: flex;
+    justify-content: center;
+}
+
+.fenmu {
+    /* height: 40rpx; */
+    border-top: 4rpx solid black;
+}
+
 .sb-width {
     /* width: 100%; */
     width: 230rpx;

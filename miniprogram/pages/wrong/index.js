@@ -9,7 +9,7 @@ const db = wx.cloud.database({});
 Page({
             data: {
                 activeKey: 0,
-                recGrade: 0, //  当前用户所在年级
+                recGrade: 9, //  当前用户所在年级
                 nickName: '小明',
                 openID: '',
 
@@ -75,211 +75,256 @@ Page({
                     case 6:
                     case 7:
                     case 8:
-                        switch (that.data.quesType[i]) {
-                            case 0:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: that.data.quesType[i]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong0: res.data,
-                                            count0: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 1:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[1]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong1: res.data,
-                                            count1: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 3:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[2]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong2: res.data,
-                                            count2: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 4:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[3]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong3: res.data,
-                                            count3: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 5:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[4]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong4: res.data,
-                                            count4: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 6:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[5]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong5: res.data,
-                                            count5: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 7:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[6]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong6: res.data,
-                                            count6: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 8:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[7]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong7: res.data,
-                                            count7: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
-                            case 8:
-                                db.collection('errcol').where({
-                                    _openid: that.data.openID,
-                                    type: quesType[8]
-                                }).get({
-                                    success: res => {
-                                        that.setData({
-                                            wrong8: res.data,
-                                            count8: res.data.length
-                                        })
-                                    }
-                                })
-                                break;
+                        //直接赋值
+                        for (i=0; i<that.data.quesType.length; i++) {
+                            switch (that.data.quesType[i] % 10) {
+                                case 0:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[0]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong0: res.data,
+                                                count0: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 1:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[1]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong1: res.data,
+                                                count1: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 2:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[2]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong2: res.data,
+                                                count2: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 3:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[3]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong3: res.data,
+                                                count3: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 4:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[4]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong4: res.data,
+                                                count4: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 5:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[5]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong5: res.data,
+                                                count5: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 6:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[6]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong6: res.data,
+                                                count6: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 7:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[7]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong7: res.data,
+                                                count7: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 8:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[8]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong8: res.data,
+                                                count8: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         break;
                     case 9:
-                        break;
                     case 10:
-                        break;
                     case 11:
+                        //使用分数渲染模板
+                        for (i = 0; i < that.data.quesType.length; i++) {
+                            switch (that.data.quesType[i] % 10) {
+                                case 0:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[0]
+                                    }).get({
+                                        success: res => {
+                                            that.parseQstring(res.data, 0);
+                                        }
+                                    })
+                                    break;
+                                case 1:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[1]
+                                    }).get({
+                                        success: res => {
+                                            that.parseQstring(res.data, 1);
+                                        }
+                                    })
+                                    break;
+                                case 2:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[2]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong2: res.data,
+                                                count2: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 3:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[3]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong3: res.data,
+                                                count3: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 4:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[4]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong4: res.data,
+                                                count4: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 5:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[5]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong5: res.data,
+                                                count5: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 6:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[6]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong6: res.data,
+                                                count6: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 7:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[7]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong7: res.data,
+                                                count7: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                case 8:
+                                    db.collection('errcol').where({
+                                        _openid: that.data.openID,
+                                        type: that.data.quesType[8]
+                                    }).get({
+                                        success: res => {
+                                            that.setData({
+                                                wrong8: res.data,
+                                                count8: res.data.length
+                                            })
+                                        }
+                                    })
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                         break;
                     default:
                         break;
                     }
-
-                        // case 12:
-                        // case 13:
-                        // case 14:
-                        // case 15:
-                        // case 20:
-                        // case 21:
-                        // case 22:
-                        // case 23:
-                        // case 24:
-                        // case 25:
-                        // case 26:
-                        // case 27:
-                        // case 28:
-                        // case 30:
-                        // case 31:
-                        // case 32:
-                        // case 33:
-                        // case 34:
-                        // case 35:
-                        // case 36:
-                        // case 37:
-                        // case 38:
-                        // case 40:
-                        // case 41:
-                        // case 42:
-                        // case 43:
-                        // case 44:
-                        // case 45:
-                        // case 50:
-                        // case 51:
-                        // case 52:
-                        // case 53:
-                        // case 54:
-                        // case 55:
-                        // case 56:
-                        // case 60:
-                        // case 61:
-                        // case 62:
-                        // case 63:
-                        // case 64:
-                        // case 65:
-                        // case 66:
-                        // case 67:
-                        // case 70:
-                        // case 71:
-                        // case 72:
-                        // case 73:
-                        // case 74:
-                        // case 75:
-                        // case 76:
-                        // case 80:
-                        // case 90:
-                        // case 91:
-                        // case 92:
-                        //直接赋值
-
-                        // case 93:
-                        //     //加 X=
-                        //     break;
-                        // case 94:
-                        // case 95:
-                        // case 100:
-                        // case 110:
-                        // case 111:
-                        // case 112:
-                        //     //使用分数渲染模板
-                        //     break;
-                        // case 113:
-                        // case 114:
-                        //     //使用分数渲染模板，并且加 X=
-                        //     break;
-                        //}
-
-                        //console.log('that.data.quesTypes', that.data.quesTypes);
-
                 },
 
                 onReady() {
@@ -298,6 +343,112 @@ Page({
                         this.setData({
                             activeKey: e.detail
                         })
+                    },
+
+                    parseQstring: function (object, type) {
+                        let that = this;
+                        let str = [];
+                        let node = [];
+                        let len = 0, i = 0, j = 0;
+                        let you = [], fsfh = [], czs = [], cfz = [], cfm = [];
+                        let ecol = [];
+                        let frame = { zs: -1, fz: -1, fm: -1 };
+
+                        for (j = 0; j < object.length; j++) {
+                            //console.log(object[j]._id);
+
+                            str[j] = object[j].ques;
+                            node = str[j].split(' ');
+                            len = node.length;
+
+                            let eques = [];
+                            let rec = { id: '', ques: [] };
+
+                            for (i = 0; i < len; i++) {
+                                let frame = { zs: -1, fz: -1, fm: -1 };
+
+                                if (node[i][0] == 'f') {
+                                    you[i] = true;
+                                    node[i] = node[i].replace('f', '')
+                                    frame.zs = -1;
+
+                                    fsfh = node[i].split('/');
+                                    frame.fz = fsfh[0];
+                                    frame.fm = fsfh[1];
+                                } else if (node[i][0] != 'f') {
+                                    you[i] = false;
+                                    frame.zs = node[i];
+                                    frame.fz = -1;
+                                    frame.fm = -1;
+                                }
+                                eques.push(frame);
+                            }
+
+                            rec.id = object[j]._id;
+                            rec.ques = eques;
+
+                            ecol.push(rec);
+                        }
+
+                        switch (type) {
+                            case 0:
+                                that.setData({
+                                    wrong0: ecol,
+                                    count0: ecol.length
+                                })
+                                break;
+                            case 1:
+                                that.setData({
+                                    wrong1: ecol,
+                                    count1: ecol.length
+                                })
+                                break;
+                            case 2:
+                                that.setData({
+                                    wrong2: ecol,
+                                    count2: ecol.length
+                                })
+                                break;
+                            case 3:
+                                that.setData({
+                                    wrong3: ecol,
+                                    count3: ecol.length
+                                })
+                                break;
+                            case 4:
+                                that.setData({
+                                    wrong4: ecol,
+                                    count4: ecol.length
+                                })
+                                break;
+                            case 5:
+                                that.setData({
+                                    wrong5: ecol,
+                                    count5: ecol.length
+                                })
+                                break;
+                            case 6:
+                                that.setData({
+                                    wrong6: ecol,
+                                    count6: ecol.length
+                                })
+                                break;
+                            case 7:
+                                that.setData({
+                                    wrong7: ecol,
+                                    count7: ecol.length
+                                })
+                                break;
+                            case 8:
+                                that.setData({
+                                    wrong8: ecol,
+                                    count8: ecol.length
+                                })
+                                break;
+                            default:
+                                break;
+                        }
+
                     },
 
                     onDelQues: function(e) {
@@ -319,7 +470,7 @@ Page({
                                 break;
                             case 1:
                                 let list1 = that.data.wrong1;
-                                list0.splice(quesIndex, 1); //截取指定的内容
+                                list1.splice(quesIndex, 1); //截取指定的内容
                                 that.setData({ //重新渲染列表
                                     wrong1: list1
                                 })
