@@ -25,10 +25,10 @@
         <view class="bc-white font-28 top-10">
             <van-row gutter="10">
                 <van-col span="5">计时
-                    <van-switch checked="{{ enTimer }}" active-color="#cbe5bc" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeTimer" />
+                    <van-switch checked="{{ enTimer }}" active-color="#07c160" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeTimer" />
                 </van-col>
                 <van-col span="5">音乐
-                    <van-switch checked="{{ enMusic }}" active-color="#cbe5bc" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeMusic" />
+                    <van-switch checked="{{ enMusic }}" active-color="#07c160" size="48rpx" inactive-color="#e9eaea" disabled="{{enSwitch}}" bind:change="onChangeMusic" />
                 </van-col>
                 <van-col span="5">
                     <view class="height-150"></view>
@@ -357,7 +357,7 @@
             </van-col>
             <van-col span="12">
                 <view class="btn-wrap">
-                    <van-button icon="certificate" bind:click="onBtnSubmit" block> 提 交</van-button>
+                    <van-button icon="certificate" type="primary" bind:click="onBtnSubmit" block> 提 交</van-button>
                 </view>
             </van-col>
         </van-row>
