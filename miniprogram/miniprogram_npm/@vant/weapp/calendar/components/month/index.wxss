@@ -143,8 +143,12 @@
     height: var(--calendar-selected-day-size, 34px);
     color: #fff;
     color: var(--calendar-selected-day-color, #fff);
-    background-color: #ee0a24;
-    background-color: var(--calendar-selected-day-background-color, #ee0a24);
+
+    /* background-color: #ee0a24; */
+    background-color: #07c160;
+    background-color: var(--calendar-selected-day-background-color, #07c160);
+        /* background-color: var(--calendar-selected-day-background-color, #ee0a24); */
+
     border-radius: 4px;
     border-radius: var(--border-radius-md, 4px);
 }
