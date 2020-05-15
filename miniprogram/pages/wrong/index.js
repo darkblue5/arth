@@ -9,7 +9,7 @@ const db = wx.cloud.database({});
 Page({
             data: {
                 activeKey: 0,
-                recGrade: 9, //  当前用户所在年级
+                recGrade: 0, //  当前用户所在年级
                 nickName: '小明',
                 openID: '',
 
@@ -39,7 +39,7 @@ Page({
                 let i = 0;
                 let quesCount = config.typeIndex[that.data.recGrade].length;
 
-                that.data.openID = app.globalData.openid;
+                //that.data.openID = app.globalData.openid;
 
                 // for ( i=0; i<quesCount; i++ ) {
                 //     that.data.quesType[i] = config.typeIndex[that.data.recGrade][i];
@@ -49,7 +49,8 @@ Page({
 
                 that.setData({
                     types: config.types[that.data.gradesDetail[grade]],
-                    quesType: config.typeIndex[that.data.recGrade]
+                    quesType: config.typeIndex[that.data.recGrade],
+                    openID: app.globalData.userGrade
                     //count: worngCount
                 })
 
@@ -61,9 +62,10 @@ Page({
                 let that = this;
                 let i = 0;
 
-                console.log('SHOW, that.data.recGrade', that.data.recGrade);
-                console.log('SHOW, that.data.quesType', that.data.quesType);
+                //console.log('SHOW, that.data.recGrade', that.data.recGrade);
+                //console.log('SHOW, that.data.quesType', that.data.quesType);
 
+                that.data.openID = app.globalData.openid;
                 //for (i=0; i<that.data.quesType.length; i++)
                 switch (that.data.recGrade) {
                     case 0:

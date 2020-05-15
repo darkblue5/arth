@@ -19,7 +19,7 @@ const audio = wx.createInnerAudioContext(); //  audio
 const QCOUNT = 6; //1组6道题
 const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
-const db = wx.cloud.database({});
+const db = wx.cloud.database( );
 
 let init;   // timer
 
@@ -1766,6 +1766,8 @@ Page({
             fail: console.error,
             complete: console.log
         })
+        
+        app.globalData.userGrade = that.data.grade;
     },
 
     onCancelGrade() {

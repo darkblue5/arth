@@ -221,7 +221,7 @@ Page({
         //     return error;
         // }
 
-        console.log('REPORT, app.globalData.nickName', app.globalData.nickName);
+        //console.log('REPORT, app.globalData.nickName', app.globalData.nickName);
 
         that.setData ({
             nickName: app.globalData.nickName + ' ',
