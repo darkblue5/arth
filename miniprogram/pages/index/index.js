@@ -244,7 +244,6 @@ Page({
     onGetUserInfo: function (e) {
         let that = this;
         let gradeIndex = -1;
-        let strGrade = '';
 
         if (!this.data.logged && e.detail.userInfo) {
             this.setData({
@@ -254,22 +253,8 @@ Page({
             })
             //console.log('INDEX, app.globalData.nickName', e.detail.userInfo.nickName);
 
-            app.globalData.nickName = e.detail.userInfo.nickName;
+            //app.globalData.nickName = e.detail.userInfo.nickName;
         }
-        //console.log('INDEX, app.globalData.nickName', app.globalData.nickName);
-
-        // wx.getSetting({
-        //     success: res => {
-        //         if (res.authSetting['scope.userInfo']) {
-        //             // wx.getUserInfo({
-        //             //     success: res => {
-        //             //         this.setData({
-        //             //             avatarUrl: res.userInfo.avatarUrl,
-        //             //             userInfo: res.userInfo
-        //             //         })
-        //             //     }
-        //             // })
-        //         }
 
         //获取用户 OpenID
         wx.cloud.callFunction({
@@ -287,34 +272,55 @@ Page({
                 }).get({
                     success: res => {
                         if (res.data.length != 0) {
+                            let strGrade = '';
                             //用库中数据初始化用户所在年级
                             app.globalData.userGrade = res.data[0].grade;
                         
-                            switch (res.data[0].grade - 1) {
+                            switch (res.data[0].grade) {
                                 case 0:
-                                    strGrade = '一年级';
+                                    strGrade = '一年级上';
                                     break;
                                 case 1:
-                                    strGrade = '二年级';
+                                    strGrade = '一年级下';
                                     break;
                                 case 2:
-                                    strGrade = '三年级';
+                                    strGrade = '二年级上';
                                     break;
                                 case 3:
-                                    strGrade = '四年级';
+                                    strGrade = '二年级下';
                                     break;
                                 case 4:
-                                    strGrade = '五年级';
+                                    strGrade = '三年级上';
                                     break;
                                 case 5:
-                                    strGrade = '六年级';
+                                    strGrade = '三年级下';
+                                    break;
+                                case 6:
+                                    strGrade = '四年级上';
+                                    break;
+                                case 7:
+                                    strGrade = '四年级下';
+                                    break;
+                                case 8:
+                                    strGrade = '五年级上';
+                                    break;
+                                case 9:
+                                    strGrade = '五年级下';
+                                    break;
+                                case 10:
+                                    strGrade = '六年级上';
+                                    break;
+                                case 11:
+                                    strGrade = '六年级下';
                                     break;
                                 default:
                                     break;
                             }
 
+                            console.log('strGrade', strGrade);
+
                             this.setData({
-                                txtScreenGrade: strGrade,                                
+                                txtScreenGrade:strGrade
                             });
 
                             app.globalData.tdyCorrt = res.data[0].tdycorrt;
@@ -322,6 +328,8 @@ Page({
                             app.globalData.tdyRate = res.data[0].sevenrate[6];
                             app.globalData.sevenRate = res.data[0].sevenrate;
                             app.globalData.userGrade = res.data[0].grade;
+                            app.globalData.tolCorrt = res.data[0].tolcorrt;
+                            app.globalData.tolFinih = res.data[0].tolfinih;
                             app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
 
                             console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
@@ -1721,28 +1729,28 @@ Page({
 
     onConfirmGrade(event) {
         let that = this;
-        let strGrade = '';
+        let txtGrade = '';
         const { picker, value, index } = event.detail;
         //Toast(`当前值：${value}, 当前索引：${index}`);
 
         switch (index) {
             case 0:
-                strGrade = '一年级';
+                txtGrade = '一年级';
                 break;
             case 1:
-                strGrade = '二年级';
+                txtGrade = '二年级';
                 break;
             case 2:
-                strGrade = '三年级';
+                txtGrade = '三年级';
                 break;
             case 3:
-                strGrade = '四年级';
+                txtGrade = '四年级';
                 break;
             case 4:
-                strGrade = '五年级';
+                txtGrade = '五年级';
                 break;
             case 5:
-                strGrade = '六年级';
+                txtGrade = '六年级';
                 break;
             default:
                 break;
@@ -1750,7 +1758,7 @@ Page({
 
         this.setData({
             showGrade: false,
-            txtScreenGrade: strGrade,
+            txtScreenGrade: txtGrade,
         });
         that.data.userGrade = index + 1;
 
@@ -1798,15 +1806,16 @@ Page({
     },
 
     onHide() {
-        console.log('in index: 使用完整功能选择年级，登陆用户');
+        //console.log('in index: 使用完整功能选择年级，登陆用户');
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
+            wx.showModal({
+                content: '请登陆微信使用完整功能',
+                showCancel: false,
+                success: function (res) {
 
-        wx.showModal({
-            content: '完整功能请登陆微信',
-            showCancel: false,
-            success: function (res) {
-
-            }
-        })
+                }
+            })
+        }
     },
 
 

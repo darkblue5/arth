@@ -8,7 +8,7 @@
                     <van-grid-item text="本日{{tdyFinih}}题" icon="records" />
                     <van-grid-item text="答对{{tdyCorrt}}题" icon="completed" info="{{lastCount}}" />
                     <van-grid-item text="正确率" icon="discount" info="{{tdyRate}}%" />
-                    <van-grid-item text="累计{{sumCorrt}}题" icon="medal-o" />
+                    <van-grid-item text="累计{{tolFinih}}题" icon="medal-o" />
                 </van-grid>
             </view>
         </van-panel>

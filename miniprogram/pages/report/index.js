@@ -7,34 +7,26 @@ const db = wx.cloud.database( );
 
 let chart = null;
 let sevenRate = app.globalData.sevenRate; //  7日正确率
-// let tdcr = app.globalData.tdycorrt;
-// let tdfh = app.globalData.tdyfinih;
 
 Page({
 
     data: {
         tdyCorrt: 0,    //  本日正确
         tdyFinih: 0,    //  本日完成
-        //tdyRate: app.globalData.sevenrate[6],
-        sumCorrt: 5555,    //  累计正确
-        sumFinih: 2355,    //  累计完成
+        tolCorrt: 0,    //  累计正确
+        tolFinih: 0,    //  累计完成
         rank: [],
 
-        // tdyCorrt: '',    //  本日正确
-        // tdyFinih: '',    //  本日完成
-        // tdyRate: '',
-        // sumCorrt: '',    //  累计正确
-
-        nickName: '王大',
-        grade: '一',       //  用户所处年级
-        firstUser: '赵一',
-        firstPoint: 44,
-        secondUser: '钱二',
-        secondPoint: 33,
-        thirdUser: '孙三',
-        thirdPoint: 22,
-        fourthUser: '李四',
-        fourthPoint: 11,
+        nickName: '0',
+        grade: '',       //  用户所处年级
+        firstUser: '0',
+        firstPoint: 1,
+        secondUser: '0',
+        secondPoint: 2,
+        thirdUser: '0',
+        thirdPoint: 3,
+        fourthUser: '0',
+        fourthPoint: 4,
 
         //dayData: [],
         ecBar: {
@@ -222,23 +214,78 @@ Page({
         // }
 
         //console.log('REPORT, app.globalData.nickName', app.globalData.nickName);
-
-        that.setData ({
-            nickName: app.globalData.nickName + ' ',
-            grade: app.globalData.userGrade + ' '
-        });
-
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
+            that.setData ({
+                nickName: '佚名 ',
+                grade: '未确认 '
+            });
+        } else {
+            that.setData ({
+                nickName: app.globalData.nickName + ' ',
+                grade: app.globalData.userGrade + ' '
+            });
+        }
     },
 
     onReady() {
-        //console.log('in report ready: 使用完整功能选择年级，登陆用户');
-        wx.showModal({
-            content: '完整功能请登陆微信',
-            showCancel: false,
-            success: function (res) {
+        let that = this;
+        let strGrade = '';
 
+        //console.log('in report ready: 使用完整功能选择年级，登陆用户');
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
+            wx.showModal({
+                content: '请登陆微信使用完整功能',
+                showCancel: false,
+                success: function (res) {
+
+                }
+            })
+        } else {
+            switch (app.globalData.userGrade) {
+                case 0:
+                    strGrade = '一年级上';
+                    break;
+                case 1:
+                    strGrade = '一年级下';
+                    break;
+                case 2:
+                    strGrade = '二年级上';
+                    break;
+                case 3:
+                    strGrade = '二年级下';
+                    break;
+                case 4:
+                    strGrade = '三年级上';
+                    break;
+                case 5:
+                    strGrade = '三年级下';
+                    break;
+                case 6:
+                    strGrade = '四年级上';
+                    break;
+                case 7:
+                    strGrade = '四年级下';
+                    break;
+                case 8:
+                    strGrade = '五年级上';
+                    break;
+                case 9:
+                    strGrade = '五年级下';
+                    break;
+                case 10:
+                    strGrade = '六年级上';
+                    break;
+                case 11:
+                    strGrade = '六年级下';
+                    break;
+                default:
+                    break;
             }
-        })
+
+            that.setData({
+                grade: strGrade + '　'//  用户所处年级                
+            });
+        }
     },
 
     async onShow( ) {
@@ -248,6 +295,8 @@ Page({
         that.setData ({
             tdyCorrt: app.globalData.tdyCorrt,    //  本日正确
             tdyFinih: app.globalData.tdyFinih,    //  本日完成
+            tolCorrt: app.globalData.tolCorrt,
+            tolFinih: app.globalData.tolFinih,
             tdyRate: app.globalData.sevenRate[6]
         });
 
@@ -270,39 +319,6 @@ Page({
         } catch (error) {
             return error;
         }
-
-        // let sevenRate = app.globalData.sevenRate; //  7日正确率
-        // let tdcr = app.globalData.tdycorrt;
-        // let tdfh = app.globalData.tdyfinih;
-        // let grade = app.globalData.userGrade;
-
-        // console.log(grade);
-
-        // db.collection('rank').where({
-        //     //_id: '1d1104975e9857c80046d4761cf635d4'
-        //     nickname: "王老师@文升教育",
-        //     grade: 1
-        // }).get({
-        //     success: (res) => {
-        //         // let ret = JSON.parse(res.data)
-        //          console.log(res.data);
-        //         //console.log(typeof(res.data));
-        //         // sevenRate = res.data[0].sevenrate;
-
-        //         that.setData({
-        //             tdyCorrt: res.data[0].tdycorrt,    //  本日正确
-        //             tdyFinih: res.data[0].tdyfinih,    //  本日完成
-        //             tdyRate: res.data[0].sevenrate[6],
-        //             sevenRate: res.data[0].sevenrate
-        //         //     sumCorrt: res.data[0].sumfinih,    //  累计正确
-        //         //     nickName: res.data[0].usr
-        //          })
-        //         // if (ret.code == 0) {
-        //         //     console.log(ret.data.usr)
-        //         // }
-        //     }
-        // })
-
     }
 
 })

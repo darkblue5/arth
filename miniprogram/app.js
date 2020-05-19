@@ -17,12 +17,14 @@ App({
         }
 
         this.globalData = {
-            userGrade: -1,
+            userGrade: 0,
             tdyCorrt: 0,    //  本日正确
             tdyFinih: 0,    //  本日完成
-            //tdyRate: 0,
+            tolCorrt: 0,
+            tolFinih: 0,
+            tdyRate: 0,
             sevenRate: [],  //  本周正确率
-            nickName: '',
+            nickName: '佚名',
         }
     }
 })
