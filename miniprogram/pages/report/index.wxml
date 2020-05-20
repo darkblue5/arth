@@ -29,33 +29,14 @@
                     <van-cell value="{{item.point}}" icon="user-circle-o" is-link>
                         <view slot="title">
                             <view class="van-cell-text ">{{item.nickname}}</view>
-                            <block wx:if="{{index == 0}}">  <van-tag type="primary ">冠军</van-tag> </block>
-                            <block wx:elif="{{index == 1}}">    <van-tag type="danger ">亚军</van-tag>  </block>
-                            <block wx:elif="{{index == 2}}">    <van-tag type="success">季军</van-tag>  </block>
-                            <block wx:elif="{{index == 3}}">    <van-tag type="warning">殿军</van-tag>  </block>
+                            <block wx:if="{{index == 0}}">  <van-tag type="danger">冠军</van-tag> </block>
+                            <block wx:elif="{{index == 1}}"> <van-tag type="primary ">亚军</van-tag> </block>
+                            <block wx:elif="{{index == 2}}"> <van-tag type="success">季军</van-tag> </block>
+                            <block wx:elif="{{index == 3}}"> <van-tag type="warning">殿军</van-tag> </block>
                         </view>
                     </van-cell>
                 </block>
-                <!-- <van-cell value="{{secondPoint}}" icon="manager-o" is-link>
-                    <view slot="title">
-                        <view class="van-cell-text ">{{secondUser}}</view>
-                        <van-tag type="danger ">亚军</van-tag>
-                    </view>
-                </van-cell>
-                <van-cell value="{{thirdPoint}}" icon="user-o" is-link>
-                    <view slot="title">
-                        <view class="van-cell-text">{{thirdUser}}</view>
-                        <van-tag type="success">季军</van-tag>
-                    </view>
-                </van-cell>
-                <van-cell value="{{fourthPoint}}" icon="contact" is-link>
-                    <view slot="title">
-                        <view class="van-cell-text">{{fourthUser}}</view>
-                        <van-tag type="warning">殿军</van-tag>
-                    </view>
-                </van-cell> -->
                 </view>
             </van-panel>
     </view>
-    <!-- delete some codes -->
-</view>
+  </view>

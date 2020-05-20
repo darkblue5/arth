@@ -125,7 +125,7 @@ Page({
 
         //usrExist: false,            //  排名表中用户记录是否存在
 
-        grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+        grades: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下','四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
         type: [
             {
                 values: Object.keys(config.types),
@@ -266,15 +266,15 @@ Page({
                 app.globalData.openid = res.result.openid;
                 that.data.openID = res.result.openid;
                 //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-                db.collection('rank').where({
+                db.collection('user').where({
                     _openid: that.data.openID
-                    //_id: 'f149f6775e9d9f37008ef0cc15204904'
                 }).get({
                     success: res => {
                         if (res.data.length != 0) {
                             let strGrade = '';
                             //用库中数据初始化用户所在年级
                             app.globalData.userGrade = res.data[0].grade;
+                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
                         
                             switch (res.data[0].grade) {
                                 case 0:
@@ -317,22 +317,19 @@ Page({
                                     break;
                             }
 
-                            console.log('strGrade', strGrade);
-
                             this.setData({
                                 txtScreenGrade:strGrade
                             });
 
-                            app.globalData.tdyCorrt = res.data[0].tdycorrt;
-                            app.globalData.tdyFinih = res.data[0].tdyfinih;
-                            app.globalData.tdyRate = res.data[0].sevenrate[6];
-                            app.globalData.sevenRate = res.data[0].sevenrate;
-                            app.globalData.userGrade = res.data[0].grade;
-                            app.globalData.tolCorrt = res.data[0].tolcorrt;
-                            app.globalData.tolFinih = res.data[0].tolfinih;
-                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+                            // app.globalData.tdyCorrt = res.data[0].tdycorrt;
+                            // app.globalData.tdyFinih = res.data[0].tdyfinih;
+                            // app.globalData.tdyRate = res.data[0].sevenrate[6];
+                            // app.globalData.sevenRate = res.data[0].sevenrate;
+                            // app.globalData.tolCorrt = res.data[0].tolcorrt;
+                            // app.globalData.tolFinih = res.data[0].tolfinih;
+                            //app.globalData.userGrade = res.data[0].grade;
 
-                            console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
+                            //console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
                             
                         } else {
                             //pop窗口选择年级
@@ -347,58 +344,10 @@ Page({
 
             }
         })
-        //     }
-        // })
-
+      
     },
 
-    // onBtnLogin: function (e) {
-    //     console.log('user login');
-    //     let that = this;
-
-    //     // 获取用户 OpenID
-    //     wx.cloud.callFunction({
-    //         name: 'login',
-    //         data: {},
-    //         success: res => {
-    //             console.log('onload get id', res.result.openid);
-    //             //app.globalData.openid = res.result.openid;
-    //             that.data.openID = res.result.openid;
-
-    //             //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-    //             db.collection('rank').where({
-    //                 uid: that.data.openID
-    //             }).get({
-    //                 success: res => {
-    //                     console.log(res.data)
-    //                     //初始化用户所在年级
-    //                     //app.globalData.userGrade = res.data.grade;
-    //                     app.globalData.userGrade = 2;
-
-    //                     // db.collection('rank').add({
-    //                     //     data: {
-    //                     //         uid: that.data.openID,
-    //                     //     },
-    //                     //     success: function (res) {
-    //                     //         //console.log(res)
-    //                     //     },
-    //                     //     fail: console.error,
-    //                     //     complete: console.log
-    //                     // })     
-
-    //                 }
-    //             })
-
-    //         },
-    //         fail: err => {
-    //             console.error('[云函数] [login] 调用失败', err);
-
-    //         }
-    //     });
-
-    //     console.log(app.globalData.userGrade);
-    // },
-
+   
     //  button START click
     onBtnStart: function (e) {
         let that = this;
@@ -526,111 +475,117 @@ Page({
         // }
         // FIXME:错题与未做题暂无法分离
 
-        if (that.data.tickColor0 == 'red') {
-            correctCount++;
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
+            //console.log('用户未登陆');
         } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques0,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
+            if (that.data.tickColor0 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                        //openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques0,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            if (that.data.tickColor1 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                        //openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques1,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            if (that.data.tickColor2 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                        //openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques2,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            if (that.data.tickColor3 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                        //openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques3,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            if (that.data.tickColor4 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                        //openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques4,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            if (that.data.tickColor5 == 'red') {
+                correctCount++;
+            } else {
+                db.collection('errcol').add({
+                    data: {
+                    // openID: that.data.openID,
+                        type: that.data.typeDetail,
+                        ques: that.data.ques5,
+                    },
+                    success: function (res) {
+                        //console.log(res)
+                    },
+                    fail: console.error,
+                    complete: console.log
+                })
+            }
+
+            //  更新用户积分记录
+            that.updateRank(correctCount);
+
         }
 
-        if (that.data.tickColor1 == 'red') {
-            correctCount++;
-        } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques1,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
-
-        if (that.data.tickColor2 == 'red') {
-            correctCount++;
-        } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques2,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
-
-        if (that.data.tickColor3 == 'red') {
-            correctCount++;
-        } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques3,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
-
-        if (that.data.tickColor4 == 'red') {
-            correctCount++;
-        } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques4,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
-
-        if (that.data.tickColor5 == 'red') {
-            correctCount++;
-        } else {
-            db.collection('errcol').add({
-                data: {
-                    openID: that.data.openID,
-                    type: that.data.typeDetail,
-                    ques: that.data.ques5,
-                },
-                success: function (res) {
-                    //console.log(res)
-                },
-                fail: console.error,
-                complete: console.log
-            })
-        }
-
-        //  更新用户积分记录
-        that.updateRank(correctCount);
-
+        //  重置答题框
         that.setData({
             enSwitch: false,
 
@@ -641,12 +596,68 @@ Page({
             tickColor4: 'white',
             tickColor5: 'white',
 
+            //inpBorder: '2rpx solid lightgreen',
+            isDisabled0: false,
+            isDisabled1: false,
+            isDisabled2: false,
+            isDisabled3: false,
+            isDisabled4: false,
+            isDisabled5: false,
+
             ans0: '',
             ans1: '',
             ans2: '',
             ans3: '',
             ans4: '',
             ans5: '',
+
+            mod0: '',
+            mod1: '',
+            mod2: '',
+            mod3: '',
+            mod4: '',
+            mod5: '',
+
+            ans0Zs: '',
+            ans0Fz: '',
+            ans0Fm: '',
+
+            ans1Zs: '',
+            ans1Fz: '',
+            ans1Fm: '',
+
+            ans2Zs: '',
+            ans2Fz: '',
+            ans2Fm: '',
+
+            ans3Zs: '',
+            ans3Fz: '',
+            ans3Fm: '',
+
+            ans4Zs: '',
+            ans4Fz: '',
+            ans4Fm: '',
+
+            ans5Zs: '',
+            ans5Fz: '',
+            ans5Fm: '',
+
+            modJudg0: [0, 0],    //  余数判定记录
+            modJudg1: [0, 0],
+            modJudg2: [0, 0],
+            modJudg3: [0, 0],
+            modJudg4: [0, 0],
+            modJudg5: [0, 0],
+
+            //  分数判定记录
+            fraJudg0: [0, 0, 0], //  0：错 1：对，一整数部分，二分子部分，三分母部分
+            fraJudg1: [0, 0, 0],
+            fraJudg2: [0, 0, 0],
+            fraJudg3: [0, 0, 0],
+            fraJudg4: [0, 0, 0],
+            fraJudg5: [0, 0, 0],
+
+            curJudg: [0, 0, 0, 0, 0, 0]
         });
     },
 
@@ -656,8 +667,6 @@ Page({
         let curRate = 0;
 
         //  更新答题积分记录
-        //console.log(correctCount);
-
         db.collection('rank').where({
             _openid: that.data.openID
             //uid: app.globalData.openid
@@ -673,7 +682,7 @@ Page({
                     wx.cloud.callFunction({
                         name: 'upRank',
                         data: {
-                            openID: app.globalData.openid,
+                            id: app.globalData.openid,
                             correct: curCorrt,
                             rate: curRate
                         }
@@ -684,8 +693,8 @@ Page({
 
                     db.collection('rank').add({
                         data: {
-                            openID: that.data.openID,
-                            nickname: that.data.userInfo.nickName,
+                            //openID: that.data.openID,
+                            //nickname: that.data.userInfo.nickName,
                             grade: that.data.userGrade,
 
                             tdycorrt: correctCount,
@@ -753,7 +762,6 @@ Page({
 
         switch (that.data.keyType) {
             case 0:
-                //console.log(typeof (e.detail.value), typeof (that.data.keys[1]))
                 if (parseInt(e.detail.value) === that.data.keys[1]) {
                     that.setData({
                         tickColor1: 'red',
@@ -1059,7 +1067,6 @@ Page({
     onInpBlurAns0Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[0]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[0] == 1) {
@@ -1098,15 +1105,10 @@ Page({
             default:
                 break;
         }
-
-        //console.log('input 1 lost focus');
     },
 
     onInpBlurAns0Fz: function (e) {
         let that = this;
-
-        // console.log(e.detail.value);
-        //console.log(that.data.keyFz[0]);
 
         if (e.detail.value == that.data.keyFz[0]) {
             //that.data.isKey0Fz = true;
@@ -1132,9 +1134,6 @@ Page({
 
     onInpBlurAns0Fm: function (e) {
         let that = this;
-
-        //console.log(e.detail.value);
-        //console.log(that.data.keyFm[0]);
 
         if (e.detail.value == that.data.keyFm[0]) {
             // that.data.isKey0Fm = true;
@@ -1164,7 +1163,6 @@ Page({
     onInpBlurAns1Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[1]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[1] == 1) {
@@ -1188,7 +1186,6 @@ Page({
                 // 分数部分禁用输入
                 break;
             case 2:    //答案为纯分数时，整数部分为空
-                //console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[1] == 0) {
                     that.data.fraJudg1[0] = 1;
                 } else {
@@ -1197,7 +1194,6 @@ Page({
 
                 break;
             case 3:
-                //console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[1] == e.detail.value) {
                     that.data.fraJudg1[0] = 1;
                 } else {
@@ -1267,7 +1263,6 @@ Page({
     onInpBlurAns2Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[2]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[2] == 1) {
@@ -1291,7 +1286,6 @@ Page({
                 // 分数部分禁用输入
                 break;
             case 2:    //答案为纯分数时，整数部分为空
-                //console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[2] == 0) {
                     that.data.fraJudg2[0] = 1;
                 } else {
@@ -1300,7 +1294,6 @@ Page({
 
                 break;
             case 3:
-                //console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[2] == e.detail.value) {
                     that.data.fraJudg2[0] = 1;
                 } else {
@@ -1370,7 +1363,6 @@ Page({
     onInpBlurAns3Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[3]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[3] == 1) {
@@ -1394,7 +1386,6 @@ Page({
                 // 分数部分禁用输入
                 break;
             case 2:    //答案为纯分数时，整数部分为空
-                console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[3] == 0) {
                     that.data.fraJudg3[0] = 1;
                 } else {
@@ -1403,7 +1394,6 @@ Page({
 
                 break;
             case 3:
-                console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[3] == e.detail.value) {
                     that.data.fraJudg3[0] = 1;
                 } else {
@@ -1472,7 +1462,6 @@ Page({
     onInpBlurAns4Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[4]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[4] == 1) {
@@ -1495,7 +1484,6 @@ Page({
                 // 分数部分禁用输入
                 break;
             case 2:    //答案为纯分数时，整数部分为空
-                //console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[4] == 0) {
                     that.data.fraJudg4[0] = 1;
                 } else {
@@ -1504,7 +1492,6 @@ Page({
 
                 break;
             case 3:
-                //console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[4] == e.detail.value) {
                     that.data.fraJudg4[0] = 1;
                 } else {
@@ -1574,7 +1561,6 @@ Page({
     onInpBlurAns5Zs: function (e) {
         let that = this;
 
-        // console.log(e.detail.value);
         switch (that.data.keyFraType[5]) {
             case 1:     //答案为整数时，直接比对
                 if (that.data.keyFraType[5] == 1) {
@@ -1598,7 +1584,6 @@ Page({
                 // 分数部分禁用输入
                 break;
             case 2:    //答案为纯分数时，整数部分为空
-                //console.log('index input 3 ZS type 2');
                 if (e.detail.value == '' && that.data.keyZs[5] == 0) {
                     that.data.fraJudg5[0] = 1;
                 } else {
@@ -1607,7 +1592,6 @@ Page({
 
                 break;
             case 3:
-                //console.log('index input 3 ZS type 3');
                 if (that.data.keyZs[5] == e.detail.value) {
                     that.data.fraJudg5[0] = 1;
                 } else {
@@ -1692,26 +1676,7 @@ Page({
     },
 
     onTapVwGrade: function (e) {
-        //let that = this;
 
-        // 获取用户 OpenID
-        // wx.cloud.callFunction({
-        //     name: 'login',
-        //     data: {},
-        //     success: res => {
-        //         //console.log('[云函数] [login] user openid: ', res.result.openid);
-        //         app.globalData.openid = res.result.openid;
-        //         that.data.openID = res.result.openid;
-        //         // wx.navigateTo({
-        //         //     url: '../userConsole/userConsole',
-        //         // })
-        //     },
-        //     fail: err => {
-        //         console.error('[云函数] [login] 调用失败', err);
-        //     }
-        // })
-
-        //that.setData({ showGrade: true });
     },
 
     onPopTypeClose() {
@@ -1735,38 +1700,51 @@ Page({
 
         switch (index) {
             case 0:
-                txtGrade = '一年级';
+                txtGrade = '一年级上';
                 break;
             case 1:
-                txtGrade = '二年级';
+                txtGrade = '一年级下';
                 break;
             case 2:
-                txtGrade = '三年级';
+                txtGrade = '二年级上';
                 break;
             case 3:
-                txtGrade = '四年级';
+                txtGrade = '二年级下';
                 break;
             case 4:
-                txtGrade = '五年级';
+                txtGrade = '三年级上';
                 break;
             case 5:
-                txtGrade = '六年级';
+                txtGrade = '三年级下';
+                break;
+            case 6:
+                txtGrade = '四年级上';
+                break;
+            case 7:
+                txtGrade = '四年级下';
+                break;
+            case 8:
+                txtGrade = '五年级上';
+                break;
+            case 9:
+                txtGrade = '五年级下';
+                break;
+            case 10:
+                txtGrade = '六年级上';
+                break;
+            case 11:
+                txtGrade = '六年级下';
                 break;
             default:
                 break;
         }
 
-        this.setData({
-            showGrade: false,
-            txtScreenGrade: txtGrade,
-        });
-        that.data.userGrade = index + 1;
+        //that.data.userGrade = index + 1;
 
-        //console.log(that.data.userGrade);
-        db.collection('rank').add({
+        db.collection('user').add({
             data: {
-                openID: that.data.openID,
-                grade: that.data.userGrade
+                //openID: that.data.openID,
+                grade: index
             },
             success: function (res) {
                 //console.log(res)
@@ -1775,7 +1753,12 @@ Page({
             complete: console.log
         })
         
-        app.globalData.userGrade = that.data.grade;
+        app.globalData.userGrade = index;
+
+        this.setData({
+            showGrade: false,
+            txtScreenGrade: txtGrade
+        });
     },
 
     onCancelGrade() {
@@ -1806,7 +1789,6 @@ Page({
     },
 
     onHide() {
-        //console.log('in index: 使用完整功能选择年级，登陆用户');
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             wx.showModal({
                 content: '请登陆微信使用完整功能',
@@ -1893,7 +1875,6 @@ Page({
                     default:
                         return -1;
                 }
-                //console.log(that.data.keys);
                 break;
             case 1:             //  一年级下
                 switch (idxType[1]) {
@@ -1924,7 +1905,6 @@ Page({
                     default:
                         break;
                 }
-                // console.log(that.data.keys);
                 break;
             case 2:             //  二年级上
                 switch (idxType[1]) {

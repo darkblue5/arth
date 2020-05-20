@@ -58,7 +58,10 @@ Page({
             })
         }
 
-        console.log('LOAD, that.data.types, that.data.quesType', that.data.types, that.data.quesType);
+        console.log('LOAD, that.data.types', that.data.types);
+        console.log('LOAD, that.data.quesType', that.data.quesType);
+        console.log('LOAD, that.data.recGrade', that.data.recGrade);
+
     },
 
     onShow(e) {
@@ -82,130 +85,131 @@ Page({
             case 7:
             case 8:
                 //直接赋值
-                for (i = 0; i < that.data.quesType.length; i++) {
-                    switch (that.data.quesType[i] % 10) {
-                        case 0:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[0]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong0: res.data.ques,
-                                        count0: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 1:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[1]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong1: res.data,
-                                        count1: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 2:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[2]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong2: res.data,
-                                        count2: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 3:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[3]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong3: res.data,
-                                        count3: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 4:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[4]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong4: res.data,
-                                        count4: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 5:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[5]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong5: res.data,
-                                        count5: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 6:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[6]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong6: res.data,
-                                        count6: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 7:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[7]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong7: res.data,
-                                        count7: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        case 8:
-                            db.collection('errcol').where({
-                                _openid: that.data.openID,
-                                type: that.data.quesType[8]
-                            }).get({
-                                success: res => {
-                                    that.setData({
-                                        wrong8: res.data,
-                                        count8: res.data.length
-                                    })
-                                }
-                            })
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                break;
+                // for (i = 0; i < that.data.quesType.length; i++) {
+                //     switch (that.data.quesType[i] % 10) {
+                //         case 0:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[0]
+                //             }).get({
+                //                 success: res => {
+                //                     console.log('WRONG, res.data', res.data);
+                //                     that.setData({
+                //                         wrong0: res.data,
+                //                         count0: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 1:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[1]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong1: res.data,
+                //                         count1: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 2:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[2]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong2: res.data,
+                //                         count2: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 3:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[3]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong3: res.data,
+                //                         count3: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 4:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[4]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong4: res.data,
+                //                         count4: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 5:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[5]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong5: res.data,
+                //                         count5: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 6:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[6]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong6: res.data,
+                //                         count6: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 7:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[7]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong7: res.data,
+                //                         count7: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         case 8:
+                //             db.collection('errcol').where({
+                //                 _openid: that.data.openID,
+                //                 type: that.data.quesType[8]
+                //             }).get({
+                //                 success: res => {
+                //                     that.setData({
+                //                         wrong8: res.data,
+                //                         count8: res.data.length
+                //                     })
+                //                 }
+                //             })
+                //             break;
+                //         default:
+                //             break;
+                //     }
+                // }
+                // break;
             case 9:
             case 10:
             case 11:
