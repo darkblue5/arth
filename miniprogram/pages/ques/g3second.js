@@ -352,7 +352,7 @@ function f2bASMD2s(grade, type, db, pt) {
     let k = 0, i = 0;
 
     if (grade == 5 && type == 6) {
-        db.collection('qu32').where({
+        db.collection('q32').where({
             type: 3201
         }).get({
             success: res => {

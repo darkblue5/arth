@@ -327,103 +327,95 @@ function f3bM2b(grade, type, pt) {
 
 //	76	三位数四测混合运算 4题带小括号，2题带中括号
 function f3b3bASMD4s(grade, type, db, pt) {
-    let col1 = [];
-    let col2 = [];
-    let col3 = [];
+    let col = [];
     let that = pt;
-    let sques1 = "", sques2 = "", sques3 = "", sques0 = "", sques4 = "", sques5 = "";
-    let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
-    let i = 0, j = 0, k = 0;
-    let key = [];
+    let cques = [], ckey = [];
+    let k = 0, i = 0;
 
     if (grade == 7 && type == 6) {
-        db.collection('q52').where({
-            type: 5211
+        db.collection('q42').where({
+            type: 4201
         }).get({
             success: res => {
-                col1 = res.data;
+                col = res.data;
 
-                i = Math.floor(Math.random() * (col1.length - 1));
-                sques0 = col1[i].ques;
-                key[0] = col1[i].key;
-                col1.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col1.length - 1));
-                sques1 = col1[i].ques;
-                key[1] = col1[i].key;
+                for (k = 0; k < 6; k++) {
+                    i = Math.floor(Math.random() * (col.length - 1));
+                    cques[k] = col[i].ques;
+                    ckey[k] = parseInt(col[i].key);
+                    col.splice(i, 1);
+                }
 
                 that.setData({
-                	quesType: 0,
+                    quesType: 0,
                     keyType: 0,
 
-                    wdQues: 16,
+                    wdQues: 14,
                     wdAns: 3,
-        
-                    ques0: sques0,
-                    ques1: sques1,
-                })
+
+                    ques0: cques[0],
+                    ques1: cques[1],
+                    ques2: cques[2],
+                    ques3: cques[3],
+                    ques4: cques[4],
+                    ques5: cques[5],
+
+                    keys: ckey
+                });
             }
         });
-
-        db.collection('q52').where({
-            type: 5212
-        }).get({
-            success: res => {
-                col2 = res.data;
-
-                j = Math.floor(Math.random() * (col2.length - 1));
-                sques2 = col2[j].ques;
-                key[2] = col2[j].key;
-                col1.splice(j, 1);
-
-                j = Math.floor(Math.random() * (col2.length - 1));
-                sques3 = col2[j].ques;
-                key[3] = col2[j].key;
-
-                that.setData({
-                    ques2: sques2,
-                    ques3: sques3,
-                })
-            }
-        });
-
-        db.collection('q52').where({
-            type: 5213
-        }).get({
-            success: res => {
-                col3 = res.data;
-
-                k = Math.floor(Math.random() * (col3.length - 1));
-                sques4 = col3[k].ques;
-                key[4] = col3[k].key;
-                col1.splice(k, 1);
-
-                k = Math.floor(Math.random() * (col3.length - 1));
-                sques5 = col3[k].ques;
-                key[5] = col3[k].key;
-
-                // console.log(nkey4);
-                // console.log(nkey5);
-
-                that.setData({
-                    ques4: sques4,
-                    ques5: sques5,
-
-                    keys: key
-                })
-            }
-        });
-
     } else {
         return -1;
-
     }
+
+    return 0;
 
 }
 
 //	77	简便运算
-function fg4easy(upa, upb, type) {
+function fg4easy(grade, type, db, pt) {
+   let col = [];
+    let that = pt;
+    let cques = [], ckey = [];
+    let k = 0, i = 0;
 
+    if (grade == 7 && type == 7) {
+        db.collection('q42').where({
+            type: 4202
+        }).get({
+            success: res => {
+                col = res.data;
+
+                for (k = 0; k < 6; k++) {
+                    i = Math.floor(Math.random() * (col.length - 1));
+                    cques[k] = col[i].ques;
+                    ckey[k] = parseInt(col[i].key);
+                    col.splice(i, 1);
+                }
+
+                that.setData({
+                    quesType: 0,
+                    keyType: 0,
+
+                    wdQues: 14,
+                    wdAns: 3,
+
+                    ques0: cques[0],
+                    ques1: cques[1],
+                    ques2: cques[2],
+                    ques3: cques[3],
+                    ques4: cques[4],
+                    ques5: cques[5],
+
+                    keys: ckey
+                });
+            }
+        });
+    } else {
+        return -1;
+    }
+
+    return 0;
 }
 
 

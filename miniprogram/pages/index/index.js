@@ -1777,7 +1777,6 @@ Page({
     },
 
     onChangeType(event) {
-        Toast('数值改变');
         const { picker, value, index } = event.detail;
         picker.setColumnValues(1, config.types[value[0]]);
     },
@@ -2140,6 +2139,10 @@ Page({
                     case 6:     //四年级四测混合运算
                         ret = g4Second.f3b3bASMD4s(7, 6, db, this);
                         that.data.typeDetail = 76;
+                        break;
+                    case 7:     //四年级简便合运算
+                        ret = g4Second.fg4easy(7, 7, db, this);
+                        that.data.typeDetail = 77;
                         break;
                     default:
                         break;

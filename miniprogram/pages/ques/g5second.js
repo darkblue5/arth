@@ -150,7 +150,7 @@ function fpotASMD(grade, type, db, pt) {
             success: res => {
                 col = res.data;
 
-                console.log(col.length);
+                //console.log(col.length);
 
                 i = Math.floor(Math.random() * (col.length - 1));
                 sques0 = col[i].ques;
