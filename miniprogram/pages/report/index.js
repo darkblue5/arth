@@ -220,6 +220,7 @@ Page({
                 grade: '未确认 '
             });
         } else {
+            
             that.setData ({
                 nickName: app.globalData.nickName + ' ',
                 grade: app.globalData.userGrade + ' '

@@ -1769,6 +1769,9 @@ Page({
             showGrade: false,
             txtScreenGrade: txtGrade
         });
+
+        //picker.setColumnValues(index, config.types[value[0]]);
+
     },
 
     onCancelGrade() {

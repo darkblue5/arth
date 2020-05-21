@@ -373,12 +373,12 @@ function f2bASMD2s(grade, type, db, pt) {
                     wdQues: 12,
                     wdAns: 5,
         
-                    ques0: ques[0],
-                    ques1: ques[1],
-                    ques2: ques[2],
-                    ques3: ques[3],
-                    ques4: ques[4],
-                    ques5: ques[5],
+                    ques0: cques[0],
+                    ques1: cques[1],
+                    ques2: cques[2],
+                    ques3: cques[3],
+                    ques4: cques[4],
+                    ques5: cques[5],
 
                     keys: ckey
                 });

@@ -464,16 +464,6 @@ function f64Opt(grade, type, db, point) {
                 // parse key string
                 for (k = 0; k < 3; k++) {
                     switch (ckey[k][0]) {
-                        // case 'i':
-                        //     cKeyFraType[k] = 1;
-                        //     tmpAns = (ckey[k]).substr(1);
-
-                        //     cKeyZs[k] = parseInt(tmpAns);
-                        //     cKeyFz[k] = 0;
-                        //     cKeyFm[k] = 0;
-
-                        //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
-                        //break;
                         case 'f':
                             cKeyFraType[k + 3] = 2;
                             tmpAns = (ckey[k]).substr(1);
@@ -666,13 +656,6 @@ function f6Simple(grade, type, db, point) {
 
 
     if (grade = 11 && type == 2) {
-        // ques[0] = "64 + f3/5 - f2/7";
-        // ques[1] = "f8/11 + 52 - f1/3";
-        // ques[2] = "f8/11 + 52 - f1/3";
-        // ques[3] = "3 - ( f8/13 - f1/2 )";
-        // ques[4] = "( 4 + f2/5 ) - f2/7";
-        // ques[5] = "( 4 + f2/5 ) - f2/7";
-
         db.collection('q62').where({
             type: 6231
         }).get({
@@ -847,6 +830,9 @@ function f6Simple(grade, type, db, point) {
                 that.setData({
                     quesType: 1,
                     keyType: 3,
+
+					wdQues: 13,
+					wdAns: 4,
 
                     ques0: shizi[0],
                     ques1: shizi[1],
@@ -1298,6 +1284,9 @@ function f6Scale(grade, type, db, point) {
                 that.setData({
                     quesType: 4,
                     keyType: 3,
+
+					wdQues: 12,
+					wdAns: 5,
 
                     ques0: shizi[0],
                     ques1: shizi[1],

@@ -442,8 +442,8 @@ function f3b3bASMD3s(grade, type, db, pt) {
                     quesType: 0,
                     keyType: 0,
 
-                    wdQues: 12,
-                    wdAns: 5,
+                    wdQues: 14,
+                    wdAns: 3,
 
                     ques0: cques[0],
                     ques1: cques[1],
