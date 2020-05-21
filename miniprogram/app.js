@@ -17,6 +17,7 @@ App({
         }
 
         this.globalData = {
+        	openid: '',
             userGrade: 0,
             tdyCorrt: 0,    //  本日正确
             tdyFinih: 0,    //  本日完成

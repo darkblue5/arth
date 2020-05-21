@@ -17,15 +17,15 @@ Page({
         tolFinih: 0,    //  累计完成
         rank: [],
 
-        nickName: '0',
-        grade: '',       //  用户所处年级
-        firstUser: '0',
+        nickName: '',
+        grade: 0,       //  用户所处年级
+        firstUser: '',
         firstPoint: 1,
-        secondUser: '0',
+        secondUser: '',
         secondPoint: 2,
-        thirdUser: '0',
+        thirdUser: '',
         thirdPoint: 3,
-        fourthUser: '0',
+        fourthUser: '',
         fourthPoint: 4,
 
         //dayData: [],

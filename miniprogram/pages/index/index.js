@@ -253,7 +253,7 @@ Page({
             })
             //console.log('INDEX, app.globalData.nickName', e.detail.userInfo.nickName);
 
-            //app.globalData.nickName = e.detail.userInfo.nickName;
+            app.globalData.nickName = e.detail.userInfo.nickName;
         }
 
         //获取用户 OpenID
@@ -271,11 +271,26 @@ Page({
                 }).get({
                     success: res => {
                         if (res.data.length != 0) {
-                            let strGrade = '';
-                            //用库中数据初始化用户所在年级
-                            app.globalData.userGrade = res.data[0].grade;
-                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+                            
+                            db.collection('rank').where({
+                                _openid: that.data.openID
+                            }).get({
+                                success: res => {
+                                    if (res.data.length != 0) {
+                                        //用库中数据初始化用户所在年级
+                                        app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+                                        app.globalData.tdyCorrt = res.data[0].tdycorrt;
+                                        app.globalData.tdyFinih = res.data[0].tdyfinih;
+                                        app.globalData.tdyRate = res.data[0].sevenrate[6];
+                                        app.globalData.sevenRate = res.data[0].sevenrate;
+                                        app.globalData.tolCorrt = res.data[0].tolcorrt;
+                                        app.globalData.tolFinih = res.data[0].tolfinih;
+                                    }
+                                }
+                            })
                         
+                            app.globalData.userGrade = res.data[0].grade;
+                            let strGrade = '';
                             switch (res.data[0].grade) {
                                 case 0:
                                     strGrade = '一年级上';
@@ -320,13 +335,7 @@ Page({
                             this.setData({
                                 txtScreenGrade:strGrade
                             });
-
-                            // app.globalData.tdyCorrt = res.data[0].tdycorrt;
-                            // app.globalData.tdyFinih = res.data[0].tdyfinih;
-                            // app.globalData.tdyRate = res.data[0].sevenrate[6];
-                            // app.globalData.sevenRate = res.data[0].sevenrate;
-                            // app.globalData.tolCorrt = res.data[0].tolcorrt;
-                            // app.globalData.tolFinih = res.data[0].tolfinih;
+                            
                             //app.globalData.userGrade = res.data[0].grade;
 
                             //console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
@@ -694,8 +703,8 @@ Page({
                     db.collection('rank').add({
                         data: {
                             //openID: that.data.openID,
-                            //nickname: that.data.userInfo.nickName,
-                            grade: that.data.userGrade,
+                            nickname: that.data.userInfo.nickName,
+                            grade: app.globalData.userGrade,
 
                             tdycorrt: correctCount,
                             tdyfinih: 6,
@@ -1744,7 +1753,8 @@ Page({
         db.collection('user').add({
             data: {
                 //openID: that.data.openID,
-                grade: index
+                grade: index,
+                nickname: app.globalData.nickName
             },
             success: function (res) {
                 //console.log(res)
