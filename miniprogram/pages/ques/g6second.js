@@ -141,6 +141,9 @@ function f61Step(grade, type, db, point) {
                    quesType: 1,
                    keyType: 3,
 
+                   wdQues: 12,
+                    wdAns: 5,
+
                    ques0: shizi[0],
                    ques1: shizi[1],
                     ques2: shizi[2]
@@ -426,6 +429,9 @@ function f64Opt(grade, type, db, point) {
                 that.setData({
                     quesType: 1,
                     keyType: 3,
+
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: shizi[0],
                     ques1: shizi[1],
@@ -1062,6 +1068,9 @@ function f6Formula(grade, type, db, point) {
                     quesType: 4,
                     keyType: 3,
 
+                    wdQues: 13,
+                    wdAns: 4,
+
                     ques0: shizi[0],
                     ques1: shizi[1],
                     ques2: shizi[2],
@@ -1085,7 +1094,7 @@ function f6Formula(grade, type, db, point) {
 
 }
 
-//            '解比例']
+//            '解比例'
 
 function f6Scale(grade, type, db, point) {
 
@@ -1285,8 +1294,8 @@ function f6Scale(grade, type, db, point) {
                     quesType: 4,
                     keyType: 3,
 
-					wdQues: 12,
-					wdAns: 5,
+                    wdQues: 12,
+                    wdAns: 5,
 
                     ques0: shizi[0],
                     ques1: shizi[1],

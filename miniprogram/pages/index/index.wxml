@@ -50,7 +50,7 @@
 
     <!--  middle area -->
     <view class="mid_area top-50 bc-white">
-        <van-row gutter="10">
+        <van-row gutter="6">
             <block wx:if="{{quesType == 0 || quesType == 3}}">
                 <van-col span="{{wdQues}}">
                     <view class="vw-ques">
@@ -202,9 +202,9 @@
                     </view>
                 </van-col>
             </block>
-            <block wx:elif="{{quesType == 2}}">
+            <!-- <block wx:elif="{{quesType == 2}}">
 
-            </block>
+            </block> -->
 
             <block wx:if="{{quesType == 0}}">
                 <van-col span="1">
@@ -230,33 +230,33 @@
                     </view>
                 </van-col>
             </block>
-            <block wx:elif="{{quesType == 3}}">
-                <van-col span="4">
+            <block wx:elif="{{ quesType == 3 }}">
+                <van-col span="2">
                     <view class="vw-col">
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
                     </view>
                 </van-col>
             </block>
-            <block wx:elif="{{quesType == 4}}">
-                <van-col span="4">
+            <block wx:elif="{{ quesType == 4 }}">
+                <van-col span="2">
                     <view class="vw-col-fra">
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
-                        <text> X =</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
+                        <text>χ=</text>
                     </view>
                 </van-col>
             </block>
-
+           
             <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
-                <van-col span="{{wdAns}}">
+                <van-col span="5">
                     <view class="vw-col">
                         <input class="inp-ans" type="number" value='{{ans0}}' bindblur="onBluAns0" />
                         <input class="inp-ans" type="number" value='{{ans1}}' bindblur="onBluAns1" />
@@ -267,8 +267,9 @@
                     </view>
                 </van-col>
             </block>
+
             <block wx:elif="{{keyType == 3}}">
-                <van-col span="4">
+                <van-col span="{{wdAns}}">
                     <view class="vw-ans-zs">
                         <input class="in-ans-zs" value='{{ans0Zs}}' type="number" bindblur="onInpBlurAns0Zs" />
                         <input class="in-ans-zs" value='{{ans1Zs}}' type="number" bindblur="onInpBlurAns1Zs" />
@@ -278,7 +279,7 @@
                         <input class="in-ans-zs" value='{{ans5Zs}}' type="number" bindblur="onInpBlurAns5Zs" />
                     </view>
                 </van-col>
-                <van-col span="4">
+                <van-col span="3">
                     <view class="vw-ans-fs">
                         <view>
                             <input class="in-ans-fz" value='{{ans0Fz}}' type="number" disabled='{{isDisabled0}}' bindblur="onInpBlurAns0Fz" />
@@ -309,7 +310,7 @@
             </block>
 
             <block wx:if="{{keyType == 1}}">
-                <van-col span="4">
+                <van-col span="2">
                     <view class="vw-col">
                         <input class="in-mod" type="number" value='{{mod0}}' bindblur="onBluMod0" />
                         <input class="in-mod" type="number" value='{{mod1}}' bindblur="onBluMod1" />
@@ -321,7 +322,7 @@
                 </van-col>
             </block>
 
-            <van-col span="3">
+            <van-col span="2">
                 <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
                 <view class="vw-col">
                     <van-icon name="success" color="{{tickColor0}}" />
