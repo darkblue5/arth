@@ -36,25 +36,12 @@ function f61Step(grade, type, db, point) {
            success: res => {
                col1 = res.data;
 
-            //    i = Math.floor(Math.random() * (col1.length - 1));
-            //    cques[0] = col1[i].ques;
-            //    ckey[0] = col1[i].key;
-            //    col1.splice(i, 1);
-
-            //    i = Math.floor(Math.random() * (col1.length - 1));
-            //    cques[1] = col1[i].ques;
-            //    ckey[1] = col1[i].key;
-
                for (k = 0; k < 3; k++) {
                    i = Math.floor(Math.random() * (col1.length - 1));
                    cques[k] = col1[i].ques;
                    ckey[k] = col1[i].key;
                }
-
-
-               //console.logn(ckey[0], ckey[1]);
-               //console.log(cques[0], cques[1]);
-
+               
                for (j = 0; j < 3; j++) {
                    //console.log(cques[j]);
 
@@ -108,7 +95,6 @@ function f61Step(grade, type, db, point) {
                    }
                }
 
-               //console.log(shizi[0], shizi[1]);
                // parse key string
                for (k = 0; k < 3; k++) {
                    switch (ckey[k][0]) {
@@ -122,7 +108,6 @@ function f61Step(grade, type, db, point) {
                            cKeyFz[k] = parseInt(ans[0]);
                            cKeyFm[k] = parseInt(ans[1]);
 
-                           // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                            break;
                        default:
                            cKeyFraType[k] = 4;     // 无分数全部采用浮点型进行比对
@@ -295,21 +280,6 @@ function f64Opt(grade, type, db, point) {
             success: res => {
                 col3 = res.data;
 
-                //                 i = Math.floor(Math.random() * (col1.length - 1));
-                //                 sques0 = col1[i].ques;
-                //                 nkey0 = col1[i].key;
-                //                 col1.splice(i, 1);
-
-                // 				i = Math.floor(Math.random() * (col1.length - 1));
-                //                 sques1 = col1[i].ques;
-                //                 nkey1 = col1[i].key;
-                //                 col1.splice(i, 1);
-
-                //                 i = Math.floor(Math.random() * (col1.length - 1));
-                //                 sques2 = col1[i].ques;
-                //                 nkey2 = col1[i].key;
-                // col3 = res.data;
-
                 for (k = 0; k < 3; k++) {
                     i = Math.floor(Math.random() * (col3.length - 1));
                     cques[k] = col3[i].ques;
@@ -360,8 +330,6 @@ function f64Opt(grade, type, db, point) {
                             cKeyZs[k] = parseFloat(tmpAns);
                             cKeyFz[k] = 0;
                             cKeyFm[k] = 0;
-
-                            // console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
 
                             break;
                     }
@@ -506,7 +474,7 @@ function f64Opt(grade, type, db, point) {
                             break;
                     }
 
-                    console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
+                    //console.log(cKeyFraType[k + 3], cKeyZs[k + 3], cKeyFz[k + 3], cKeyFm[k + 3]);
 
                 }
 
@@ -725,7 +693,7 @@ function f6Simple(grade, type, db, point) {
                             cKeyFm[k] = 0;
                             break;
                     }
-                    console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                    //console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                 }
 
                 for (j = 0; j < 6; j++) {
@@ -884,20 +852,12 @@ function f6Formula(grade, type, db, point) {
 
 
     if (grade = 11 && type == 3) {
-        // ques[0] = "64 + f3/5 - f2/7";
-        // ques[1] = "f8/11 + 52 - f1/3";
-        // ques[2] = "f8/11 + 52 - f1/3";
-        // ques[3] = "3 - ( f8/13 - f1/2 )";
-        // ques[4] = "( 4 + f2/5 ) - f2/7";
-        // ques[5] = "( 4 + f2/5 ) - f2/7";
 
         db.collection('q62').where({
             type: 6241
         }).get({
             success: res => {
                 col = res.data;
-
-                //console.log(col.length);
 
                 for (k = 0; k < 6; k++) {
                     i = Math.floor(Math.random() * (col.length - 1));
@@ -956,7 +916,7 @@ function f6Formula(grade, type, db, point) {
                             //console.log(cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                             break;
                     }
-                    console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
+                    //console.log(cKeyFraType[k], cKeyZs[k], cKeyFz[k], cKeyFm[k]);
                 }
 
                 for (j = 0; j < 6; j++) {
@@ -1094,7 +1054,7 @@ function f6Formula(grade, type, db, point) {
 
 }
 
-//            '解比例'
+// 解比例'
 
 function f6Scale(grade, type, db, point) {
 

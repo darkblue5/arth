@@ -1076,13 +1076,16 @@ Page({
     onInpBlurAns0Zs: function (e) {
         let that = this;
 
+        // console.log('that.data.keyFraType[0]', that.data.keyFraType[0]);
+        // console.log('e.detail.value', e.detail.value);
+        // console.log('that.data.keyZs[0]', that.data.keyZs[0]);
+
         switch (that.data.keyFraType[0]) {
             case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[0] == 1) {
+                if (parseInt(e.detail.value) === that.data.keyZs[0]) {
                     that.setData({
                         tickColor0: 'red',
                         isDisabled0: true,
-                        //inpBorder: '3rpx solid gray'
                     });
                 }
                 // 分数部分禁用输入
@@ -1105,10 +1108,13 @@ Page({
                     that.data.fraJudg0[0] = 1;
                 break;
             case 3:
-                if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
-                    that.setData({
-                        tickColor0: 'red',
-                    });
+                if (parseInt(e.detail.value) === that.data.keyZs[0]) {
+                    that.data.fraJudg0[0] = 1;
+                    if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                        that.setData({
+                            tickColor0: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1119,7 +1125,7 @@ Page({
     onInpBlurAns0Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[0]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[0]) {
             //that.data.isKey0Fz = true;
             that.data.fraJudg0[1] = 1;
         }
@@ -1135,8 +1141,6 @@ Page({
                 that.setData({
                     tickColor0: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -1144,7 +1148,7 @@ Page({
     onInpBlurAns0Fm: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFm[0]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[0]) {
             // that.data.isKey0Fm = true;
             that.data.fraJudg0[2] = 1;
         }
@@ -1154,16 +1158,12 @@ Page({
                 that.setData({
                     tickColor0: 'red',
                 });
-            } else {
-
             }
         } else if (that.data.keyFraType[0] == 3) {
             if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                 that.setData({
                     tickColor0: 'red',
                 });
-            } else {
-
             }
         }
     },
@@ -1173,14 +1173,13 @@ Page({
         let that = this;
 
         switch (that.data.keyFraType[1]) {
-            case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[1] == 1) {
-                    that.setData({
-                        tickColor1: 'red',
-                        isDisabled1: true,
-                        //inpBorder: '3rpx solid gray'
-                    });
-                }
+            case 1://答案为整数时，直接比对
+                    if (parseInt(e.detail.value) === that.data.keyZs[1]) {
+                        that.setData({
+                            tickColor1: 'red',
+                            isDisabled1: true,
+                        });
+                    }
                 // 分数部分禁用输入
 
                 break;
@@ -1203,16 +1202,13 @@ Page({
 
                 break;
             case 3:
-                if (that.data.keyZs[1] == e.detail.value) {
+                if (parseInt(e.detail.value) === that.data.keyZs[1]) {
                     that.data.fraJudg1[0] = 1;
-                } else {
-                    that.data.fraJudg1[0] = 0;
-                }
-
-                if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
-                    that.setData({
-                        tickColor1: 'red',
-                    });
+                    if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                        that.setData({
+                            tickColor1: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1223,7 +1219,7 @@ Page({
     onInpBlurAns1Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[1]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[1]) {
             that.data.fraJudg1[1] = 1;
         } else {
             that.data.fraJudg1[1] = 0;
@@ -1247,7 +1243,7 @@ Page({
     onInpBlurAns1Fm: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFm[1]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[1]) {
             that.data.fraJudg1[2] = 1;
         } else {
             that.data.fraJudg1[2] = 0;
@@ -1274,15 +1270,12 @@ Page({
 
         switch (that.data.keyFraType[2]) {
             case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[2] == 1) {
-                    that.setData({
-                        tickColor2: 'red',
-                        isDisabled2: true,
-                        //inpBorder: '3rpx solid gray'
-                    });
-                }
-                // 分数部分禁用输入
-
+                    if (parseInt(e.detail.value) === that.data.keyZs[2]) {
+                        that.setData({
+                            tickColor2: 'red',
+                            isDisabled2: true,
+                        });
+                    }
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
@@ -1297,22 +1290,19 @@ Page({
             case 2:    //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[2] == 0) {
                     that.data.fraJudg2[0] = 1;
-                } else {
-                    that.data.fraJudg2[0] = 0;
-                }
+                 }// else {
+                //     that.data.fraJudg2[0] = 0;
+                // }
 
                 break;
             case 3:
-                if (that.data.keyZs[2] == e.detail.value) {
+                if (parseInt(e.detail.value) === that.data.keyZs[2]) {
                     that.data.fraJudg2[0] = 1;
-                } else {
-                    that.data.fraJudg2[0] = 0;
-                }
-
-                if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
-                    that.setData({
-                        tickColor2: 'red',
-                    });
+                    if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                        that.setData({
+                            tickColor2: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1323,7 +1313,7 @@ Page({
     onInpBlurAns2Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[2]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[2]) {
             that.data.fraJudg2[1] = 1;
         } else {
             that.data.fraJudg2[1] = 0;
@@ -1347,7 +1337,7 @@ Page({
     onInpBlurAns2Fm: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFm[2]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[2]) {
             that.data.fraJudg2[2] = 1;
         } else {
             that.data.fraJudg2[2] = 0;
@@ -1374,13 +1364,12 @@ Page({
 
         switch (that.data.keyFraType[3]) {
             case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[3] == 1) {
-                    that.setData({
-                        tickColor3: 'red',
-                        isDisabled3: true,
-                        //inpBorder: '3rpx solid gray'
-                    });
-                }
+                    if (parseInt(e.detail.value) === that.data.keyZs[3]) {
+                        that.setData({
+                            tickColor3: 'red',
+                            isDisabled3: true,
+                        });
+                    }
                 // 分数部分禁用输入
 
                 break;
@@ -1403,16 +1392,13 @@ Page({
 
                 break;
             case 3:
-                if (that.data.keyZs[3] == e.detail.value) {
+                if (parseInt(e.detail.value) === that.data.keyZs[3]) {
                     that.data.fraJudg3[0] = 1;
-                } else {
-                    that.data.fraJudg3[0] = 0;
-                }
-
-                if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
-                    that.setData({
-                        tickColor3: 'red',
-                    });
+                    if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                        that.setData({
+                            tickColor3: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1423,7 +1409,7 @@ Page({
     onInpBlurAns3Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[3]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[3]) {
             that.data.fraJudg3[1] = 1;
         } else {
             that.data.fraJudg3[1] = 0;
@@ -1446,7 +1432,7 @@ Page({
 
     onInpBlurAns3Fm: function (e) {
         let that = this;
-        if (e.detail.value == that.data.keyFm[3]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[3]) {
             that.data.fraJudg3[2] = 1;
         } else {
             that.data.fraJudg3[2] = 0;
@@ -1473,12 +1459,12 @@ Page({
 
         switch (that.data.keyFraType[4]) {
             case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[4] == 1) {
-                    that.setData({
-                        tickColor4: 'red',
-                        isDisabled4: true,
-                    });
-                }
+                    if (parseInt(e.detail.value) === that.data.keyZs[4]) {
+                        that.setData({
+                            tickColor4: 'red',
+                            isDisabled4: true,
+                        });
+                    }
                 // 分数部分禁用输入
 
                 break;
@@ -1501,16 +1487,13 @@ Page({
 
                 break;
             case 3:
-                if (that.data.keyZs[4] == e.detail.value) {
+                if (parseInt(e.detail.value) === that.data.keyZs[4]) {
                     that.data.fraJudg4[0] = 1;
-                } else {
-                    that.data.fraJudg4[0] = 0;
-                }
-
-                if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
-                    that.setData({
-                        tickColor4: 'red',
-                    });
+                    if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                        that.setData({
+                            tickColor4: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1521,7 +1504,7 @@ Page({
     onInpBlurAns4Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[4]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[4]) {
             that.data.fraJudg4[1] = 1;
         } else {
             that.data.fraJudg4[1] = 0;
@@ -1545,7 +1528,7 @@ Page({
     onInpBlurAns4Fm: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFm[4]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[4]) {
             that.data.fraJudg4[2] = 1;
         } else {
             that.data.fraJudg4[2] = 0;
@@ -1572,13 +1555,12 @@ Page({
 
         switch (that.data.keyFraType[5]) {
             case 1:     //答案为整数时，直接比对
-                if (that.data.keyFraType[5] == 1) {
-                    that.setData({
-                        tickColor5: 'red',
-                        isDisabled5: true,
-                        //inpBorder: '3rpx solid gray'
-                    });
-                }
+                    if (parseInt(e.detail.value) === that.data.keyZs[5]) {
+                        that.setData({
+                            tickColor5: 'red',
+                            isDisabled5: true,
+                        });
+                    }
                 // 分数部分禁用输入
 
                 break;
@@ -1601,16 +1583,13 @@ Page({
 
                 break;
             case 3:
-                if (that.data.keyZs[5] == e.detail.value) {
+                if (parseInt(e.detail.value) === that.data.keyZs[5]) {
                     that.data.fraJudg5[0] = 1;
-                } else {
-                    that.data.fraJudg5[0] = 0;
-                }
-
-                if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
-                    that.setData({
-                        tickColor5: 'red',
-                    });
+                    if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                        that.setData({
+                            tickColor5: 'red',
+                        });
+                    }
                 }
                 break;
             default:
@@ -1621,7 +1600,7 @@ Page({
     onInpBlurAns5Fz: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFz[5]) {
+        if (parseInt(e.detail.value) === that.data.keyFz[5]) {
             that.data.fraJudg5[1] = 1;
         } else {
             that.data.fraJudg5[1] = 0;
@@ -1645,7 +1624,7 @@ Page({
     onInpBlurAns5Fm: function (e) {
         let that = this;
 
-        if (e.detail.value == that.data.keyFm[5]) {
+        if (parseInt(e.detail.value) === that.data.keyFm[5]) {
             that.data.fraJudg5[2] = 1;
         } else {
             that.data.fraJudg5[2] = 0;

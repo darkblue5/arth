@@ -117,8 +117,8 @@ function f1pot(grade, type, pt) {
             quesType: 0,
             keyType: 2,
 
-        wdQues: 10,
-        wdAns: 7,
+            wdQues: 10,
+            wdAns: 7,
 
             ques0: sques0,
             ques1: sques1,
@@ -394,7 +394,7 @@ function fsfAorS(grade, type, pt) {
                 cKeyFm[j] = cfm[0];
             }
 
-            console.log(cKeyZs[j], cKeyFz[j], cKeyFm[j]);
+            //console.log(cKeyZs[j], cKeyFz[j], cKeyFm[j]);
 
             shizi[j] = [
                 {
@@ -440,7 +440,6 @@ function fsfAorS(grade, type, pt) {
             keyFm: cKeyFm,
 
             keyFraType: cKeyFraType
-
         });
     }
 
@@ -532,7 +531,8 @@ function fdfAorS(grade, type, db, pt) {
                             break;
                         default:
                             cKeyFraType[k] = 1;
-                            tmpAns = (ckey[k]).substr(1);
+                            //tmpAns = (ckey[k]).substr(1);
+                            tmpAns = ckey[k];
 
                             cKeyZs[k] = parseInt(tmpAns);
                             cKeyFz[k] = 0;
@@ -636,6 +636,8 @@ function fdfAorS(grade, type, db, pt) {
 
                     keyFraType: cKeyFraType
                 });
+
+                //console.log('cKeyZs, cKeyFz, cKeyFm', cKeyZs, cKeyFz, cKeyFm)
             }
         });       
     }
