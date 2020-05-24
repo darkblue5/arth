@@ -25,7 +25,7 @@ let init;   // timer
 
 Page({
     data: {
-        avatarUrl: '../../images/user-unlogin.png',
+        avatarUrl: 'https://6173-ascpg-1301277680.tcb.qcloud.la/user-unlogin.png?sign=aff839f66cc8805071eab02ce2720cc8&t=1590301116',
         hasUserInfo: false,     //  用户信息标识
         //canIUse: wx.canIUse('button.open-type.getUserInfo'),    //  开放式授权检测
 
