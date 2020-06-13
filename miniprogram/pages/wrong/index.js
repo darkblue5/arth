@@ -242,10 +242,7 @@ Page({
                                 type: that.data.quesType[2]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong2: res.data,
-                                        count2: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 2);
                                 }
                             })
                             break;
@@ -255,10 +252,7 @@ Page({
                                 type: that.data.quesType[3]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong3: res.data,
-                                        count3: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 3);
                                 }
                             })
                             break;
@@ -268,10 +262,7 @@ Page({
                                 type: that.data.quesType[4]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong4: res.data,
-                                        count4: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 4);
                                 }
                             })
                             break;
@@ -281,10 +272,7 @@ Page({
                                 type: that.data.quesType[5]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong5: res.data,
-                                        count5: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 5);
                                 }
                             })
                             break;
@@ -294,10 +282,8 @@ Page({
                                 type: that.data.quesType[6]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong6: res.data,
-                                        count6: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 6);
+
                                 }
                             })
                             break;
@@ -307,10 +293,8 @@ Page({
                                 type: that.data.quesType[7]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong7: res.data,
-                                        count7: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 7);
+
                                 }
                             })
                             break;
@@ -320,10 +304,7 @@ Page({
                                 type: that.data.quesType[8]
                             }).get({
                                 success: res => {
-                                    that.setData({
-                                        wrong8: res.data,
-                                        count8: res.data.length
-                                    })
+                                    that.parseQstring(res.data, 8);
                                 }
                             })
                             break;

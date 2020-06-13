@@ -39,7 +39,11 @@ Page({
 
                 canvas.setChart(chart);
 
-                todayRate = app.globalData.sevenRate[6];
+                //若未登录正确率初始值为0
+                if (app.globalData.sevenRate[6] === undefined)
+                    todayRate = 0;
+                else
+                    todayRate = app.globalData.sevenRate[6];
 
                 var option = {
                     backgroundColor: "#ffffff",
@@ -94,12 +98,18 @@ Page({
                 var day = now.getDate();
                 let i = 0;
                 let dayData = [];
-                let crrRate;
+                let weekRate = [];
                 //let crrRate = this.data.sevenRate;
 
                 for (i = 7; i > 0; i--) {
                     dayData[i - 1] = day - 7 + i;
                 }
+
+                //console.log(app.globalData.sevenRate);
+                if (app.globalData.sevenRate.length == 0)
+                    weekRate = [100, 100, 100, 100, 100, 100, 100];
+                else
+                    weekRate = app.globalData.sevenRate;
 
                 var option = {
                     title: {
@@ -177,7 +187,7 @@ Page({
                         name: '正确率',
                         type: 'line',
                         smooth: false,
-                        data: app.globalData.sevenRate
+                        data: weekRate
                         //data: sevenRate
                     }]
 
@@ -216,13 +226,19 @@ Page({
         //console.log('REPORT, app.globalData.nickName', app.globalData.nickName);
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             that.setData ({
-                nickName: '佚名 ',
-                grade: '未确认 '
+                nickName: '未命名 ',
+                grade: '未登陆　'
             });
         } else {
-            
+            let nameStr = app.globalData.nickName;
+
+            if(app.globalData.nickName.length > 6)
+                nameStr = app.globalData.nickName.substr(0, 6);
+            else
+                nameStr = app.globalData.nickName;
+
             that.setData ({
-                nickName: app.globalData.nickName + ' ',
+                nickName: nameStr + ' ',
                 grade: app.globalData.userGrade + ' '
             });
         }
@@ -238,7 +254,7 @@ Page({
                 content: '请登陆微信使用完整功能',
                 showCancel: false,
                 success: function (res) {
-
+                    // FIXME:
                 }
             })
         } else {
@@ -301,24 +317,33 @@ Page({
             tdyRate: app.globalData.sevenRate[6]
         });
 
-        try {
-            let res = await db.collection('rank')
-                .aggregate()
-                .match({
-                    grade: app.globalData.userGrade
-                })
-                .sort({
-                    point: -1
-                })
-                .limit(4)
-                .end();
-            //console.log(res.list[2]);
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
 
             that.setData({
-                rank: res.list
+                rank: [{nickname: '用户一', point: 400}, {nickname: '用户二', point: 300}, {nickname: '用户三', point: 200}, {nickname: '用户四', point: 100}]
             });
-        } catch (error) {
-            return error;
+
+        } else {
+            try {            
+                let res = await db.collection('rank')
+                    .aggregate()
+                    .match({
+                        grade: app.globalData.userGrade
+                    })
+                    .sort({
+                        point: -1
+                    })
+                    .limit(4)
+                    .end();
+                //console.log(res.list);
+
+                that.setData({
+                    rank: res.list
+                });
+            } catch (error) {
+                return error;
+            }
+
         }
     }
 
