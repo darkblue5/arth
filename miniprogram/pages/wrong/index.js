@@ -11,7 +11,7 @@ Page({
         activeKey: 0,
         recGrade: 0, //  当前用户所在年级
         txtGrade: '',
-        nickName: '佚名',
+        nickName: '未登陆',
         openID: '',
 
         grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
@@ -368,7 +368,7 @@ Page({
         //console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             that.setData({
-                txtGrade: '未确认年级'
+                txtGrade: '未知 年级'
             });
         } else {
             that.setData({

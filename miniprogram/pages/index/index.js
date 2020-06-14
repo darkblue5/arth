@@ -108,10 +108,6 @@ Page({
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
 
-        // curRecord: [0, 0],
-        // dayRecord: [0, 0],
-        // talRecord: [0, 0],
-
         showGrade: false,   //  pop弹窗开关
         showType: false,
 
@@ -152,72 +148,6 @@ Page({
             })
             return -1;
         }
-
-        // wx.checkSession({
-        //     success: function (res) {
-        //         wx.getSetting({
-        //             success: res => {
-        //                 if (res.authSetting['scope.userInfo']) {
-        //                     // wx.getUserInfo({
-        //                     //     success: res => {
-        //                     //         this.setData({
-        //                     //             avatarUrl: res.userInfo.avatarUrl,
-        //                     //             userInfo: res.userInfo
-        //                     //         })
-        //                     //     }
-        //                     // })
-        //                 }
-
-        //                 // 获取用户 OpenID
-        //                 // wx.cloud.callFunction({
-        //                 //     name: 'login',
-        //                 //     data: {},
-        //                 //     success: res => {
-        //                 //         console.log('onload get id', res.result.openid);
-        //                 //         //app.globalData.openid = res.result.openid;
-        //                 //         that.data.openID = res.result.openid;
-
-        //                 //         //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-        //                 //         db.collection('rank').where({
-        //                 //             uid: that.data.openID
-        //                 //         }).get({
-        //                 //             success: res => {
-        //                 //                 //console.log(res.data)
-        //                 //                 //初始化用户所在年级
-        //                 //                 app.globalData.userGrade = res.data.grade;
-        //                 //             }
-        //                 //         })
-
-        //                 //     },
-        //                 //     fail: err => {
-        //                 //         console.error('[云函数] [login] 调用失败', err);
-
-        //                 //     }
-        //                 // })
-        //             }
-        //         })
-
-        //     },
-        //     fail: function (res) {
-        //     }
-        // });
-
-        //  若为新用户，提示选择年级
-        //  与读取旧用户记录的异步问题
-
-        // if (that.data.userGrade == -1) {
-        //     wx.showModal({
-        //         //title: '提示',
-        //         content: '选择所在年级',
-        //         showCancel: false,
-        //         //confirmText: '返回',
-        //         success: function (res) {
-        //             if (res.confirm) {
-        //                 //console.log('用户点击了“返回授权”')
-        //             }
-        //         }
-        //     })
-        // }
 
         clearInterval(init); // 计时器归零
         that.data.minute = 0;
@@ -288,7 +218,9 @@ Page({
                                     }
                                 }
                             })
-                        
+                            
+                            //console.log('res.data[0].grade', res.data[0].grade);
+
                             app.globalData.userGrade = res.data[0].grade;
                             let strGrade = '';
                             switch (res.data[0].grade) {
@@ -333,9 +265,13 @@ Page({
                             }
 
                             this.setData({
-                                txtScreenGrade:strGrade
+                                indexType: [res.data[0].grade, 0],
+
+                                txtScreenGrade: strGrade,
+                                txtScreenType: config.types[strGrade][0]
                             });
                             
+                            //console.log('that.data.indexType', that.data.indexType)
                             //app.globalData.userGrade = res.data[0].grade;
 
                             //console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
