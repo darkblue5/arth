@@ -215,12 +215,15 @@ Page({
                                         app.globalData.sevenRate = res.data[0].sevenrate;
                                         app.globalData.tolCorrt = res.data[0].tolcorrt;
                                         app.globalData.tolFinih = res.data[0].tolfinih;
+
+                                        that.setData({
+                                            
+                                        });
                                     }
                                 }
                             })
                             
-                            //console.log('res.data[0].grade', res.data[0].grade);
-
+4
                             app.globalData.userGrade = res.data[0].grade;
                             let strGrade = '';
                             switch (res.data[0].grade) {

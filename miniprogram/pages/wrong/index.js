@@ -34,33 +34,31 @@ Page({
     },
 
     onLoad: function () {
-        let that = this;
-        let grade = 0;
-        let worngCount = [];
-        let i = 0;
-        let quesCount = 0;
+        // let that = this;
+        // let grade = 0;
+        // let quesCount = 0;
 
-        if (app.globalData.openid === undefined || app.globalData.openid === '') {
-            // 未登录时的默认展示一年级上
-            that.setData({
-                types: config.types[that.data.gradesDetail[0]],
-                quesType: config.typeIndex[0],
-                recGrade: 0
-            })
-        } else {
-            quesCount = config.typeIndex[app.globalData.userGrade].length;
-            grade = app.globalData.userGrade;
+        // if (app.globalData.openid === undefined || app.globalData.openid === '') {
+        //     // 未登录时的默认展示一年级上
+        //     that.setData({
+        //         types: config.types[that.data.gradesDetail[0]],
+        //         quesType: config.typeIndex[0],
+        //         recGrade: 0
+        //     })
+        // } else {
+        //     quesCount = config.typeIndex[app.globalData.userGrade].length;
+        //     grade = app.globalData.userGrade;
 
-            that.setData({
-                types: config.types[that.data.gradesDetail[grade]],
-                quesType: config.typeIndex[app.globalData.userGrade],
-                recGrade: app.globalData.userGrade
-            })
-        }
+        //     that.setData({
+        //         types: config.types[that.data.gradesDetail[grade]],
+        //         quesType: config.typeIndex[app.globalData.userGrade],
+        //         recGrade: app.globalData.userGrade
+        //     })
+        // }
 
-        console.log('LOAD, that.data.types', that.data.types);
-        console.log('LOAD, that.data.quesType', that.data.quesType);
-        console.log('LOAD, that.data.recGrade', that.data.recGrade);
+        //console.log('LOAD, that.data.types', that.data.types);
+        //console.log('LOAD, that.data.quesType', that.data.quesType);
+        //console.log('LOAD, that.data.recGrade', that.data.recGrade);
 
     },
 
@@ -68,9 +66,6 @@ Page({
         //console.log(app.globalData.userGrade);
         let that = this;
         let i = 0;
-
-        //console.log('SHOW, that.data.recGrade', that.data.recGrade);
-        //console.log('SHOW, that.data.quesType', that.data.quesType);
 
         that.data.openID = app.globalData.openid;
         //for (i=0; i<that.data.quesType.length; i++)
@@ -84,132 +79,6 @@ Page({
             case 6:
             case 7:
             case 8:
-                //直接赋值
-                // for (i = 0; i < that.data.quesType.length; i++) {
-                //     switch (that.data.quesType[i] % 10) {
-                //         case 0:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[0]
-                //             }).get({
-                //                 success: res => {
-                //                     console.log('WRONG, res.data', res.data);
-                //                     that.setData({
-                //                         wrong0: res.data,
-                //                         count0: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 1:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[1]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong1: res.data,
-                //                         count1: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 2:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[2]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong2: res.data,
-                //                         count2: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 3:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[3]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong3: res.data,
-                //                         count3: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 4:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[4]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong4: res.data,
-                //                         count4: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 5:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[5]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong5: res.data,
-                //                         count5: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 6:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[6]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong6: res.data,
-                //                         count6: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 7:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[7]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong7: res.data,
-                //                         count7: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         case 8:
-                //             db.collection('errcol').where({
-                //                 _openid: that.data.openID,
-                //                 type: that.data.quesType[8]
-                //             }).get({
-                //                 success: res => {
-                //                     that.setData({
-                //                         wrong8: res.data,
-                //                         count8: res.data.length
-                //                     })
-                //                 }
-                //             })
-                //             break;
-                //         default:
-                //             break;
-                //     }
-                // }
-                // break;
             case 9:
             case 10:
             case 11:
@@ -316,13 +185,85 @@ Page({
             default:
                 break;
         }
+
+        // 刷新数据
+        //let that = this;
+        let grade = 0;
+        let quesCount = 0;
+
+        if (app.globalData.openid === undefined || app.globalData.openid === '') {
+            // 未登录时的默认展示一年级上
+            that.setData({
+                types: config.types[that.data.gradesDetail[0]],
+                quesType: config.typeIndex[0],
+                recGrade: 0
+            })
+        } else {
+            let strGrade;
+            
+            quesCount = config.typeIndex[app.globalData.userGrade].length;
+            grade = app.globalData.userGrade;
+
+            switch (app.globalData.userGrade) {
+                case 0:
+                    strGrade = '一年级上';
+                    break;
+                case 1:
+                    strGrade = '一年级下';
+                    break;
+                case 2:
+                    strGrade = '二年级上';
+                    break;
+                case 3:
+                    strGrade = '二年级下';
+                    break;
+                case 4:
+                    strGrade = '三年级上';
+                    break;
+                case 5:
+                    strGrade = '三年级下';
+                    break;
+                case 6:
+                    strGrade = '四年级上';
+                    break;
+                case 7:
+                    strGrade = '四年级下';
+                    break;
+                case 8:
+                    strGrade = '五年级上';
+                    break;
+                case 9:
+                    strGrade = '五年级下';
+                    break;
+                case 10:
+                    strGrade = '六年级上';
+                    break;
+                case 11:
+                    strGrade = '六年级下';
+                    break;
+                default:
+                    break;
+            }
+
+            that.setData({
+                nickName: app.globalData.nickName + ' ',
+                txtGrade: strGrade,
+
+                types: config.types[that.data.gradesDetail[grade]],
+                quesType: config.typeIndex[app.globalData.userGrade],
+                recGrade: app.globalData.userGrade
+            })
+        }
+
+        //用户名与年级刷新
+
     },
 
     onReady() {
         let that = this;
         let strGrade = '';
 
-        console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
+        //console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
 
         switch (app.globalData.userGrade) {
             case 0:
