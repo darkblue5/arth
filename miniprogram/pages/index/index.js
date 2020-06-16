@@ -215,10 +215,7 @@ Page({
                                         app.globalData.sevenRate = res.data[0].sevenrate;
                                         app.globalData.tolCorrt = res.data[0].tolcorrt;
                                         app.globalData.tolFinih = res.data[0].tolfinih;
-
-                                        that.setData({
-                                            
-                                        });
+                                    
                                     }
                                 }
                             })

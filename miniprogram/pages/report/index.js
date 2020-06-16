@@ -345,6 +345,19 @@ Page({
             }
 
         }
+
+        //debug
+        //test fresh rate
+        // wx.cloud.callFunction({
+        //     // 云函数名称
+        //     name: 'freshRate',
+        //     success: res => {
+        //         console.log('[云函数] [freshRate] 调用成功', res);
+        //     },
+        //     fail: err => {
+        //         console.error('[云函数] [freshRate] 调用失败', err)
+        //     }
+        // })
     }
 
 })
