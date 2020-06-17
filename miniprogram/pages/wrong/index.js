@@ -29,36 +29,38 @@ Page({
         wrong6: [],
         wrong7: [],
 
-        quesType: []
+        quesType: [],
+
+        objectId: '',
+        days: [],
+        signUp: [],
+        cur_year: 0,
+        cur_month: 0,
+        count: 0
 
     },
 
     onLoad: function () {
-        // let that = this;
-        // let grade = 0;
-        // let quesCount = 0;
+        let that = this;
+       
+        //获取当前年月  
+        const date = new Date();
+        const cur_year = date.getFullYear();
+        const cur_month = date.getMonth() + 1;
+        const weeks_ch = ['日', '一', '二', '三', '四', '五', '六'];
+        that.calculateEmptyGrids(cur_year, cur_month);
+        that.calculateDays(cur_year, cur_month);
 
-        // if (app.globalData.openid === undefined || app.globalData.openid === '') {
-        //     // 未登录时的默认展示一年级上
-        //     that.setData({
-        //         types: config.types[that.data.gradesDetail[0]],
-        //         quesType: config.typeIndex[0],
-        //         recGrade: 0
-        //     })
-        // } else {
-        //     quesCount = config.typeIndex[app.globalData.userGrade].length;
-        //     grade = app.globalData.userGrade;
+        //获取当前用户当前任务的签到状态
+        that.onGetSignUp();
 
-        //     that.setData({
-        //         types: config.types[that.data.gradesDetail[grade]],
-        //         quesType: config.typeIndex[app.globalData.userGrade],
-        //         recGrade: app.globalData.userGrade
-        //     })
-        // }
+        that.setData({
+            cur_year: cur_year,
+            cur_month: cur_month,
+            weeks_ch: weeks_ch
+        });
 
-        //console.log('LOAD, that.data.types', that.data.types);
-        //console.log('LOAD, that.data.quesType', that.data.quesType);
-        //console.log('LOAD, that.data.recGrade', that.data.recGrade);
+        that.onShow();
 
     },
 
@@ -200,7 +202,7 @@ Page({
             })
         } else {
             let strGrade;
-            
+
             quesCount = config.typeIndex[app.globalData.userGrade].length;
             grade = app.globalData.userGrade;
 
@@ -262,8 +264,6 @@ Page({
     onReady() {
         let that = this;
         let strGrade = '';
-
-        //console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
 
         switch (app.globalData.userGrade) {
             case 0:
@@ -331,10 +331,20 @@ Page({
         let that = this;
         let str = [];
         let node = [];
-        let len = 0, i = 0, j = 0;
-        let you = [], fsfh = [], czs = [], cfz = [], cfm = [];
+        let len = 0,
+            i = 0,
+            j = 0;
+        let you = [],
+            fsfh = [],
+            czs = [],
+            cfz = [],
+            cfm = [];
         let ecol = [];
-        let frame = { zs: -1, fz: -1, fm: -1 };
+        let frame = {
+            zs: -1,
+            fz: -1,
+            fm: -1
+        };
 
         for (j = 0; j < object.length; j++) {
             //console.log(object[j]._id);
@@ -344,10 +354,17 @@ Page({
             len = node.length;
 
             let eques = [];
-            let rec = { id: '', ques: [] };
+            let rec = {
+                id: '',
+                ques: []
+            };
 
             for (i = 0; i < len; i++) {
-                let frame = { zs: -1, fz: -1, fm: -1 };
+                let frame = {
+                    zs: -1,
+                    fz: -1,
+                    fm: -1
+                };
 
                 if (node[i][0] == 'f') {
                     you[i] = true;
@@ -503,7 +520,7 @@ Page({
                 break;
         }
 
-        console.log('index id:', e.currentTarget.dataset.quesid);
+        //console.log('index id:', e.currentTarget.dataset.quesid);
 
         wx.cloud.callFunction({
             name: 'del',
@@ -511,10 +528,10 @@ Page({
                 quesId: e.currentTarget.dataset.quesid
             },
             success: res => {
-                console.log('[云函数] [bookAdd] 删除信息成功！！ ', res);
+                //console.log('[云函数] [del] 删除信息成功！！ ', res);
             },
             fail: err => {
-                console.error('[云函数] [bookAdd] 调用失败', err)
+                //console.error('[云函数] [del] 调用失败', err)
             }
         })
 
@@ -534,5 +551,158 @@ Page({
             })
         }
     },
+
+    //获取当前用户该任务的签到数组
+    onGetSignUp: function () {
+        let that = this;
+
+        let i = 0;
+        let csignUp = [];
+
+        for (i = 0; i < 31; i++) {
+            csignUp[i] = new Object();
+            csignUp[i].isSign = "今日已打卡";
+            csignUp[i].data = new Date('2020-06-16');
+        }
+
+        that.setData({
+            signUp: csignUp,
+            //count: 55
+        });
+
+        // console.log(that.data.signUp);
+
+        that.onJudgeSign();
+
+    },
+
+    // 获取当月共多少天
+    getThisMonthDays: function (year, month) {
+        return new Date(year, month, 0).getDate()
+    },
+
+    // 获取当月第一天星期几
+    getFirstDayOfWeek: function (year, month) {
+        return new Date(Date.UTC(year, month - 1, 1)).getDay();
+    },
+
+    // 计算当月1号前空了几个格子，把它填充在days数组的前面
+    calculateEmptyGrids: function (year, month) {
+        let that = this;
+
+        //计算每个月时要清零
+        that.setData({
+            days: []
+        });
+
+        const firstDayOfWeek = this.getFirstDayOfWeek(year, month);
+        if (firstDayOfWeek > 0) {
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                let obj = {
+                    date: null,
+                    isSign: false
+                }
+                that.data.days.push(obj);
+            }
+            this.setData({
+                days: that.data.days
+            });
+            //清空
+        } else {
+            this.setData({
+                days: []
+            });
+        }
+
+    },
+
+    // 绘制当月天数占的格子，并把它放到days数组中
+    calculateDays: function (year, month) {
+        let that = this;
+        const thisMonthDays = this.getThisMonthDays(year, month);
+
+        for (let i = 1; i <= thisMonthDays; i++) {
+            let obj = {
+                date: i,
+                isSign: false
+            }
+            that.data.days.push(obj);
+        }
+
+        this.setData({
+            days: that.data.days
+        });
+    },
+
+    //匹配判断当月与当月哪些日子签到打卡
+    onJudgeSign: function () {
+        let that = this;
+        let signs = that.data.signUp;
+        let daysArr = that.data.days;
+
+        db.collection('loginRec').where({
+
+        }).get({
+            success: res => {
+                let count = 0;
+
+                for (let j = 0; j < daysArr.length; j++) {
+                    //年月日相同并且已打卡signs
+                    if (res.data[0].rec[j] === 1) {
+                        daysArr[j].isSign = true;
+                        count++;
+                    }
+                }
+
+                that.setData({
+                    days: daysArr,
+                    count: count
+                });
+            }
+        })
+    },
+
+    // 切换控制年月，上一个月，下一个月
+    // handleCalendar: function (e) {
+    //     const handle = e.currentTarget.dataset.handle;
+    //     const cur_year = this.data.cur_year;
+    //     const cur_month = this.data.cur_month;
+
+    //     if (handle === 'prev') {
+    //         let newMonth = cur_month - 1;
+    //         let newYear = cur_year;
+
+    //         if (newMonth < 1) {
+    //             newYear = cur_year - 1;
+    //             newMonth = 12;
+    //         }
+
+    //         this.calculateEmptyGrids(newYear, newMonth);
+    //         this.calculateDays(newYear, newMonth);
+    //         this.onGetSignUp();
+    //         this.setData({
+    //             cur_year: newYear,
+    //             cur_month: newMonth
+    //         })
+    //     } else {
+
+    //         let newMonth = cur_month + 1;
+    //         let newYear = cur_year;
+
+    //         if (newMonth > 12) {
+    //             newYear = cur_year + 1;
+    //             newMonth = 1;
+    //         }
+
+    //         this.calculateEmptyGrids(newYear, newMonth);
+    //         this.calculateDays(newYear, newMonth);
+    //         this.onGetSignUp();
+    //         this.setData({
+    //             cur_year: newYear,
+    //             cur_month: newMonth
+    //         })
+
+    //     }
+    // }
 
 })

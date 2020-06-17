@@ -307,7 +307,7 @@ Page({
 
     async onShow( ) {
         let that = this;
-        console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
+        //console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
 
         that.setData ({
             tdyCorrt: app.globalData.tdyCorrt,    //  本日正确

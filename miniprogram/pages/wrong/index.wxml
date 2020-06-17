@@ -1,12 +1,58 @@
-<!--index.wxml-->
 <view class="container">
 	<van-row>
-		<van-calendar title="每日打卡" poppable="{{ false }}" show-confirm="{{ false }}" class="calendar" row-height="32" />
+		<!-- 显示星期 -->
+		<view class="week">
+			<view wx:for="{{weeks_ch}}" wx:key="{{index}}" data-idx="{{index}}">{{item}}</view>
+		</view>
+	</van-row>
+
+	<van-row>
+		<view class='days'>
+			<!-- 列 -->
+			<view class="columns" wx:for="{{days.length/7}}" wx:for-index="i" wx:key="i">
+				<view wx:for="{{days}}" wx:for-index="j" wx:key="j">
+					<!-- 行 -->
+					<view class="rows" wx:if="{{j/7 == i}}">
+						<view class="rows" wx:for="{{7}}" wx:for-index="k" wx:key="k">
+							<!-- 每个月份的空的单元格 -->
+							<view class='cell' wx:if="{{days[j+k].date == null}}">
+								<text decode="{{true}}">&nbsp;&nbsp;</text>
+							</view>
+
+							<!-- 每个月份的有数字的单元格 -->
+							<view class='cell' wx:else>
+								<!-- 当前日期已签到 -->
+								<view wx:if="{{days[j+k].isSign == true}}" style='background-color:#ffe3b3' class='cell'>
+									<text>{{days[j+k].date}}</text>
+								</view>
+								<!-- 当前日期未签到 -->
+								<view wx:else>
+									<text>{{days[j+k].date}}</text>
+								</view>
+
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</van-row>
+
+
+	<van-row>
+		<!-- 坚持打卡天数 -->
+		<view class='count'>
+			<text>本月已坚持练习</text>
+			<view class='daynumber'>
+				<text class='number'>{{count}}</text>
+				<text class='day'>天</text>
+			</view>
+		</view>
 	</van-row>
 
 	<!-- <view class="top-50"> -->
 	<van-row>
-		<view class="top-50 ques_title">{{nickName}} @ {{txtGrade}} </view>
+		<view class="top-10 ques_title">{{nickName}} @ {{txtGrade}} </view>
 	</van-row>
 
 	<view class="top-10">
@@ -49,245 +95,245 @@
 
 						<block wx:if="{{index == 0}}">
 							<view wx:for="{{ wrong0 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 1}}">
 							<view wx:for="{{ wrong1 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 2}}">
 							<view wx:for="{{ wrong2 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 3}}">
 							<view wx:for="{{ wrong3 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 4}}">
 							<view wx:for="{{ wrong4 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 5}}">
-						<view wx:for="{{ wrong5 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+							<view wx:for="{{ wrong5 }}" wx:key="index">
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 6}}">
 							<view wx:for="{{ wrong6 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 7}}">
 							<view wx:for="{{ wrong7 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 						<block wx:if="{{index == 8}}">
 							<view wx:for="{{ wrong8 }}" wx:key="index">
-                                <van-swipe-cell right-width="{{100}}">
-                                    <view class="shizi top-10">
-                                        <view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
-                                            <block wx:if="{{qstr.zs != -1}}">
-                                                <view class="zsbufen">
-                                                    {{qstr.zs}}
-                                                </view>
-                                            </block>
-                                            <block wx:if="{{qstr.fz != -1}}">
-                                                <view class="fsbufen">
-                                                    <view class="fenzi">
-                                                        {{qstr.fz}}
-                                                    </view>
-                                                    <view class="fenmu">
-                                                        {{qstr.fm}}
-                                                    </view>
-                                                </view>
-                                            </block>
-                                        </view>
-                                    </view>
-                                    <view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
-                                </van-swipe-cell>
-                            </view>
+								<van-swipe-cell right-width="{{100}}">
+									<view class="shizi top-10">
+										<view wx:for="{{item.ques}}" wx:for-item="qstr" wx:key="index" class="fenshu">
+											<block wx:if="{{qstr.zs != -1}}">
+												<view class="zsbufen">
+													{{qstr.zs}}
+												</view>
+											</block>
+											<block wx:if="{{qstr.fz != -1}}">
+												<view class="fsbufen">
+													<view class="fenzi">
+														{{qstr.fz}}
+													</view>
+													<view class="fenmu">
+														{{qstr.fm}}
+													</view>
+												</view>
+											</block>
+										</view>
+									</view>
+									<view slot="right" class="cel-del-btn" data-quesid="{{item.id}}" data-qindex="{{index}}" bindtap="onDelQues">删除</view>
+								</van-swipe-cell>
+							</view>
 						</block>
 
 					</view>
