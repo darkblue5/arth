@@ -42,7 +42,7 @@ Page({
 
     onLoad: function () {
         let that = this;
-       
+
         //获取当前年月  
         const date = new Date();
         const cur_year = date.getFullYear();
@@ -59,6 +59,18 @@ Page({
             cur_month: cur_month,
             weeks_ch: weeks_ch
         });
+
+        //debug
+        // wx.cloud.callFunction({
+        //     // 云函数名称
+        //     name: 'freshRec',
+        //     success: res => {
+        //         console.log('[云函数] [freshRate] 调用成功', res);
+        //     },
+        //     fail: err => {
+        //         console.error('[云函数] [freshRate] 调用失败', err)
+        //     }
+        // })
 
         that.onShow();
 
@@ -661,48 +673,5 @@ Page({
             }
         })
     },
-
-    // 切换控制年月，上一个月，下一个月
-    // handleCalendar: function (e) {
-    //     const handle = e.currentTarget.dataset.handle;
-    //     const cur_year = this.data.cur_year;
-    //     const cur_month = this.data.cur_month;
-
-    //     if (handle === 'prev') {
-    //         let newMonth = cur_month - 1;
-    //         let newYear = cur_year;
-
-    //         if (newMonth < 1) {
-    //             newYear = cur_year - 1;
-    //             newMonth = 12;
-    //         }
-
-    //         this.calculateEmptyGrids(newYear, newMonth);
-    //         this.calculateDays(newYear, newMonth);
-    //         this.onGetSignUp();
-    //         this.setData({
-    //             cur_year: newYear,
-    //             cur_month: newMonth
-    //         })
-    //     } else {
-
-    //         let newMonth = cur_month + 1;
-    //         let newYear = cur_year;
-
-    //         if (newMonth > 12) {
-    //             newYear = cur_year + 1;
-    //             newMonth = 1;
-    //         }
-
-    //         this.calculateEmptyGrids(newYear, newMonth);
-    //         this.calculateDays(newYear, newMonth);
-    //         this.onGetSignUp();
-    //         this.setData({
-    //             cur_year: newYear,
-    //             cur_month: newMonth
-    //         })
-
-    //     }
-    // }
 
 })

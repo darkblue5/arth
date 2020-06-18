@@ -2,8 +2,9 @@
 @import "../../style/common.wxss";
 
 .calendar {
-  --calendar-height: 500rpx;
+    --calendar-height: 500rpx;
 }
+
 /* 
 .van-calendar__confirm {
     height: 10rpx;
@@ -48,7 +49,8 @@
     display: flex;
     flex-direction: row;
     margin-right: 2rpx;
-    /* width: 200rpx; *//* height: 80rpx; */
+    /* width: 200rpx; */
+    /* height: 80rpx; */
 }
 
 .zsbufen {
@@ -56,7 +58,8 @@
     flex-direction: row-reverse;
     align-items: center;
     padding-right: 2rpx;
-    /* width: 100rpx; *//* height: 80rpx; */
+    /* width: 100rpx; */
+    /* height: 80rpx; */
 }
 
 .fsbufen {
@@ -65,7 +68,8 @@
 }
 
 .fenzi {
-    /* height: 40rpx; *//* align-items: center; */
+    /* height: 40rpx; */
+    /* align-items: center; */
     display: flex;
     justify-content: center;
 }
@@ -90,10 +94,8 @@
     background-color: crimson;
 }
 
-/*  */
 /* 打卡日历 */
-
-.week{
+.week {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -104,30 +106,30 @@
     border-radius: 10px;
     background-color: #acd;
     font-weight: bold;
-  }
-  
-.days{
+}
+
+.days {
     margin: 20rpx;
     padding: 10rpx;
     border-radius: 10px;
     background-color: #acd;
     font-weight: bold;
 
-  }
-  
-.columns{
+}
+
+.columns {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-  }
-  
-.columns .rows{
+    justify-content: space-between;
+}
+
+.columns .rows {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
-  
-.columns .rows .cell{
+}
+
+.columns .rows .cell {
     width: 84rpx;
     height: 88rpx;
     margin: 3rpx;
@@ -136,18 +138,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}  
-  .count .daynumber{
+}
+
+.count .daynumber {
     display: flex;
     flex-direction: row;
     justify-content: center;
-  }
-  
-  .count .daynumber .day{
-    margin-top: 50rpx;
-  }
+}
 
-  .count{
+.count .daynumber .day {
+    margin-top: 50rpx;
+}
+
+.count {
     margin: 20rpx;
     padding: 30rpx;
     display: flex;
@@ -157,10 +160,10 @@
     justify-content: center;
     background-color: #acd;
     align-items: center;
-  }
-  
-  .count .number{
-    color: #64bd47;
+}
+
+.count .number {
+    color: crimson;
     font-size: 60rpx;
     background-color: #fff;
     width: 100rpx;
@@ -170,13 +173,13 @@
     flex-direction: column;
     justify-content: center;
     margin: 20rpx;
-  }
-  
-  .count text{
-    margin: 10rpx;
-    font-weight: bold;
+}
 
-  }
+.count text {
+    margin: 10rpx;
+    /* font-weight: bold; */
+
+}
 
 /*  */
 .top-50 {
@@ -188,7 +191,7 @@
 }
 
 .bc-red {
-    background-color:crimson;
+    background-color: crimson;
 }
 
 .bc-green {
@@ -196,7 +199,7 @@
 }
 
 .bc-blue {
-    background-color:cornflowerblue;
+    background-color: cornflowerblue;
 }
 
 .bc-gray {

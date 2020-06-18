@@ -122,18 +122,9 @@ Page({
         //usrExist: false,            //  排名表中用户记录是否存在
 
         grades: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下','四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
-        type: [
-            {
-                values: Object.keys(config.types),
-                className: 'column1'
-
-            },
-            {
-                values: config.types['一年级上'],
-                className: 'column2',
-                defaultIndex: 0
-            }
-        ]
+        type: [ { values: Object.keys(config.types), className: 'column1' },
+                { values: config.types['一年级上'], className: 'column2',defaultIndex: 0 }
+            ]
     },
 
     //
@@ -219,7 +210,6 @@ Page({
                                     }
                                 }
                             })
-                            
 4
                             app.globalData.userGrade = res.data[0].grade;
                             let strGrade = '';
@@ -270,12 +260,6 @@ Page({
                                 txtScreenGrade: strGrade,
                                 txtScreenType: config.types[strGrade][0]
                             });
-                            
-                            //console.log('that.data.indexType', that.data.indexType)
-                            //app.globalData.userGrade = res.data[0].grade;
-
-                            //console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
-                            
                         } else {
                             //pop窗口选择年级
                             that.setData({ showGrade: true });
@@ -283,12 +267,34 @@ Page({
                     }
                 })
 
+                let oDate = new Date();
+                let vDate = oDate.getDate(); //获取当前日期
+                //console.log('app.globalData.openid', app.globalData.openid);
+                //console.log('vDate', vDate);
+
+                //刷新签到记录表
+                wx.cloud.callFunction({
+                    name: 'updateRec',
+                    data: {
+                        id: app.globalData.openid,
+                        date: vDate
+                    },
+                    success: res => {
+                        console.log('[云函数] [updateRec] 调用成功', res);
+                    },
+                    fail: err => {
+                        console.error('[云函数] [updateRec] 调用失败', err)
+                    }
+                })
             },
             fail: err => {
                 console.error('[云函数] [login] 调用失败', err);
 
             }
         })
+
+        
+
       
     },
 
@@ -1677,12 +1683,44 @@ Page({
             fail: console.error,
             complete: console.log
         })
+
+        db.collection('loginRec').add({
+            data: {
+                //openID: that.data.openID,
+                rec:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            success: function (res) {
+                let oDate = new Date();
+                let vDate = oDate.getDate(); //获取当前日期
+
+                //刷新签到记录表
+                wx.cloud.callFunction({
+                    name: 'updateRec',
+                    data: {
+                        id: app.globalData.openid,
+                        date: vDate
+                    },
+                    success: res => {
+                        console.log('[云函数] [updateRec] 调用成功', res);
+                    },
+                    fail: err => {
+                        console.error('[云函数] [updateRec] 调用失败', err)
+                    }
+                })
+            },
+            fail: console.error,
+            complete: console.log
+        })
         
         app.globalData.userGrade = index;
 
         this.setData({
             showGrade: false,
-            txtScreenGrade: txtGrade
+
+            indexType: [index, 0],
+            txtScreenGrade: txtGrade,
+            txtScreenType: config.types[txtGrade][0]
+
         });
 
         //picker.setColumnValues(index, config.types[value[0]]);
