@@ -18,7 +18,17 @@ Page({
         gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
 
         types: [],
-        count: [],
+        //count: [],
+
+        count0: 0,
+        count1: 0,
+        count2: 0,
+        count3: 0,
+        count4: 0,
+        count5: 0,
+        count6: 0,
+        count7: 0,
+        count8: 0,
 
         wrong0: [],
         wrong1: [],
@@ -28,6 +38,7 @@ Page({
         wrong5: [],
         wrong6: [],
         wrong7: [],
+        wrong8: [],
 
         quesType: [],
 

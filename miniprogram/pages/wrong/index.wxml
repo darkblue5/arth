@@ -79,10 +79,13 @@
 							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count5 }}" />
 						</block>
 						<block wx:elif="{{index == 6}}">
-							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count6}}" />
+							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count6 }}" />
 						</block>
 						<block wx:elif="{{index == 7}}">
-							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count7}}" />
+							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count7 }}" />
+						</block>
+						<block wx:elif="{{index == 8}}">
+							<van-sidebar-item title="{{item}}" custom-class="sb-width" info="{{ count8 }}" />
 						</block>
 					</block>
 				</van-sidebar>
