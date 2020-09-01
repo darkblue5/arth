@@ -436,6 +436,7 @@ Page({
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             //console.log('用户未登陆');
         } else {
+            // FIXME: 代码冗余
             if (that.data.tickColor0 == 'red') {
                 correctCount++;
             } else {
@@ -690,6 +691,7 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keys[0]) {
                     that.data.modJudg0[0] = 1;         //整数部分判断结果
 
+                    // FIXME: 条件合并
                     if (that.data.modJudg0[1] == 1) {
                         this.setData({
                             tickColor0: 'red',
@@ -1703,7 +1705,6 @@ Page({
     },
 
     onCancelGrade() {
-        //Toast('取消');
         this.setData({ showGrade: false });
     },
 
@@ -1734,7 +1735,7 @@ Page({
                 content: '请登陆微信使用完整功能',
                 showCancel: false,
                 success: function (res) {
-
+                    //
                 }
             })
         }

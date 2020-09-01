@@ -1,6 +1,6 @@
-//index.js
-//获取应用实例
-//import Notify from '@vant/weapp/notify/notify';
+// wrong: index.js
+// by sean
+
 import * as config from '../config/config.js';
 
 const app = getApp();
