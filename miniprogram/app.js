@@ -1,4 +1,6 @@
 //app.js
+let _DEBUG_ = true;
+
 App({
     
     onLaunch: function () {
@@ -29,3 +31,13 @@ App({
         }
     }
 })
+
+
+//重写console.log方法，判断是否开启日志调试模式，否则就不输出
+console.log = ( function(oriLogFunc){
+    return function(str){
+      if (_DEBUG_){//判断配置文件是否开启日志调试
+        oriLogFunc.call(console, str);
+      }
+    }
+})(console.log);

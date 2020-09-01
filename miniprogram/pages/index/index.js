@@ -35,19 +35,28 @@ Page({
         requestResult: '',
         openID: '',
 
+        //  开关变量定义
         enMusic: false,
         enTimer: false,
         enSwitch: false,
+        showGrade: false,   //  pop弹窗开关
+        showType: false,
 
+        //  计时器数值
         txtTimer: '0:00',
         mintue: 0,
         second: 0,
 
-        mp3: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',
+        //  音乐资源文件
+        musBgm: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3', //背景音乐
+        musRight: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',   //  答案正确提示音
+        musWrong: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',   //  答案错误提示音
 
+        //  试题与答案占宽
         wdQues: 12,         //  24格栅模型中，试题占宽
         wdAns: 5,           //  24格栅模型中，答案占宽
 
+        //  对勾号颜色  white: 初始颜色     red: 答案错误颜色
         tickColor0: 'white',
         tickColor1: 'white',
         tickColor2: 'white',
@@ -55,12 +64,14 @@ Page({
         tickColor4: 'white',
         tickColor5: 'white',
 
-        quesType: 0,        //  0: 整数、小数四则   1: 分数四则     2：3题整数3题分数 
-        //  3：整数小数方程和比例   4: 分数方程
+        //  答案类型分类
+        quesType: 0,        //  0: 整数、小数四则    1: 分数四则    2：3题整数3题分数    3：整数小数方程和比例    4: 分数方程
         keyType: 0,         //  0： 整数    1：整数带余数   2：浮点数   3：分数
+
         typeDetail: 0,      //  试題细分类型 与picker初始化数组对应
 
-        ques0: '',          //  无须编码部分试题字符串
+        //  表达式为整数字符串时的试题式变量
+        ques0: '',          
         ques1: '',
         ques2: '',
         ques3: '',
@@ -103,21 +114,19 @@ Page({
         isDisabled4: false,
         isDisabled5: false,
 
-        curJudg: [0, 0, 0, 0, 0, 0],     //  6道题最终正误判定结果，0 未完成 1 正确 2 错误
+        //  6道题最终正误判定结果，0 未完成 1 正确 2 错误
+        curJudg: [0, 0, 0, 0, 0, 0],     
 
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
-
-        showGrade: false,   //  pop弹窗开关
-        showType: false,
 
         txtScreenGrade: '一年级上',
         txtScreenType: '5以内的加法或减法',
         txtButtonGrade: '一年级',
 
-        curGrade: -1,            //  用户所在年级
-        indexType: [],              //  picker 控件试题类型索引
-        txtType: [],                //  picker 控件題型字符串 
+        curGrade: -1,           //  用户所在年级
+        indexType: [],          //  picker 控件试题类型索引
+        txtType: [],            //  picker 控件題型字符串 
 
         //usrExist: false,            //  排名表中用户记录是否存在
 
@@ -135,6 +144,7 @@ Page({
             }
         ]
     },
+
 
     //
     // functions area
@@ -162,7 +172,7 @@ Page({
         that.data.indexType = [0, 0];   //  初始类型
         ret = that.initQues(0);
         if (ret == -1)
-            return -1;
+            console.log('ERROR: index.js onReady()-->initQeus()');
 
         // app.globalData.testID = 520;
     },
@@ -181,8 +191,9 @@ Page({
                 avatarUrl: e.detail.userInfo.avatarUrl,
                 userInfo: e.detail.userInfo
             })
-            //console.log('INDEX, app.globalData.nickName', e.detail.userInfo.nickName);
+            console.log('INFO: index.js --> app.globalData.nickName', e.detail.userInfo.nickName);
 
+            //  根据鉴权信息初始化全局变量
             app.globalData.nickName = e.detail.userInfo.nickName;
         }
 
@@ -191,10 +202,11 @@ Page({
             name: 'login',
             data: {},
             success: res => {
-                //console.log('INDEX, res.result.openid', res.result.openid);
+                console.log('INFO: index.js --> res.result.openid', res.result.openid);
 
                 app.globalData.openid = res.result.openid;
                 that.data.openID = res.result.openid;
+                
                 //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
                 db.collection('user').where({
                     _openid: that.data.openID
@@ -219,10 +231,12 @@ Page({
                                 }
                             })
                             
-                            //console.log('res.data[0].grade', res.data[0].grade);
+                            console.log('INFO: index.js --> res.data[0].grade', res.data[0].grade);
 
                             app.globalData.userGrade = res.data[0].grade;
                             let strGrade = '';
+
+                            console.log('INFO: index.js --> that.data.grades[index]', app.data.grades[res.data[0].grade]);
                             switch (res.data[0].grade) {
                                 case 0:
                                     strGrade = '一年级上';
@@ -291,7 +305,6 @@ Page({
         })
       
     },
-
    
     //  button START click
     onBtnStart: function (e) {
@@ -311,7 +324,7 @@ Page({
         if (that.data.enMusic) {
             audio.autoplay = true;
             audio.loop = true;
-            audio.src = that.data.mp3;
+            audio.src = that.data.musBgm;
             audio.stop();       // restart music
             audio.play();
         }
@@ -319,7 +332,7 @@ Page({
         // initical question && ticker
         ret = that.initQues(type);
         if (ret == -1)
-            return -1;
+            console.log('ERROR: index.js --> onBtnStart() --> initQues ()');
 
         that.setData({
             enSwitch: true,
