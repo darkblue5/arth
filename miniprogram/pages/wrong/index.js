@@ -40,6 +40,9 @@ Page({
         let i = 0;
         let quesCount = 0;
 
+        console.log('[INFO] report.js : onLoad -> config.types[ app.globalData.userGrade ].typeIndex');
+        console.log(config.types[ app.globalData.userGrade ].typeIndex);
+
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             // 未登录时的默认展示一年级上
             that.setData({
@@ -324,46 +327,51 @@ Page({
 
         console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
 
-        switch (app.globalData.userGrade) {
-            case 0:
-                strGrade = '一年级上';
-                break;
-            case 1:
-                strGrade = '一年级下';
-                break;
-            case 2:
-                strGrade = '二年级上';
-                break;
-            case 3:
-                strGrade = '二年级下';
-                break;
-            case 4:
-                strGrade = '三年级上';
-                break;
-            case 5:
-                strGrade = '三年级下';
-                break;
-            case 6:
-                strGrade = '四年级上';
-                break;
-            case 7:
-                strGrade = '四年级下';
-                break;
-            case 8:
-                strGrade = '五年级上';
-                break;
-            case 9:
-                strGrade = '五年级下';
-                break;
-            case 10:
-                strGrade = '六年级上';
-                break;
-            case 11:
-                strGrade = '六年级下';
-                break;
-            default:
-                break;
-        }
+        // switch (app.globalData.userGrade) {
+        //     case 0:
+        //         strGrade = '一年级上';
+        //         break;
+        //     case 1:
+        //         strGrade = '一年级下';
+        //         break;
+        //     case 2:
+        //         strGrade = '二年级上';
+        //         break;
+        //     case 3:
+        //         strGrade = '二年级下';
+        //         break;
+        //     case 4:
+        //         strGrade = '三年级上';
+        //         break;
+        //     case 5:
+        //         strGrade = '三年级下';
+        //         break;
+        //     case 6:
+        //         strGrade = '四年级上';
+        //         break;
+        //     case 7:
+        //         strGrade = '四年级下';
+        //         break;
+        //     case 8:
+        //         strGrade = '五年级上';
+        //         break;
+        //     case 9:
+        //         strGrade = '五年级下';
+        //         break;
+        //     case 10:
+        //         strGrade = '六年级上';
+        //         break;
+        //     case 11:
+        //         strGrade = '六年级下';
+        //         break;
+        //     default:
+        //         break;
+        // }
+
+        strGrade = config.types[ app.globalData.userGrade ].grade;
+            
+        console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
+        console.log(config.types[ app.globalData.userGrade ].grade);
 
         //console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
