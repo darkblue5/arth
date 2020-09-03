@@ -14,8 +14,8 @@ Page({
         nickName: '未登陆',
         openID: '',
 
-        grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
-        gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
+        //grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+        //gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
 
         types: [],
         count: [],
@@ -46,8 +46,10 @@ Page({
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             // 未登录时的默认展示一年级上
             that.setData({
-                types: config.types[that.data.gradesDetail[0]],
-                quesType: config.typeIndex[0],
+                //types: config.types[that.data.gradesDetail[0]],
+                //quesType: config.typeIndex[0],
+                types: config.types[0].type,
+                quesType: config.types[0].typeIndex,
                 recGrade: 0
             })
         } else {
@@ -55,8 +57,11 @@ Page({
             grade = app.globalData.userGrade;
 
             that.setData({
-                types: config.types[that.data.gradesDetail[grade]],
-                quesType: config.typeIndex[app.globalData.userGrade],
+                //types: config.types[that.data.gradesDetail[grade]],
+                //quesType: config.typeIndex[app.globalData.userGrade],
+                types: config.types[app.globalData.userGrade].type,
+                quesType: config.types[app.globalData.userGrade].typeIndex,
+
                 recGrade: app.globalData.userGrade
             })
         }

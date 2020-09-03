@@ -301,6 +301,7 @@ Page({
             //     default:
             //         break;
             // }
+            
             strGrade = config.types[ app.globalData.userGrade ].grade;
             
             console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
