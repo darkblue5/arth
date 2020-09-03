@@ -58,9 +58,9 @@ Page({
             })
         }
 
-        console.log('LOAD, that.data.types', that.data.types);
-        console.log('LOAD, that.data.quesType', that.data.quesType);
-        console.log('LOAD, that.data.recGrade', that.data.recGrade);
+        console.log('INFO: wrong -> index.js -> LOAD(), that.data.types', that.data.types);
+        console.log('INFO: wrong -> index.js -> LOAD(), that.data.quesType', that.data.quesType);
+        console.log('INFO: wrong -> index.js -> LOAD(), that.data.recGrade', that.data.recGrade);
 
     },
 
@@ -493,7 +493,7 @@ Page({
     },
 
     onDelQues: function (e) {
-        console.log('delete data');
+        console.log('NOTICE: worng -> index.js -> onDelQues() delete data');
 
         let that = this;
         let index = e.currentTarget.dataset.quesid;
@@ -576,12 +576,9 @@ Page({
                 console.error('[云函数] [bookAdd] 调用失败', err)
             }
         })
-
-
     },
 
     onHide() {
-
         //console.log('in wrong: 使用完整功能选择年级，登陆用户');
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             wx.showModal({

@@ -7,6 +7,7 @@
 //  M:  Mul
 //  D:  Div
 
+import * as config from '../config/config.js';
 let util = require("util.js");
 
 //        ['各类型数字一步运算',
@@ -28,6 +29,10 @@ function f61Step(grade, type, db, point) {
     let len = 0;
     let tmpQues, tmpAns;
     let fsfh = [];
+
+    let count = config.typeIndex[11][1][0];
+
+    console.log('[INFO] g6sencond.js : f61Step() -> ' + count);
 
     if (grade = 11 && type == 0) {
         db.collection('q62').where({
