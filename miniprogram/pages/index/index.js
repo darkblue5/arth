@@ -1,5 +1,9 @@
-//index.js
-import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+//
+//  index/index.js
+//  by sean.wang
+//  2020/9/5
+//
+
 import * as config from '../config/config.js';
 
 let g1First = require('../ques/g1first.js');
@@ -19,7 +23,7 @@ const audio = wx.createInnerAudioContext(); //  audio
 const QCOUNT = 6; //1组6道题
 const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
 
-const db = wx.cloud.database( );
+const db = wx.cloud.database();
 
 let init;   // timer
 
@@ -71,7 +75,7 @@ Page({
         typeDetail: 0,      //  试題细分类型 与picker初始化数组对应
 
         //  表达式为整数字符串时的试题式变量
-        ques0: '',          
+        ques0: '',
         ques1: '',
         ques2: '',
         ques3: '',
@@ -115,33 +119,24 @@ Page({
         isDisabled5: false,
 
         //  6道题最终正误判定结果，0 未完成 1 正确 2 错误
-        curJudg: [0, 0, 0, 0, 0, 0],     
+        curJudg: [0, 0, 0, 0, 0, 0],
 
         errQues: [],        //  当前错题集错题
         errRec: [],         //  错题集中该型错题
 
         txtScreenGrade: '一年级上',
         txtScreenType: '5以内的加法或减法',
-        txtButtonGrade: '一年级',
+        txtButtonGrade: '一年级上',
 
         curGrade: -1,           //  用户所在年级
         indexType: [],          //  picker 控件试题类型索引
         txtType: [],            //  picker 控件題型字符串 
 
         //usrExist: false,            //  排名表中用户记录是否存在
-
-        grades: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下','四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
+        grades: app.globalData._grades,
         type: [
-            {
-                values: Object.keys(config.types),
-                className: 'column1'
-
-            },
-            {
-                values: config.types['一年级上'],
-                className: 'column2',
-                defaultIndex: 0
-            }
+            { values: Object.keys(app.globalData._types), className: 'column1' },
+            { values: app.globalData._types['一年级上'], className: 'column2', defaultIndex: 2 }
         ]
     },
 
@@ -172,7 +167,7 @@ Page({
         that.data.indexType = [0, 0];   //  初始类型
         ret = that.initQues(0);
         if (ret == -1)
-            console.log('ERROR: index.js onReady()-->initQeus()');
+            console.log('ERROR: index/index.js -> onReady() -> initQeus()');
 
         // app.globalData.testID = 520;
     },
@@ -191,121 +186,76 @@ Page({
                 avatarUrl: e.detail.userInfo.avatarUrl,
                 userInfo: e.detail.userInfo
             })
-            console.log('INFO: index.js --> app.globalData.nickName', e.detail.userInfo.nickName);
+            //console.log('INFO: index.js --> app.globalData.nickName', e.detail.userInfo.nickName);
 
             //  根据鉴权信息初始化全局变量
             app.globalData.nickName = e.detail.userInfo.nickName;
+
+            //获取用户 OpenID
+            wx.cloud.callFunction({
+                name: 'login',
+                data: {},
+                success: res => {
+                    console.log('INFO: index/index.js -> login() -> res.result.openid', res.result.openid);
+
+                    app.globalData.openid = res.result.openid;
+                    that.data.openID = res.result.openid;
+
+                    //查询rank中有无当前用户，无则新增用户，有则读取年级等个人信息
+                    db.collection('user').where({
+                        _openid: that.data.openID
+                    }).get({
+                        success: res => {
+                            if (res.data.length != 0) {
+
+                                //读取用户信息
+                                db.collection('rank').where({
+                                    _openid: that.data.openID
+                                }).get({
+                                    success: res => {
+                                        if (res.data.length != 0) {
+                                            //用库中数据初始化用户所在年级
+                                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+                                            app.globalData.tdyCorrt = res.data[0].tdycorrt;
+                                            app.globalData.tdyFinih = res.data[0].tdyfinih;
+                                            app.globalData.tdyRate = res.data[0].sevenrate[6];
+                                            app.globalData.sevenRate = res.data[0].sevenrate;
+                                            app.globalData.tolCorrt = res.data[0].tolcorrt;
+                                            app.globalData.tolFinih = res.data[0].tolfinih;
+                                            //app.globalData.userGrade = res.data[0].grade;
+                                            //console.log('INFO: index/index.js -> login() -> res.data[0].grade', res.data[0].grade);
+
+                                        }
+                                    }
+                                })
+                                console.log('INFO: index/index.js -> login() -> res.data[0].grade: ' + res.data[0].grade);
+                                app.globalData.userGrade = res.data[0].grade;
+
+                                this.setData({
+                                    indexType: [app.globalData.userGrade, 0],
+                                    txtScreenGrade: config.types[app.globalData.userGrade].grade,
+                                    txtScreenType: config.types[app.globalData.userGrade].type[0],
+                                    txtButtonGrade: config.types[app.globalData.userGrade].grade
+                                });
+
+                            } else {
+                                //pop窗口选择年级
+                                that.setData({ showGrade: true });
+                            }
+                        }
+                    })
+
+                },
+                fail: err => {
+                    console.error('[云函数] [login] 调用失败', err);
+
+                }
+            })
+
         }
 
-        //获取用户 OpenID
-        wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-                console.log('INFO: index.js --> res.result.openid', res.result.openid);
-
-                app.globalData.openid = res.result.openid;
-                that.data.openID = res.result.openid;
-                
-                //查询rank中有无当前用户，无则新增，有则读取年级等个人信息
-                db.collection('user').where({
-                    _openid: that.data.openID
-                }).get({
-                    success: res => {
-                        if (res.data.length != 0) {
-                            
-                            db.collection('rank').where({
-                                _openid: that.data.openID
-                            }).get({
-                                success: res => {
-                                    if (res.data.length != 0) {
-                                        //用库中数据初始化用户所在年级
-                                        app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
-                                        app.globalData.tdyCorrt = res.data[0].tdycorrt;
-                                        app.globalData.tdyFinih = res.data[0].tdyfinih;
-                                        app.globalData.tdyRate = res.data[0].sevenrate[6];
-                                        app.globalData.sevenRate = res.data[0].sevenrate;
-                                        app.globalData.tolCorrt = res.data[0].tolcorrt;
-                                        app.globalData.tolFinih = res.data[0].tolfinih;
-                                    }
-                                }
-                            })
-                            
-                            console.log('INFO: index.js --> res.data[0].grade', res.data[0].grade);
-
-                            app.globalData.userGrade = res.data[0].grade;
-                            let strGrade = '';
-
-                            console.log('INFO: index.js --> that.data.grades[index]', app.data.grades[res.data[0].grade]);
-                            switch (res.data[0].grade) {
-                                case 0:
-                                    strGrade = '一年级上';
-                                    break;
-                                case 1:
-                                    strGrade = '一年级下';
-                                    break;
-                                case 2:
-                                    strGrade = '二年级上';
-                                    break;
-                                case 3:
-                                    strGrade = '二年级下';
-                                    break;
-                                case 4:
-                                    strGrade = '三年级上';
-                                    break;
-                                case 5:
-                                    strGrade = '三年级下';
-                                    break;
-                                case 6:
-                                    strGrade = '四年级上';
-                                    break;
-                                case 7:
-                                    strGrade = '四年级下';
-                                    break;
-                                case 8:
-                                    strGrade = '五年级上';
-                                    break;
-                                case 9:
-                                    strGrade = '五年级下';
-                                    break;
-                                case 10:
-                                    strGrade = '六年级上';
-                                    break;
-                                case 11:
-                                    strGrade = '六年级下';
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            this.setData({
-                                indexType: [res.data[0].grade, 0],
-
-                                txtScreenGrade: strGrade,
-                                txtScreenType: config.types[strGrade][0]
-                            });
-                            
-                            //console.log('that.data.indexType', that.data.indexType)
-                            //app.globalData.userGrade = res.data[0].grade;
-
-                            //console.log('INDEX, app.globalData', app.globalData.tdyCorrt, app.globalData.tdyFinih, app.globalData.tdyRate, app.globalData.sevenRate, app.globalData.userGrade, app.globalData.nickName);
-                            
-                        } else {
-                            //pop窗口选择年级
-                            that.setData({ showGrade: true });
-                        }
-                    }
-                })
-
-            },
-            fail: err => {
-                console.error('[云函数] [login] 调用失败', err);
-
-            }
-        })
-      
     },
-   
+
     //  button START click
     onBtnStart: function (e) {
         let that = this;
@@ -527,7 +477,7 @@ Page({
             } else {
                 db.collection('errcol').add({
                     data: {
-                    // openID: that.data.openID,
+                        // openID: that.data.openID,
                         type: that.data.typeDetail,
                         ques: that.data.ques5,
                     },
@@ -1125,12 +1075,12 @@ Page({
 
         switch (that.data.keyFraType[1]) {
             case 1://答案为整数时，直接比对
-                    if (parseInt(e.detail.value) === that.data.keyZs[1]) {
-                        that.setData({
-                            tickColor1: 'red',
-                            isDisabled1: true,
-                        });
-                    }
+                if (parseInt(e.detail.value) === that.data.keyZs[1]) {
+                    that.setData({
+                        tickColor1: 'red',
+                        isDisabled1: true,
+                    });
+                }
                 // 分数部分禁用输入
 
                 break;
@@ -1221,12 +1171,12 @@ Page({
 
         switch (that.data.keyFraType[2]) {
             case 1:     //答案为整数时，直接比对
-                    if (parseInt(e.detail.value) === that.data.keyZs[2]) {
-                        that.setData({
-                            tickColor2: 'red',
-                            isDisabled2: true,
-                        });
-                    }
+                if (parseInt(e.detail.value) === that.data.keyZs[2]) {
+                    that.setData({
+                        tickColor2: 'red',
+                        isDisabled2: true,
+                    });
+                }
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
@@ -1241,7 +1191,7 @@ Page({
             case 2:    //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[2] == 0) {
                     that.data.fraJudg2[0] = 1;
-                 }// else {
+                }// else {
                 //     that.data.fraJudg2[0] = 0;
                 // }
 
@@ -1315,12 +1265,12 @@ Page({
 
         switch (that.data.keyFraType[3]) {
             case 1:     //答案为整数时，直接比对
-                    if (parseInt(e.detail.value) === that.data.keyZs[3]) {
-                        that.setData({
-                            tickColor3: 'red',
-                            isDisabled3: true,
-                        });
-                    }
+                if (parseInt(e.detail.value) === that.data.keyZs[3]) {
+                    that.setData({
+                        tickColor3: 'red',
+                        isDisabled3: true,
+                    });
+                }
                 // 分数部分禁用输入
 
                 break;
@@ -1410,12 +1360,12 @@ Page({
 
         switch (that.data.keyFraType[4]) {
             case 1:     //答案为整数时，直接比对
-                    if (parseInt(e.detail.value) === that.data.keyZs[4]) {
-                        that.setData({
-                            tickColor4: 'red',
-                            isDisabled4: true,
-                        });
-                    }
+                if (parseInt(e.detail.value) === that.data.keyZs[4]) {
+                    that.setData({
+                        tickColor4: 'red',
+                        isDisabled4: true,
+                    });
+                }
                 // 分数部分禁用输入
 
                 break;
@@ -1506,12 +1456,12 @@ Page({
 
         switch (that.data.keyFraType[5]) {
             case 1:     //答案为整数时，直接比对
-                    if (parseInt(e.detail.value) === that.data.keyZs[5]) {
-                        that.setData({
-                            tickColor5: 'red',
-                            isDisabled5: true,
-                        });
-                    }
+                if (parseInt(e.detail.value) === that.data.keyZs[5]) {
+                    that.setData({
+                        tickColor5: 'red',
+                        isDisabled5: true,
+                    });
+                }
                 // 分数部分禁用输入
 
                 break;
@@ -1633,52 +1583,7 @@ Page({
 
     onConfirmGrade(event) {
         let that = this;
-        let txtGrade = '';
         const { picker, value, index } = event.detail;
-        //Toast(`当前值：${value}, 当前索引：${index}`);
-
-        switch (index) {
-            case 0:
-                txtGrade = '一年级上';
-                break;
-            case 1:
-                txtGrade = '一年级下';
-                break;
-            case 2:
-                txtGrade = '二年级上';
-                break;
-            case 3:
-                txtGrade = '二年级下';
-                break;
-            case 4:
-                txtGrade = '三年级上';
-                break;
-            case 5:
-                txtGrade = '三年级下';
-                break;
-            case 6:
-                txtGrade = '四年级上';
-                break;
-            case 7:
-                txtGrade = '四年级下';
-                break;
-            case 8:
-                txtGrade = '五年级上';
-                break;
-            case 9:
-                txtGrade = '五年级下';
-                break;
-            case 10:
-                txtGrade = '六年级上';
-                break;
-            case 11:
-                txtGrade = '六年级下';
-                break;
-            default:
-                break;
-        }
-
-        //that.data.userGrade = index + 1;
 
         db.collection('user').add({
             data: {
@@ -1692,16 +1597,18 @@ Page({
             fail: console.error,
             complete: console.log
         })
-        
+
         app.globalData.userGrade = index;
 
         this.setData({
             showGrade: false,
-            txtScreenGrade: txtGrade
+            txtButtonGrade: config.types[index].grade,
+            indexType: [app.globalData.userGrade, 0],
+            txtScreenGrade: config.types[app.globalData.userGrade].grade,
+            txtScreenType: config.types[app.globalData.userGrade].type[0],
         });
 
         //picker.setColumnValues(index, config.types[value[0]]);
-
     },
 
     onCancelGrade() {
@@ -1710,7 +1617,7 @@ Page({
 
     onChangeType(event) {
         const { picker, value, index } = event.detail;
-        picker.setColumnValues(1, config.types[value[0]]);
+        picker.setColumnValues(1, app.globalData._types[value[0]]);
     },
 
     onConfirmType(e) {
@@ -1780,10 +1687,12 @@ Page({
         that.setData({ txtTimer: mutVal + ":" + secVal, });
     },
 
+    //
     // decode question type
+    //
     initQues(type) {
         let that = this;
-        let ret;
+        let ret = 0;
         let idxType = that.data.indexType;
 
         switch (idxType[0]) {        //  FIXME: double switch
@@ -2181,10 +2090,7 @@ Page({
                     default:
                         break;
                 }
-                //console.log("index key:", that.data.keyZs);
-                //console.log(that.data.keyFz);
-                //console.log(that.data.keyFm);
-                break;
+
             default:
                 return -1;
         }

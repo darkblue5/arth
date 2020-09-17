@@ -14,9 +14,6 @@ Page({
         nickName: '未登陆',
         openID: '',
 
-        //grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
-        //gradesDetail: ['一年级上', '一年级下', '二年级上', '二年级下', '三年级上', '三年级下', '四年级上', '四年级下', '五年级上', '五年级下', '六年级上', '六年级下'],
-
         types: [],
         count: [],
 
@@ -40,25 +37,22 @@ Page({
         let i = 0;
         let quesCount = 0;
 
-        console.log('[INFO] report.js : onLoad -> config.types[ app.globalData.userGrade ].typeIndex');
-        console.log(config.types[ app.globalData.userGrade ].typeIndex);
+        //console.log('[INFO] report.js : onLoad -> config.types[ app.globalData.userGrade ].typeIndex');
+        //console.log(config.types[ app.globalData.userGrade ].typeIndex);
 
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
             // 未登录时的默认展示一年级上
             that.setData({
-                //types: config.types[that.data.gradesDetail[0]],
-                //quesType: config.typeIndex[0],
                 types: config.types[0].type,
                 quesType: config.types[0].typeIndex,
                 recGrade: 0
             })
         } else {
-            quesCount = config.typeIndex[app.globalData.userGrade].length;
+            quesCount = config.types[app.globalData.userGrade].typeIndex.length;
             grade = app.globalData.userGrade;
 
             that.setData({
-                //types: config.types[that.data.gradesDetail[grade]],
-                //quesType: config.typeIndex[app.globalData.userGrade],
+
                 types: config.types[app.globalData.userGrade].type,
                 quesType: config.types[app.globalData.userGrade].typeIndex,
 
@@ -66,9 +60,9 @@ Page({
             })
         }
 
-        console.log('INFO: wrong -> index.js -> LOAD(), that.data.types', that.data.types);
-        console.log('INFO: wrong -> index.js -> LOAD(), that.data.quesType', that.data.quesType);
-        console.log('INFO: wrong -> index.js -> LOAD(), that.data.recGrade', that.data.recGrade);
+        // console.log('INFO: wrong/index.js -> LOAD(), that.data.types' + that.data.types);
+        // console.log('INFO: wrong/index.js -> LOAD(), that.data.quesType', that.data.quesType);
+        // console.log('INFO: wrong/index.js -> LOAD(), that.data.recGrade', that.data.recGrade);
 
     },
 
@@ -330,53 +324,12 @@ Page({
         let that = this;
         let strGrade = '';
 
-        console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
-
-        // switch (app.globalData.userGrade) {
-        //     case 0:
-        //         strGrade = '一年级上';
-        //         break;
-        //     case 1:
-        //         strGrade = '一年级下';
-        //         break;
-        //     case 2:
-        //         strGrade = '二年级上';
-        //         break;
-        //     case 3:
-        //         strGrade = '二年级下';
-        //         break;
-        //     case 4:
-        //         strGrade = '三年级上';
-        //         break;
-        //     case 5:
-        //         strGrade = '三年级下';
-        //         break;
-        //     case 6:
-        //         strGrade = '四年级上';
-        //         break;
-        //     case 7:
-        //         strGrade = '四年级下';
-        //         break;
-        //     case 8:
-        //         strGrade = '五年级上';
-        //         break;
-        //     case 9:
-        //         strGrade = '五年级下';
-        //         break;
-        //     case 10:
-        //         strGrade = '六年级上';
-        //         break;
-        //     case 11:
-        //         strGrade = '六年级下';
-        //         break;
-        //     default:
-        //         break;
-        // }
+        //console.log('WRONG, app.globalData.userGrade', app.globalData.userGrade);
 
         strGrade = config.types[ app.globalData.userGrade ].grade;
             
-        console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
-        console.log(config.types[ app.globalData.userGrade ].grade);
+        //console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
+        //console.log(config.types[ app.globalData.userGrade ].grade);
 
         //console.log('in wrong ready: 使用完整功能选择年级，登陆用户');
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
@@ -506,13 +459,13 @@ Page({
     },
 
     onDelQues: function (e) {
-        console.log('NOTICE: worng -> index.js -> onDelQues() delete data');
+        //console.log('NOTICE: worng -> index.js -> onDelQues() delete data');
 
         let that = this;
         let index = e.currentTarget.dataset.quesid;
         let quesIndex = e.currentTarget.dataset.qindex;
 
-        console.log('ques index:', quesIndex);
+        //console.log('ques index:', quesIndex);
 
         switch (that.data.activeKey) {
             case 0:
@@ -575,7 +528,7 @@ Page({
                 break;
         }
 
-        console.log('index id:', e.currentTarget.dataset.quesid);
+        //console.log('index id:', e.currentTarget.dataset.quesid);
 
         wx.cloud.callFunction({
             name: 'del',

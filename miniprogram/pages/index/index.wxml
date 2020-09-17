@@ -35,7 +35,7 @@
                 </van-col>
                 <van-col span="5">
                     <!-- <view class="vw-d-mr" bindtap="onTapVwGrade">{{txtScreenGrade}}</view> -->
-                    <view class="vw-d-mr" >{{txtScreenGrade}}</view>
+                    <view class="vw-d-mr" >{{txtButtonGrade}}</view>
                 </van-col>
                 <van-col span="2">
                     <view class="vw-d-rr">

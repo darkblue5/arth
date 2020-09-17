@@ -143,7 +143,6 @@ Page({
                         // data: ['一', '二', '三', '四', '五', '六', '日'],
                         data: dayData,
 
-
                         // x轴的字体样式
                         axisLabel: {
                             show: true,
@@ -260,52 +259,11 @@ Page({
                     // FIXME:
                 }
             })
-        } else {
-            // switch (app.globalData.userGrade) {
-            //     case 0:
-            //         strGrade = '一年级上';
-            //         break;
-            //     case 1:
-            //         strGrade = '一年级下';
-            //         break;
-            //     case 2:
-            //         strGrade = '二年级上';
-            //         break;
-            //     case 3:
-            //         strGrade = '二年级下';
-            //         break;
-            //     case 4:
-            //         strGrade = '三年级上';
-            //         break;
-            //     case 5:
-            //         strGrade = '三年级下';
-            //         break;
-            //     case 6:
-            //         strGrade = '四年级上';
-            //         break;
-            //     case 7:
-            //         strGrade = '四年级下';
-            //         break;
-            //     case 8:
-            //         strGrade = '五年级上';
-            //         break;
-            //     case 9:
-            //         strGrade = '五年级下';
-            //         break;
-            //     case 10:
-            //         strGrade = '六年级上';
-            //         break;
-            //     case 11:
-            //         strGrade = '六年级下';
-            //         break;
-            //     default:
-            //         break;
-            // }
-            
+        } else {            
             strGrade = config.types[ app.globalData.userGrade ].grade;
             
-            console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
-            console.log(config.types[ app.globalData.userGrade ].grade);
+            //console.log('[INFO] report.js : onReady -> config.types[ app.globalData.userGrade ].grade');
+            //console.log(config.types[ app.globalData.userGrade ].grade);
             
             that.setData({
                 grade: strGrade + '　'//  用户所处年级                
@@ -315,7 +273,7 @@ Page({
 
     async onShow( ) {
         let that = this;
-        console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
+        //console.log('on show', app.globalData.tdyCorrt, app.globalData.tdyFinih);
 
         that.setData ({
             tdyCorrt: app.globalData.tdyCorrt,    //  本日正确
@@ -326,7 +284,6 @@ Page({
         });
 
         if (app.globalData.openid === undefined || app.globalData.openid === '') {
-
             that.setData({
                 rank: [{nickname: '用户一', point: 400}, {nickname: '用户二', point: 300}, {nickname: '用户三', point: 200}, {nickname: '用户四', point: 100}]
             });
