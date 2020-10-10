@@ -1,13 +1,11 @@
 //
-//	四年级上
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
-
+//  g4first.js
+//	function: 按大纲要求，生成符合四年级上学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.17
+//
+import * as config from '../config/config.js';
 let util = require("util.js");
 
 //	三位整数加减法
@@ -376,41 +374,46 @@ function f3b3bASMD2s(grade, type, db, pt) {
     let k = 0,
         i = 0;
 
-    if (grade == 6 && type == 6) {
-        db.collection('q41').where({
-            type: 4101
-        }).get({
-            success: res => {
-                col = res.data;
+        if (grade == 6 && type == 6) {
 
-                for (k = 0; k < 6; k++) {
-                    i = Math.floor(Math.random() * (col.length - 1));
-                    cques[k] = col[i].ques;
-                    ckey[k] = parseInt(col[i].key);
-                    col.splice(i, 1);
+            wx.cloud.callFunction({
+                name: 'dbquery',
+                data: {
+                    table: 'q41',
+                    type: 4101,
+                    count: config.types[6].count[6]
                 }
-
+            }).then(res => {
+                let i = 0;
+                let ckey = [];
+                
+                for (i=0; i<6; i++) {
+                    ckey[i] = parseInt(res.result.data[i].key);
+                }
+    
                 that.setData({
                     quesType: 0,
                     keyType: 0,
-
+    
                     wdQues: 12,
                     wdAns: 5,
-
-                    ques0: cques[0],
-                    ques1: cques[1],
-                    ques2: cques[2],
-                    ques3: cques[3],
-                    ques4: cques[4],
-                    ques5: cques[5],
-
+    
+                    ques0: res.result.data[0].ques,
+                    ques1: res.result.data[1].ques,
+                    ques2: res.result.data[2].ques,
+                    ques3: res.result.data[3].ques,
+                    ques4: res.result.data[4].ques,
+                    ques5: res.result.data[5].ques,
+    
                     keys: ckey
                 });
-            }
-        });
-    } else {
-        return -1;
-    }
+            }).catch(err => {
+                // handle error
+            })
+    
+        } else {
+            return -1;
+        }
 
     return 0;
 }
@@ -424,41 +427,47 @@ function f3b3bASMD3s(grade, type, db, pt) {
     let k = 0,
         i = 0;
 
-    if (grade == 6 && type == 7) {
-        db.collection('q41').where({
-            type: 4102
-        }).get({
-            success: res => {
-                col = res.data;
+        if (grade == 6 && type == 7) {
 
-                for (k = 0; k < 6; k++) {
-                    i = Math.floor(Math.random() * (col.length - 1));
-                    cques[k] = col[i].ques;
-                    ckey[k] = parseInt(col[i].key);
-                    col.splice(i, 1);
+            wx.cloud.callFunction({
+                name: 'dbquery',
+                data: {
+                    table: 'q41',
+                    type: 4102,
+                    count: config.types[6].count[7]
                 }
-
+            }).then(res => {
+                let i = 0;
+                let ckey = [];
+                
+                for (i=0; i<6; i++) {
+                    ckey[i] = parseInt(res.result.data[i].key);
+                }
+    
                 that.setData({
                     quesType: 0,
                     keyType: 0,
-
+    
                     wdQues: 14,
                     wdAns: 3,
-
-                    ques0: cques[0],
-                    ques1: cques[1],
-                    ques2: cques[2],
-                    ques3: cques[3],
-                    ques4: cques[4],
-                    ques5: cques[5],
-
+    
+                    ques0: res.result.data[0].ques,
+                    ques1: res.result.data[1].ques,
+                    ques2: res.result.data[2].ques,
+                    ques3: res.result.data[3].ques,
+                    ques4: res.result.data[4].ques,
+                    ques5: res.result.data[5].ques,
+    
                     keys: ckey
                 });
-            }
-        });
-    } else {
-        return -1;
-    }
+            }).catch(err => {
+                // handle error
+            })
+    
+        } else {
+            return -1;
+        }
+    
 
     return 0;
 }

@@ -1,13 +1,11 @@
 //
-//	四年级下
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
-
+//  g4second.js
+//	function: 按大纲要求，生成符合四年级下学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.17
+//
+import * as config from '../config/config.js';
 let util = require("util.js");
 
 //	70	三位整数加减法
@@ -333,37 +331,42 @@ function f3b3bASMD4s(grade, type, db, pt) {
     let k = 0, i = 0;
 
     if (grade == 7 && type == 6) {
-        db.collection('q42').where({
-            type: 4201
-        }).get({
-            success: res => {
-                col = res.data;
 
-                for (k = 0; k < 6; k++) {
-                    i = Math.floor(Math.random() * (col.length - 1));
-                    cques[k] = col[i].ques;
-                    ckey[k] = parseInt(col[i].key);
-                    col.splice(i, 1);
-                }
-
-                that.setData({
-                    quesType: 0,
-                    keyType: 0,
-
-                    wdQues: 14,
-                    wdAns: 3,
-
-                    ques0: cques[0],
-                    ques1: cques[1],
-                    ques2: cques[2],
-                    ques3: cques[3],
-                    ques4: cques[4],
-                    ques5: cques[5],
-
-                    keys: ckey
-                });
+        wx.cloud.callFunction({
+            name: 'dbquery',
+            data: {
+                table: 'q42',
+                type: 4201,
+                count: config.types[7].count[6]
             }
-        });
+        }).then(res => {
+            let i = 0;
+            let ckey = [];
+            
+            for (i=0; i<6; i++) {
+                ckey[i] = parseInt(res.result.data[i].key);
+            }
+
+            that.setData({
+                quesType: 0,
+                keyType: 0,
+
+                wdQues: 14,
+                wdAns: 3,
+
+                ques0: res.result.data[0].ques,
+                ques1: res.result.data[1].ques,
+                ques2: res.result.data[2].ques,
+                ques3: res.result.data[3].ques,
+                ques4: res.result.data[4].ques,
+                ques5: res.result.data[5].ques,
+
+                keys: ckey
+            });
+        }).catch(err => {
+            // handle error
+        })
+
     } else {
         return -1;
     }
@@ -374,48 +377,109 @@ function f3b3bASMD4s(grade, type, db, pt) {
 
 //	77	简便运算
 function fg4easy(grade, type, db, pt) {
-   let col = [];
-    let that = pt;
-    let cques = [], ckey = [];
-    let k = 0, i = 0;
+//    let col = [];
+//     let that = pt;
+//     let cques = [], ckey = [];
+//     let k = 0, i = 0;
 
-    if (grade == 7 && type == 7) {
-        db.collection('q42').where({
-            type: 4202
-        }).get({
-            success: res => {
-                col = res.data;
+    
+//     if (grade == 7 && type == 7) {
+//         //console.log(config.types[7].count[7]);
 
-                for (k = 0; k < 6; k++) {
-                    i = Math.floor(Math.random() * (col.length - 1));
-                    cques[k] = col[i].ques;
-                    ckey[k] = parseInt(col[i].key);
-                    col.splice(i, 1);
-                }
+//         wx.cloud.callFunction({
+//             name: 'dbquery',
+//             data: {
+//                 table: 'q42',
+//                 type: 4202,
+//                 //count: config.types[7].count[7]
+//                 count: 256
+//             }
+//         }).then(res => {
+//             //console.log(res);
+//             let i = 0;
+//             let ckey = [];
+            
+//             for (i=0; i<6; i++) {
+//                 ckey[i] = parseInt(res.result.data[i].key);
+//             }
 
-                that.setData({
-                    quesType: 0,
-                    keyType: 0,
+//             //console.log(ckey);
 
-                    wdQues: 14,
-                    wdAns: 3,
+//             that.setData({
+//                 quesType: 0,
+//                 keyType: 0,
 
-                    ques0: cques[0],
-                    ques1: cques[1],
-                    ques2: cques[2],
-                    ques3: cques[3],
-                    ques4: cques[4],
-                    ques5: cques[5],
+//                 wdQues: 12,
+//                 wdAns: 5,
 
-                    keys: ckey
-                });
-            }
+//                 ques0: res.result.data[0].ques,
+//                 ques1: res.result.data[1].ques,
+//                 ques2: res.result.data[2].ques,
+//                 ques3: res.result.data[3].ques,
+//                 ques4: res.result.data[4].ques,
+//                 ques5: res.result.data[5].ques,
+
+//                 keys: ckey
+//             });
+//         }).catch(err => {
+//             // handle error
+//         })
+
+//     } else {
+//         return -1;
+//     }
+
+//     return 0;
+
+let col = [];
+let that = pt;
+let cques = [], ckey = [];
+let k = 0, i = 0;
+
+if (grade == 7 && type == 7) {
+
+    wx.cloud.callFunction({
+        name: 'dbquery',
+        data: {
+            table: 'q42',
+            type: 4204,
+            //count: config.types[7].count[7]
+            count: 150
+        }
+    }).then(res => {
+        let i = 0;
+        let ckey = [];
+        
+        for (i=0; i<6; i++) {
+            ckey[i] = parseInt(res.result.data[i].key);
+        }
+
+        that.setData({
+            quesType: 0,
+            keyType: 0,
+
+            wdQues: 14,
+            wdAns: 3,
+
+            ques0: res.result.data[0].ques,
+            ques1: res.result.data[1].ques,
+            ques2: res.result.data[2].ques,
+            ques3: res.result.data[3].ques,
+            ques4: res.result.data[4].ques,
+            ques5: res.result.data[5].ques,
+
+            keys: ckey
         });
-    } else {
-        return -1;
-    }
+    }).catch(err => {
+        // handle error
+    })
 
-    return 0;
+} else {
+    return -1;
+}
+
+return 0;
+
 }
 
 
@@ -427,5 +491,5 @@ module.exports = {
     f100M10: f100M10,
     f3bM2b: f3bM2b,
     f3b3bASMD4s: f3b3bASMD4s,
-    fg4easy: fg4easy,
+    fg4easy: fg4easy
 }

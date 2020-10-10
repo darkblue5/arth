@@ -14,16 +14,21 @@ let g3First = require('../ques/g3first.js');
 let g3Second = require('../ques/g3second.js');
 let g4First = require('../ques/g4first.js');
 let g4Second = require('../ques/g4second.js');
+let g5First = require('../ques/g5first.js');
 let g5Second = require('../ques/g5second.js');
+let g6First = require('../ques/g6first.js');
 let g6Second = require('../ques/g6second.js');
 
 const app = getApp();
-const audio = wx.createInnerAudioContext(); //  audio
+//const audio = wx.createInnerAudioContext(); //  audio
+const bgMusic = wx.createInnerAudioContext();       //  background music
+const rightMusic = wx.createInnerAudioContext();    //  right music
+const errorMusic = wx.createInnerAudioContext();    //  error music
 
-const QCOUNT = 6; //1组6道题
-const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //浮点数比对差值
+const QCOUNT = 6;                                   //  1组6道题
+const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //  浮点数比对差值
 
-const db = wx.cloud.database();
+const db = wx.cloud.database();                     //
 
 let init;   // timer
 
@@ -53,12 +58,13 @@ Page({
 
         //  音乐资源文件
         musBgm: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3', //背景音乐
-        musRight: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',   //  答案正确提示音
-        musWrong: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3',   //  答案错误提示音
+        musRight: 'cloud://ascpg.6173-ascpg-1301277680/right.wav',   //  答案正确提示音
+        musWrong: 'cloud://ascpg.6173-ascpg-1301277680/error.wav',   //  答案错误提示音
 
         //  试题与答案占宽
         wdQues: 12,         //  24格栅模型中，试题占宽
         wdAns: 5,           //  24格栅模型中，答案占宽
+        fsize: 54,
 
         //  对勾号颜色  white: 初始颜色     red: 答案错误颜色
         tickColor0: 'white',
@@ -157,6 +163,15 @@ Page({
         clearInterval(init); // 计时器归零
         that.data.minute = 0;
         that.data.second = 0;
+
+        // initial bgn/right/error music file
+        bgMusic.src = that.data.musBgm;
+        rightMusic.src = that.data.musRight;
+        errorMusic.src = that.data.musWrong;
+
+        bgMusic.loop = true;
+        rightMusic.loop = false;
+        errorMusic.loop = false;
     },
 
     onReady() {
@@ -173,7 +188,14 @@ Page({
     },
 
     onUnload() {
-        audio.stop();
+        //audio.stop();
+        this.bgMusic.stop();
+        this.rightMusic.stop();
+        this.errorMusic.stop();
+
+        this.bgMusic.destroy();
+        this.rightMusic.destroy();
+        this.errorMusic.destroy();
     },
 
     onGetUserInfo: function (e) {
@@ -272,11 +294,13 @@ Page({
 
         // play mp3
         if (that.data.enMusic) {
-            audio.autoplay = true;
-            audio.loop = true;
-            audio.src = that.data.musBgm;
-            audio.stop();       // restart music
-            audio.play();
+            //audio.autoplay = true;
+            //audio.loop = true;
+            //audio.src = that.data.musBgm;
+            //audio.stop();       // restart music
+            //audio.play();
+            bgMusic.stop();
+            bgMusic.play();
         }
 
         // initical question && ticker
@@ -355,7 +379,9 @@ Page({
             fraJudg4: [0, 0, 0],
             fraJudg5: [0, 0, 0],
 
-            curJudg: [0, 0, 0, 0, 0, 0]
+            curJudg: [0, 0, 0, 0, 0, 0],
+
+            fsize: config.types[ that.data.indexType[0] ].fsize[ that.data.indexType[1] ]
         });
     },
 
@@ -375,7 +401,8 @@ Page({
 
         // stop music
         if (that.data.enMusic)
-            audio.pause();
+            //audio.pause();
+            bgMusic.pause();
 
         // for (i=0; i<6; i++) {
         //     if (that.data.curJudg[i] == 2)
@@ -628,21 +655,33 @@ Page({
     onBluAns0: function (e) {
         let that = this;
 
+        // console.log('that.data.keyType:  '+ that.data.keyType);
+        // console.log('e.detail.value:  '+ e.detail.value);
+        // console.log('that.data.keys[0]:  '+ that.data.keys[0]);
+        // console.log('FLOTERR:  '+ FLOTERR);
+
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[0]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor0: 'red',
                     });
                 } else {
                     // that.data.curJudg[0] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[0]) {
                     that.data.modJudg0[0] = 1;         //整数部分判断结果
 
                     // FIXME: 条件合并
                     if (that.data.modJudg0[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor0: 'red',
                         });
@@ -653,14 +692,29 @@ Page({
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor0: 'red',
                     });
                 } else {
                     // that.data.curJudg[0] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             default:
+                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
+                    this.setData({
+                        tickColor0: 'red',
+                    });
+                } else {
+                    // that.data.curJudg[0] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
+                }
                 break;
         }
 
@@ -673,37 +727,60 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[1]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor1: 'red',
                     });
                 } else {
                     // that.data.curJudg[1] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[1]) {
                     that.data.modJudg1[0] = 1;         //整数部分判断结果
-
+          
                     if (that.data.modJudg1[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor1: 'red',
                         });
-                    }
+                    } 
                 } else {
                     // that.data.curJudg[1] = 2;
+                    
                 }
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[1]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor1: 'red',
                     });
                 } else {
                     // that.data.curJudg[1] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 3:
                 break;
             default:
+                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
+                    this.setData({
+                        tickColor0: 'red',
+                    });
+                } else {
+                    // that.data.curJudg[0] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
+                }
                 break;
         }
 
@@ -716,37 +793,59 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[2]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor2: 'red',
                     });
                 } else {
                     // that.data.curJudg[2] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[2]) {
                     that.data.modJudg2[0] = 1;         //整数部分判断结果
-
+ 
                     if (that.data.modJudg2[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor2: 'red',
                         });
-                    }
+                    } 
                 } else {
                     // that.data.curJudg[2] = 2;
                 }
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor2: 'red',
                     });
                 } else {
                     // that.data.curJudg[2] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 3:
                 break;
             default:
+                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
+                    this.setData({
+                        tickColor0: 'red',
+                    });
+                } else {
+                    // that.data.curJudg[0] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
+                }
                 break;
         }
 
@@ -759,17 +858,25 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[3]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor3: 'red',
                     });
                 } else {
                     // that.data.curJudg[3] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
+
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[3]) {
                     that.data.modJudg3[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg3[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor3: 'red',
                         });
@@ -780,11 +887,15 @@ Page({
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor3: 'red',
                     });
                 } else {
                     // that.data.curJudg[3] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 3:
@@ -802,32 +913,43 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[4]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor4: 'red',
                     });
                 } else {
                     // that.data.curJudg[4] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[4]) {
                     that.data.modJudg4[0] = 1;         //整数部分判断结果
-
+                    
                     if (that.data.modJudg4[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor4: 'red',
                         });
-                    }
+                    } 
                 } else {
                     // that.data.curJudg[4] = 2;
                 }
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[4]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor4: 'red',
                     });
                 } else {
                     // that.data.curJudg[4] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 3:
@@ -845,17 +967,24 @@ Page({
         switch (that.data.keyType) {
             case 0:
                 if (parseInt(e.detail.value) === that.data.keys[5]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor5: 'red',
                     });
                 } else {
                     // that.data.curJudg[5] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
+                break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[5]) {
                     that.data.modJudg5[0] = 1;         //整数部分判断结果
 
                     if (that.data.modJudg5[1] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         this.setData({
                             tickColor0: 'red',
                         });
@@ -866,11 +995,15 @@ Page({
                 break;
             case 2:
                 if (Math.abs(e.detail.value - that.data.keys[5]) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor5: 'red',
                     });
                 } else {
                     // that.data.curJudg[5] = 2;
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 3:
@@ -887,10 +1020,16 @@ Page({
 
         if (parseInt(e.detail.value) === that.data.keyMods[0]) {
             that.data.modJudg0[1] = 1        //余数部分判定
+
             if (that.data.modJudg0[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor0: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[0] = 2;
@@ -902,10 +1041,16 @@ Page({
 
         if (parseInt(e.detail.value) === that.data.keyMods[1]) {
             that.data.modJudg1[1] = 1        //余数部分判定
+
             if (that.data.modJudg1[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor1: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[1] = 2;
@@ -918,9 +1063,14 @@ Page({
         if (parseInt(e.detail.value) === that.data.keyMods[2]) {
             that.data.modJudg2[1] = 1        //余数部分判定
             if (that.data.modJudg2[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor2: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[2] = 2;
@@ -933,9 +1083,14 @@ Page({
         if (parseInt(e.detail.value) === that.data.keyMods[3]) {
             that.data.modJudg3[1] = 1        //余数部分判定
             if (that.data.modJudg3[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor3: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[3] = 2;
@@ -948,9 +1103,14 @@ Page({
         if (parseInt(e.detail.value) === that.data.keyMods[4]) {
             that.data.modJudg4[1] = 1        //余数部分判定
             if (that.data.modJudg4[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor4: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[4] = 2;
@@ -963,9 +1123,14 @@ Page({
         if (parseInt(e.detail.value) === that.data.keyMods[5]) {
             that.data.modJudg5[1] = 1        //余数部分判定
             if (that.data.modJudg5[0] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 this.setData({
                     tickColor5: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else {
             // that.data.curJudg[5] = 2;
@@ -977,17 +1142,22 @@ Page({
     onInpBlurAns0Zs: function (e) {
         let that = this;
 
-        // console.log('that.data.keyFraType[0]', that.data.keyFraType[0]);
-        // console.log('e.detail.value', e.detail.value);
-        // console.log('that.data.keyZs[0]', that.data.keyZs[0]);
+        // console.log('that.data.keyFraType[0] : ' + that.data.keyFraType[0]);
+        // console.log('e.detail.value : ' + e.detail.value);
+        // console.log('that.data.keyZs[0] : ' + that.data.keyZs[0]);
 
         switch (that.data.keyFraType[0]) {
             case 1:     //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[0]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor0: 'red',
                         isDisabled0: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -995,12 +1165,16 @@ Page({
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
                     //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
-
-                    this.setData({
+                    rightMusic.stop();
+                    rightMusic.play();
+                    that.setData({
                         tickColor0: 'red',
                         isDisabled0: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1011,10 +1185,16 @@ Page({
             case 3:
                 if (parseInt(e.detail.value) === that.data.keyZs[0]) {
                     that.data.fraJudg0[0] = 1;
+                   
                     if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor0: 'red',
                         });
+                    } else {
+                        errorMusic.stop();
+                        errorMusic.play();
                     }
                 }
                 break;
@@ -1033,15 +1213,25 @@ Page({
 
         if (that.data.keyFraType[0] == 2) {
             if (that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor0: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[0] == 3) {
             if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor0: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1056,15 +1246,25 @@ Page({
 
         if (that.data.keyFraType[0] == 2) {
             if (that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor0: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[0] == 3) {
             if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor0: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1073,24 +1273,38 @@ Page({
     onInpBlurAns1Zs: function (e) {
         let that = this;
 
+        console.log('that.data.keyFraType[1] : ' + that.data.keyFraType[1]);
+        console.log('e.detail.value : ' + e.detail.value);
+        console.log('that.data.keyZs[1] : ' + that.data.keyZs[1]);
+
         switch (that.data.keyFraType[1]) {
             case 1://答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[1]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor1: 'red',
                         isDisabled1: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
 
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[1] - e.detail.value) <= FLOTERR) {
-                    this.setData({
+                    rightMusic.stop();
+                    rightMusic.play();
+                    that.setData({
                         tickColor1: 'red',
                         isDisabled1: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1106,9 +1320,14 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keyZs[1]) {
                     that.data.fraJudg1[0] = 1;
                     if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor1: 'red',
                         });
+                    } else {
+                        errorMusic.stop();
+                        errorMusic.play();
                     }
                 }
                 break;
@@ -1128,15 +1347,25 @@ Page({
 
         if (that.data.keyFraType[1] == 2) {
             if (that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor1: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[1] == 3) {
             if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor1: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1152,15 +1381,25 @@ Page({
 
         if (that.data.keyFraType[1] == 2) {
             if (that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor1: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[1] == 3) {
             if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor1: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1169,22 +1408,36 @@ Page({
     onInpBlurAns2Zs: function (e) {
         let that = this;
 
+        // console.log('that.data.keyFraType[2] : ' + that.data.keyFraType[2]);
+        // console.log('e.detail.value : ' + e.detail.value);
+        // console.log('that.data.keyZs[2] : ' + that.data.keyZs[2]);
+
         switch (that.data.keyFraType[2]) {
             case 1:     //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[2]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor2: 'red',
                         isDisabled2: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
-                    this.setData({
+                    rightMusic.stop();
+                    rightMusic.play();
+                    that.setData({
                         tickColor2: 'red',
                         isDisabled2: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1200,9 +1453,14 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keyZs[2]) {
                     that.data.fraJudg2[0] = 1;
                     if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor2: 'red',
                         });
+                    } else {
+                        errorMusic.stop();
+                        errorMusic.play();
                     }
                 }
                 break;
@@ -1222,15 +1480,25 @@ Page({
 
         if (that.data.keyFraType[2] == 2) {
             if (that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor2: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[2] == 3) {
             if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor2: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1246,15 +1514,25 @@ Page({
 
         if (that.data.keyFraType[2] == 2) {
             if (that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor2: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[2] == 3) {
             if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor2: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1266,21 +1544,31 @@ Page({
         switch (that.data.keyFraType[3]) {
             case 1:     //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[3]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor3: 'red',
                         isDisabled3: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
 
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[3] - e.detail.value) <= FLOTERR) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     this.setData({
                         tickColor3: 'red',
                         isDisabled3: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1296,9 +1584,14 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keyZs[3]) {
                     that.data.fraJudg3[0] = 1;
                     if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor3: 'red',
                         });
+                    } else {
+                        errorMusic.stop();
+                        errorMusic.play();
                     }
                 }
                 break;
@@ -1318,15 +1611,25 @@ Page({
 
         if (that.data.keyFraType[3] == 2) {
             if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor3: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[3] == 3) {
             if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor3: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1341,15 +1644,25 @@ Page({
 
         if (that.data.keyFraType[3] == 2) {
             if (that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor3: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[3] == 3) {
             if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor3: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1361,21 +1674,31 @@ Page({
         switch (that.data.keyFraType[4]) {
             case 1:     //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[4]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor4: 'red',
                         isDisabled4: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
 
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[4] - e.detail.value) <= FLOTERR) {
-                    this.setData({
+                    rightMusic.stop();
+                    rightMusic.play();
+                    that.setData({
                         tickColor4: 'red',
                         isDisabled4: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1391,10 +1714,15 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keyZs[4]) {
                     that.data.fraJudg4[0] = 1;
                     if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor4: 'red',
                         });
                     }
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 break;
             default:
@@ -1413,15 +1741,25 @@ Page({
 
         if (that.data.keyFraType[4] == 2) {
             if (that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor4: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[4] == 3) {
             if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor4: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1437,15 +1775,25 @@ Page({
 
         if (that.data.keyFraType[4] == 2) {
             if (that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor4: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[4] == 3) {
             if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor4: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1457,21 +1805,31 @@ Page({
         switch (that.data.keyFraType[5]) {
             case 1:     //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[5]) {
+                    rightMusic.stop();
+                    rightMusic.play();
                     that.setData({
                         tickColor5: 'red',
                         isDisabled5: true,
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
 
                 break;
             case 4:     //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[5] - e.detail.value) <= FLOTERR) {
-                    this.setData({
+                    rightMusic.stop();
+                    rightMusic.play();
+                    that.setData({
                         tickColor5: 'red',
                         isDisabled5: true,
                         //inpBorder: '3rpx solid gray'
                     });
+                } else {
+                    errorMusic.stop();
+                    errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1487,9 +1845,14 @@ Page({
                 if (parseInt(e.detail.value) === that.data.keyZs[5]) {
                     that.data.fraJudg5[0] = 1;
                     if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                        rightMusic.stop();
+                        rightMusic.play();
                         that.setData({
                             tickColor5: 'red',
                         });
+                    } else {
+                        errorMusic.stop();
+                        errorMusic.play();
                     }
                 }
                 break;
@@ -1509,15 +1872,25 @@ Page({
 
         if (that.data.keyFraType[5] == 2) {
             if (that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor5: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[5] == 3) {
             if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor5: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1533,15 +1906,25 @@ Page({
 
         if (that.data.keyFraType[5] == 2) {
             if (that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor5: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         } else if (that.data.keyFraType[5] == 3) {
             if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
+                rightMusic.stop();
+                rightMusic.play();
                 that.setData({
                     tickColor5: 'red',
                 });
+            } else {
+                errorMusic.stop();
+                errorMusic.play();
             }
         }
     },
@@ -1994,18 +2377,24 @@ Page({
             case 8:             //  五年级上
                 switch (idxType[1]) {
                     case 0:
+                        ret = g5First.intAsmd(8, 0, db, this);
+                        that.data.typeDetail = 80;
                         break;
                     case 1:
+                        ret = g5First.intSimple(8, 1, db, this);
+                        that.data.typeDetail = 81;
                         break;
                     case 2:
+                        ret = g5First.fltAs(8, 2, db, this);
+                        that.data.typeDetail = 82;
                         break;
                     case 3:
+                        ret = g5First.fltMd(8, 3, db, this);
+                        that.data.typeDetail = 83;
                         break;
                     case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
+                        ret = g5First.fltAsmd(8, 4, db, this);
+                        that.data.typeDetail = 84;
                         break;
                     default:
                         break;
@@ -2048,19 +2437,29 @@ Page({
             case 10:            //  六年级上
                 switch (idxType[1]) {
                     case 0:
+                        ret = g6First.ifAsmd(10, 0, db, this);
+                        that.data.typeDetail = 100;
                         break;
                     case 1:
+                        ret = g6First.dAs(10, 1, db, this);
+                        that.data.typeDetail = 101;
                         break;
                     case 2:
+                        ret = g6First.dSd(10, 2, db, this);
+                        that.data.typeDetail = 102;
                         break;
                     case 3:
+                        ret = g6First.dAsmd(10, 3, db, this);
+                        that.data.typeDetail = 103;
                         break;
                     case 4:
+                        ret = g6First.dSimp(10, 4, db, this);
+                        that.data.typeDetail = 104;
                         break;
                     case 5:
-                        break;
-                    case 6:
-                        break;
+                        ret = g6First.dformu(10, 5, db, this);
+                        that.data.typeDetail = 105;
+                        break;                
                     default:
                         break;
                 }
@@ -2090,7 +2489,7 @@ Page({
                     default:
                         break;
                 }
-
+                break;
             default:
                 return -1;
         }

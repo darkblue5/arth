@@ -1,14 +1,12 @@
 //
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
+//  g2second.js
+//	function: 按大纲要求，生成符合二年级下学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.17
+//
 
 let util = require("util.js");
-
 
 //	30 几百几十相加或减
 function f110AorS(grade, type, pt) {
@@ -83,12 +81,9 @@ function f1100AorS(grade, type, pt) {
     let optType;
     let that = pt;
 
-
     if (grade == 3 && type == 1) {
         for (i = 0; i < 6; i++) {
-
             optType = Math.ceil(Math.random() * 2);
-
             switch (optType) {
                 case 1:     //a+b
                     a = util.rangeRand(10, 99);
@@ -412,12 +407,9 @@ function f2bDMod(grade, type, pt) {
     let optType;
     let that = pt;
 
-
     if (grade == 3 && type == 6) {
         for (i = 0; i < 6; i++) {
-
             optType = Math.ceil(Math.random() * 2);
-
             a = util.rangeRand(2, 10);
             b = util.rangeRand(2, 9);
             m = a * b;
@@ -427,7 +419,6 @@ function f2bDMod(grade, type, pt) {
             key[i] = a;
             mods[i] = mod;
             ques[i] = arr.join(' ');
-
         }
     } else {
         return -1;
@@ -438,7 +429,7 @@ function f2bDMod(grade, type, pt) {
         keyType: 1,
 
         wdQues: 10,
-        wdAns: 5,
+        wdAns: 7,
         
         ques0: ques[0],
         ques1: ques[1],
@@ -452,9 +443,6 @@ function f2bDMod(grade, type, pt) {
     });
 
     return 0;
-
-
-
 }
 
 //	37	两位数连加或连减
@@ -465,7 +453,6 @@ function f2bDulAandS(grade, type, pt) {
     let ques = [];
     let optType;
     let that = pt;
-
 
     if (grade == 3 && type == 7) {
         for (i = 0; i < 6; i++) {
@@ -494,7 +481,6 @@ function f2bDulAandS(grade, type, pt) {
 
         }
     }
-
 
     that.setData({
         quesType: 0,
@@ -525,7 +511,6 @@ function f2bAandS(grade, type, pt) {
     let ques = [];
     let optType;
     let that = pt;
-
 
     if (grade == 3 && type == 8) {
         for (i = 0; i < 6; i++) {

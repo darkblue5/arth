@@ -1,13 +1,12 @@
 //
-//	三年级下
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
+//  g3second.js
+//	function: 按大纲要求，生成符合三年级下学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.17
+//
 
+import * as config from '../config/config.js';
 let util = require("util.js");
 
 //	50 两位数乘或除一位数
@@ -59,7 +58,7 @@ function f2bMorD1b(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -122,7 +121,7 @@ function f3bMorD1b(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -177,7 +176,7 @@ function f110M1b(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -223,7 +222,7 @@ function f2bM2b(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -268,7 +267,7 @@ function f2bDoulM(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -328,7 +327,7 @@ function f2bMandAorS(grade, type, pt) {
 
         wdQues: 12,
         wdAns: 5,
-        
+
         ques0: ques[0],
         ques1: ques[1],
         ques2: ques[2],
@@ -345,45 +344,46 @@ function f2bMandAorS(grade, type, pt) {
 
 //	56 两个两位数四则混合运算
 function f2bASMD2s(grade, type, db, pt) {
-
-    let col = [];
     let that = pt;
-    let cques = [], ckey = [];
-    let k = 0, i = 0;
+    let qcount = config.types[5].count[6];
 
     if (grade == 5 && type == 6) {
-        db.collection('q32').where({
-            type: 3201
-        }).get({
-            success: res => {
-                col = res.data;
 
-                //  FIXME: 
-                for (k = 0; k < 6; k++) {
-                    i = Math.floor(Math.random() * (col.length - 1));
-                    cques[k] = col[i].ques;
-                    ckey[k] = parseInt(col[i].key);
-                    col.splice(i, 1);
-                }
-
-                that.setData({
-                    quesType: 0,
-                    keyType: 0,
-                    
-                    wdQues: 12,
-                    wdAns: 5,
-        
-                    ques0: cques[0],
-                    ques1: cques[1],
-                    ques2: cques[2],
-                    ques3: cques[3],
-                    ques4: cques[4],
-                    ques5: cques[5],
-
-                    keys: ckey
-                });
+        wx.cloud.callFunction({
+            name: 'dbquery',
+            data: {
+                table: 'q32',
+                type: 3201,
+                count: qcount
             }
-        });
+        }).then(res => {
+            let i = 0;
+            let ckey = [];
+            
+            for (i=0; i<6; i++) {
+                ckey[i] = parseInt(res.result.data[i].key);
+            }
+
+            that.setData({
+                quesType: 0,
+                keyType: 0,
+
+                wdQues: 12,
+                wdAns: 5,
+
+                ques0: res.result.data[0].ques,
+                ques1: res.result.data[1].ques,
+                ques2: res.result.data[2].ques,
+                ques3: res.result.data[3].ques,
+                ques4: res.result.data[4].ques,
+                ques5: res.result.data[5].ques,
+
+                keys: ckey
+            });
+        }).catch(err => {
+            // handle error
+        })
+
     } else {
         return -1;
     }

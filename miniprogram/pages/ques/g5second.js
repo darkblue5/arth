@@ -1,12 +1,11 @@
 //
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
-
+//  g5second.js
+//	function: 按大纲要求，生成符合五年级下学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.19
+//
+import * as config from '../config/config.js';
 let util = require("util.js");
 
 function f1pot(grade, type, pt) {
@@ -144,61 +143,44 @@ function fpotASMD(grade, type, db, pt) {
     let i = 0;
 
     if (grade == 9 && type == 1) {
-		db.collection('q52').where({
-            type: 5211
-        }).get({
-            success: res => {
-                col = res.data;
 
-                //console.log(col.length);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques0 = col[i].ques;
-                key[0] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques1 = col[i].ques;
-                key[1] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques2 = col[i].ques;
-                key[2] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques3 = col[i].ques;
-                key[3] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques4 = col[i].ques;
-                key[4] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques5 = col[i].ques;
-				key[5] = Number(col[i].key);
-				
-                that.setData({                    
-                    quesType: 0,
-                    keyType: 2,
-
-                    wdQues: 12,
-                    wdAns: 5,
-
-                    ques0: sques0,
-                    ques1: sques1,
-                    ques2: sques2,
-                    ques3: sques3,
-                    ques4: sques4,
-                    ques5: sques5,
-
-                    keys: key
-                })
+        wx.cloud.callFunction({
+            name: 'dbquery',
+            data: {
+                table: 'q52',
+                type: 5211,
+                count: config.types[9].count[1]
             }
-        });
+        }).then(res => {
+            let i = 0;
+            let ckey = [];
+            
+            for (i=0; i<6; i++) {
+                ckey[i] = parseInt(res.result.data[i].key);
+            }
+
+            that.setData({
+                quesType: 0,
+                keyType: 0,
+
+                wdQues: 15,
+                wdAns: 2,
+
+                ques0: res.result.data[0].ques,
+                ques1: res.result.data[1].ques,
+                ques2: res.result.data[2].ques,
+                ques3: res.result.data[3].ques,
+                ques4: res.result.data[4].ques,
+                ques5: res.result.data[5].ques,
+
+                keys: ckey
+            });
+        }).catch(err => {
+            // handle error
+        })
+
+    } else {
+        return -1;
     }
 
     return 0;
@@ -212,63 +194,46 @@ function fpotSimple(grade, type, db, pt) {
     let key = [];
     let col = [];
     let i = 0;
-
+    
     if (grade == 9 && type == 2) {
-        db.collection('q52').where({
-            type: 5212
-        }).get({
-            success: res => {
-                col = res.data;
 
-                console.log(col.length);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques0 = col[i].ques;
-                key[0] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques1 = col[i].ques;
-                key[1] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques2 = col[i].ques;
-                key[2] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques3 = col[i].ques;
-                key[3] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques4 = col[i].ques;
-                key[4] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques5 = col[i].ques;
-                key[5] = Number(col[i].key);
-
-                that.setData({
-                    quesType: 0,
-                    keyType: 2,
-
-                    wdQues: 16,
-                    wdAns: 3,
-
-                    ques0: sques0,
-                    ques1: sques1,
-                    ques2: sques2,
-                    ques3: sques3,
-                    ques4: sques4,
-                    ques5: sques5,
-
-                    keys: key
-                })
+        wx.cloud.callFunction({
+            name: 'dbquery',
+            data: {
+                table: 'q52',
+                type: 5212,
+                count: config.types[9].count[2]
             }
-        });
+        }).then(res => {
+            let i = 0;
+            let ckey = [];
+            
+            for (i=0; i<6; i++) {
+                ckey[i] = parseInt(res.result.data[i].key);
+            }
+
+            that.setData({
+                quesType: 0,
+                keyType: 0,
+
+                wdQues: 16,
+                wdAns: 1,
+
+                ques0: res.result.data[0].ques,
+                ques1: res.result.data[1].ques,
+                ques2: res.result.data[2].ques,
+                ques3: res.result.data[3].ques,
+                ques4: res.result.data[4].ques,
+                ques5: res.result.data[5].ques,
+
+                keys: ckey
+            });
+        }).catch(err => {
+            // handle error
+        })
+
+    } else {
+        return -1;
     }
 
     return 0;
@@ -277,72 +242,53 @@ function fpotSimple(grade, type, db, pt) {
 //简单方程
 function f2formula(grade, type, db, pt) {
     let that = pt;
-    let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
+    //let sques0 = "", sques1 = "", sques2 = "", sques3 = "", sques4 = "", sques5 = "";
     //let nkey0, nkey1, nkey2, nkey3, nkey4, nkey5;
-    let key = [];
-    let col = [];
-    let i = 0;
-
+    // let key = [];
+    // let col = [];
+    // let i = 0;
+   
     if (grade == 9 && type == 3) {
-       // sques1 = "2+□=7  □中填：";
-        //sques2 = "2+=7  中填：";
-        db.collection('q52').where({
-            type: 5213
-        }).get({
-            success: res => {
-                col = res.data;
-
-                //console.log(col.length);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques0 = col[i].ques;
-                key[0] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques1 = col[i].ques;
-                key[1] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques2 = col[i].ques;
-                key[2] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques3 = col[i].ques;
-                key[3] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques4 = col[i].ques;
-                key[4] = Number(col[i].key);
-                col.splice(i, 1);
-
-                i = Math.floor(Math.random() * (col.length - 1));
-                sques5 = col[i].ques;
-                key[5] = Number(col[i].key);
-
-                //console.log(sques0, sques1, sques2, sques3, sques4, sques5);
-
-                that.setData({
-                    quesType: 3,
-                    keyType: 2,
-
-                    wdQues: 12,
-                    wdAns: 5,
-
-                    ques0: sques0,
-                    ques1: sques1,
-                    ques2: sques2,
-                    ques3: sques3,
-                    ques4: sques4,
-                    ques5: sques5,
-
-                    keys: key
-                });
+        wx.cloud.callFunction({
+            name: 'dbquery',
+            data: {
+                table: 'q52',
+                type: 5213.0,
+                //count: config.types[9].count[3]
+                count: 100
             }
-        });
+        }).then(res => {
+            console.log(res);
+            
+            let i = 0;
+            let ckey = [];
+            
+            for (i=0; i<6; i++) {
+                ckey[i] = parseInt(res.result.data[i].key);
+            }
+
+            that.setData({
+                quesType: 0,
+                keyType: 0,
+
+                wdQues: 12,
+                wdAns: 5,
+
+                ques0: res.result.data[0].ques,
+                ques1: res.result.data[1].ques,
+                ques2: res.result.data[2].ques,
+                ques3: res.result.data[3].ques,
+                ques4: res.result.data[4].ques,
+                ques5: res.result.data[5].ques,
+
+                keys: ckey
+            });
+        }).catch(err => {
+            // handle error
+        })
+
+    } else {
+        return -1;
     }
 
     return 0;
@@ -468,12 +414,6 @@ function fdfAorS(grade, type, db, pt) {
 
 
     if (grade == 9 && type == 5) {
-        // ques[0] = "64 + f3/5 - f2/7";
-        // ques[1] = "f8/11 + 52 - f1/3";
-        // ques[2] = "f8/11 + 52 - f1/3";
-        // ques[3] = "3 - ( f8/13 - f1/2 )";
-        // ques[4] = "( 4 + f2/5 ) - f2/7";
-        // ques[5] = "( 4 + f2/5 ) - f2/7";
 
         db.collection('q52').where({
             type: 5214

@@ -53,13 +53,13 @@
         <van-row gutter="6">
             <block wx:if="{{quesType == 0 || quesType == 3}}">
                 <van-col span="{{wdQues}}">
-                    <view class="vw-ques">
-                        <text class="txt-ques">{{ques0}}</text>
-                        <text class="txt-ques">{{ques1}}</text>
-                        <text class="txt-ques">{{ques2}}</text>
-                        <text class="txt-ques">{{ques3}}</text>
-                        <text class="txt-ques">{{ques4}}</text>
-                        <text class="txt-ques">{{ques5}}</text>
+                    <view class="vw-ques" >
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques0}}</text>
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques1}}</text>
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques2}}</text>
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques3}}</text>
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques4}}</text>
+                        <text class="txt-ques" style="font-size:{{fsize}}rpx">{{ques5}}</text>
                     </view>
                 </van-col>
             </block>
@@ -310,7 +310,7 @@
             </block>
 
             <block wx:if="{{keyType == 1}}">
-                <van-col span="2">
+                <van-col span="3">
                     <view class="vw-col">
                         <input class="in-mod" type="number" value='{{mod0}}' bindblur="onBluMod0" />
                         <input class="in-mod" type="number" value='{{mod1}}' bindblur="onBluMod1" />

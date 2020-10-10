@@ -1,11 +1,10 @@
 //
-//  按大纲要求，生成符合各年级，各教学段所需试题
-//  参数:    上限、步骤、运算符种类
-//  返回值：    表达式字符串
-//  A:  add
-//  S:  sub
-//  M:  Mul
-//  D:  Div
+//  g1first.js
+//	function: 按大纲要求，生成符合一年级上学期所需试题
+//  A: Add  S: Sub  M: Mul  D: Div
+//  by sean wang
+//  2020.9.17
+//
 
 let util = require("util.js");
 
