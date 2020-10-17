@@ -66,6 +66,13 @@ function f2bMorD1b(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -129,6 +136,13 @@ function f3bMorD1b(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -184,6 +198,13 @@ function f110M1b(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -230,6 +251,13 @@ function f2bM2b(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -274,6 +302,13 @@ function f2bDoulM(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -335,6 +370,13 @@ function f2bMandAorS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -377,6 +419,13 @@ function f2bASMD2s(grade, type, db, pt) {
                 ques3: res.result.data[3].ques,
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
+
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
 
                 keys: ckey
             });

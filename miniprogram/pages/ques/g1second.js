@@ -47,6 +47,13 @@ function g1Second20SBorrow(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -103,6 +110,13 @@ function g1Second20AorS(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -168,6 +182,13 @@ function g1Second10AandS10(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -241,6 +262,13 @@ function g1Second2bAandS10(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -298,6 +326,13 @@ function g1Second20DulAorS(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -357,6 +392,13 @@ function g1Second20AandS(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });

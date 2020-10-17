@@ -46,6 +46,13 @@ function intAsmd(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -96,6 +103,13 @@ function intSimple(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -145,6 +159,13 @@ function fltAs(grade, type, db, pt) {
                 ques3: res.result.data[3].ques,
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
+
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
 
                 keys: ckey
             });
@@ -197,6 +218,13 @@ function fltMd(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -247,6 +275,13 @@ function fltAsmd(grade, type, db, pt) {
                 ques3: res.result.data[3].ques,
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
+                
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
 
                 keys: ckey
             });

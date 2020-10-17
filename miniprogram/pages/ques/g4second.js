@@ -60,6 +60,13 @@ function f3bAorS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -111,6 +118,13 @@ function f2bM1b10(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -169,6 +183,13 @@ function f2b3bD1b10(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+        
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -222,6 +243,13 @@ function f2bM10(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -271,6 +299,13 @@ function f100M10(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -317,6 +352,13 @@ function f3bM2b(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -361,6 +403,13 @@ function f3b3bASMD4s(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -377,59 +426,6 @@ function f3b3bASMD4s(grade, type, db, pt) {
 
 //	77	简便运算
 function fg4easy(grade, type, db, pt) {
-//    let col = [];
-//     let that = pt;
-//     let cques = [], ckey = [];
-//     let k = 0, i = 0;
-
-    
-//     if (grade == 7 && type == 7) {
-//         //console.log(config.types[7].count[7]);
-
-//         wx.cloud.callFunction({
-//             name: 'dbquery',
-//             data: {
-//                 table: 'q42',
-//                 type: 4202,
-//                 //count: config.types[7].count[7]
-//                 count: 256
-//             }
-//         }).then(res => {
-//             //console.log(res);
-//             let i = 0;
-//             let ckey = [];
-            
-//             for (i=0; i<6; i++) {
-//                 ckey[i] = parseInt(res.result.data[i].key);
-//             }
-
-//             //console.log(ckey);
-
-//             that.setData({
-//                 quesType: 0,
-//                 keyType: 0,
-
-//                 wdQues: 12,
-//                 wdAns: 5,
-
-//                 ques0: res.result.data[0].ques,
-//                 ques1: res.result.data[1].ques,
-//                 ques2: res.result.data[2].ques,
-//                 ques3: res.result.data[3].ques,
-//                 ques4: res.result.data[4].ques,
-//                 ques5: res.result.data[5].ques,
-
-//                 keys: ckey
-//             });
-//         }).catch(err => {
-//             // handle error
-//         })
-
-//     } else {
-//         return -1;
-//     }
-
-//     return 0;
 
 let col = [];
 let that = pt;
@@ -467,6 +463,13 @@ if (grade == 7 && type == 7) {
             ques3: res.result.data[3].ques,
             ques4: res.result.data[4].ques,
             ques5: res.result.data[5].ques,
+
+            rques0: res.result.data[0].ques,
+            rques1: res.result.data[1].ques,
+            rques2: res.result.data[2].ques,
+            rques3: res.result.data[3].ques,
+            rques4: res.result.data[4].ques,
+            rques5: res.result.data[5].ques,
 
             keys: ckey
         });

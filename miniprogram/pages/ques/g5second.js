@@ -126,6 +126,14 @@ function f1pot(grade, type, pt) {
             ques4: sques4,
             ques5: sques5,
 
+            rques0: sques0,
+            rques1: sques1,
+            rques2: sques2,
+            rques3: sques3,
+            rques4: sques4,
+            rques5: sques5,
+
+
             keys: key
         })
     }
@@ -172,6 +180,13 @@ function fpotASMD(grade, type, db, pt) {
                 ques3: res.result.data[3].ques,
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
+
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
 
                 keys: ckey
             });
@@ -226,6 +241,13 @@ function fpotSimple(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -253,9 +275,9 @@ function f2formula(grade, type, db, pt) {
             name: 'dbquery',
             data: {
                 table: 'q52',
-                type: 5213.0,
+                type: 5213,
                 //count: config.types[9].count[3]
-                count: 100
+                count: 28
             }
         }).then(res => {
             console.log(res);
@@ -268,11 +290,11 @@ function f2formula(grade, type, db, pt) {
             }
 
             that.setData({
-                quesType: 0,
-                keyType: 0,
+                quesType: 3,
+                keyType: 2,
 
-                wdQues: 12,
-                wdAns: 5,
+                wdQues: 13,
+                wdAns: 4,
 
                 ques0: res.result.data[0].ques,
                 ques1: res.result.data[1].ques,
@@ -280,6 +302,13 @@ function f2formula(grade, type, db, pt) {
                 ques3: res.result.data[3].ques,
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
+
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
 
                 keys: ckey
             });
@@ -305,6 +334,8 @@ function fsfAorS(grade, type, pt) {
     let len = 0;
     let i = 0, j = 0;
     let optType = 0;
+
+    let cques = [];     //编码表达式
 
     if (grade == 9 && type == 4) {
         for (j = 0; j < 6; j++) {
@@ -365,6 +396,13 @@ function fsfAorS(grade, type, pt) {
             ];
 
             cKeyFraType[j] = 2;
+
+            //编码同分母有达式为一维字符串
+            //for (i=0; i<3; i++) {
+                //cques[j] = 'f7/30 + f2/5';
+                cques[j] = 'f' + cfz[0] + '/' + cfm[0] + ' ' + czs[1] + ' ' + 'f' + cfz[2] + '/' + cfm[2];
+                //console.log('cques[j]' + cques[j]);
+           // }
         }
 
         that.setData({
@@ -380,6 +418,13 @@ function fsfAorS(grade, type, pt) {
             ques3: shizi[3],
             ques4: shizi[4],   
             ques5: shizi[5],
+
+            rques0: cques[0],
+            rques1: cques[1],
+            rques2: cques[2],
+            rques3: cques[3],
+            rques4: cques[4],   
+            rques5: cques[5],
 
            // keyZs: cKeyZs,
             keyFz: cKeyFz,
@@ -569,6 +614,13 @@ function fdfAorS(grade, type, db, pt) {
                     ques3: shizi[3],
                     ques4: shizi[4],
                     ques5: shizi[5],
+
+                    rques0: cques[0],
+                    rques1: cques[1],
+                    rques2: cques[2],
+                    rques3: cques[3],
+                    rques4: cques[4],
+                    rques5: cques[5],                
 
                     keyZs: cKeyZs,
                     keyFz: cKeyFz,

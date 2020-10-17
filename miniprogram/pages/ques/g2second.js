@@ -65,6 +65,13 @@ function f110AorS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -128,6 +135,13 @@ function f1100AorS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -143,7 +157,6 @@ function f1100AorS110(grade, type, pt) {
     let ques = [];
     let optType;
     let that = pt;
-
 
     if (grade == 3 && type == 2) {
         for (i = 0; i < 6; i++) {
@@ -194,6 +207,13 @@ function f1100AorS110(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -254,6 +274,13 @@ function f3bAorS(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -327,6 +354,13 @@ function f2bAorSCarry(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -391,6 +425,13 @@ function f1bMorD(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -437,6 +478,13 @@ function f2bDMod(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key,
         keyMods: mods
@@ -496,6 +544,13 @@ function f2bDulAandS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -552,6 +607,13 @@ function f2bAandS(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });

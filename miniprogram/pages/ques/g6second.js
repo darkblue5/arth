@@ -200,6 +200,10 @@ function f61Step(grade, type, db, pt) {
                 ques1: shizi[1],
                 ques2: shizi[2],
 
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
                 keyFm: cKeyFm,
@@ -392,6 +396,10 @@ function f61Step(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+
+                rques3: cques[0],
+                rques4: cques[1],
+                rques5: cques[2],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
@@ -599,6 +607,10 @@ function f64Opt(grade, type, db, pt) {
                 ques1: shizi[1],
                 ques2: shizi[2],
 
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
                 keyFm: cKeyFm,
@@ -788,6 +800,10 @@ function f64Opt(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+
+                rques3: cques[0],
+                rques4: cques[1],
+                rques5: cques[2],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
@@ -1001,6 +1017,13 @@ function f6Simple(grade, type, db, pt) {
                 ques4: shizi[4],
                 ques5: shizi[5],
 
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
+
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
                 keyFm: cKeyFm,
@@ -1213,6 +1236,13 @@ function f6Formula(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+                
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
@@ -1426,6 +1456,13 @@ function f6Scale(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+                
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,

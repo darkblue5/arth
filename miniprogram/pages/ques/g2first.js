@@ -81,6 +81,13 @@ function f2bAorS12bNoCarry(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -140,6 +147,13 @@ function f100DulAorS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
     return 0;
@@ -195,6 +209,13 @@ function f100AandS(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -238,6 +259,13 @@ function f66M(grade, type, pt) {
         ques4: ques[4],
         ques5: ques[5],
 
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
+
         keys: key
     });
 
@@ -276,6 +304,13 @@ function f99M(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -318,6 +353,13 @@ function f9D(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });
@@ -383,6 +425,13 @@ function f100DoulMorD(grade, type, pt) {
         ques3: ques[3],
         ques4: ques[4],
         ques5: ques[5],
+
+        rques0: ques[0],
+        rques1: ques[1],
+        rques2: ques[2],
+        rques3: ques[3],
+        rques4: ques[4],
+        rques5: ques[5],
 
         keys: key
     });

@@ -21,25 +21,27 @@ let g6Second = require('../ques/g6second.js');
 
 const app = getApp();
 //const audio = wx.createInnerAudioContext(); //  audio
-const bgMusic = wx.createInnerAudioContext();       //  background music
-const rightMusic = wx.createInnerAudioContext();    //  right music
-const errorMusic = wx.createInnerAudioContext();    //  error music
+const bgMusic = wx.createInnerAudioContext(); //  background music
+const rightMusic = wx.createInnerAudioContext(); //  right music
+const errorMusic = wx.createInnerAudioContext(); //  error music
+const startMusic = wx.createInnerAudioContext(); //  right music
+const submitMusic = wx.createInnerAudioContext(); //  error music
 
-const QCOUNT = 6;                                   //  1组6道题
-const FLOTERR = Number.EPSILON * Math.pow(2, 10);   //  浮点数比对差值
+const QCOUNT = 6; //  1组6道题
+const FLOTERR = Number.EPSILON * Math.pow(2, 10); //  浮点数比对差值
 
-const db = wx.cloud.database();                     //
+const db = wx.cloud.database(); //
 
-let init;   // timer
+let init; // timer
 
 Page({
     data: {
         avatarUrl: 'https://6173-ascpg-1301277680.tcb.qcloud.la/user-unlogin.png?sign=aff839f66cc8805071eab02ce2720cc8&t=1590301116',
-        hasUserInfo: false,     //  用户信息标识
+        hasUserInfo: false, //  用户信息标识
         //canIUse: wx.canIUse('button.open-type.getUserInfo'),    //  开放式授权检测
 
         userInfo: {},
-        logged: false,          //  用户是否登陆
+        logged: false, //  用户是否登陆
         takeSession: false,
         requestResult: '',
         openID: '',
@@ -48,7 +50,7 @@ Page({
         enMusic: false,
         enTimer: false,
         enSwitch: false,
-        showGrade: false,   //  pop弹窗开关
+        showGrade: false, //  pop弹窗开关
         showType: false,
 
         //  计时器数值
@@ -58,12 +60,14 @@ Page({
 
         //  音乐资源文件
         musBgm: 'cloud://ascpg.6173-ascpg-1301277680/bgm.mp3', //背景音乐
-        musRight: 'cloud://ascpg.6173-ascpg-1301277680/right.wav',   //  答案正确提示音
-        musWrong: 'cloud://ascpg.6173-ascpg-1301277680/error.wav',   //  答案错误提示音
+        musRight: 'cloud://ascpg.6173-ascpg-1301277680/right.wav', //  答案正确提示音
+        musWrong: 'cloud://ascpg.6173-ascpg-1301277680/error.wav', //  答案错误提示音
+        musStart: 'cloud://ascpg.6173-ascpg-1301277680/start.wav',
+        musSubmit: 'https://6173-ascpg-1301277680.tcb.qcloud.la/submit.wav?sign=bada17938c073b743fbda109152f7f25&t=1602818417',
 
         //  试题与答案占宽
-        wdQues: 12,         //  24格栅模型中，试题占宽
-        wdAns: 5,           //  24格栅模型中，答案占宽
+        wdQues: 12, //  24格栅模型中，试题占宽
+        wdAns: 5, //  24格栅模型中，答案占宽
         fsize: 54,
 
         //  对勾号颜色  white: 初始颜色     red: 答案错误颜色
@@ -75,18 +79,25 @@ Page({
         tickColor5: 'white',
 
         //  答案类型分类
-        quesType: 0,        //  0: 整数、小数四则    1: 分数四则    2：3题整数3题分数    3：整数小数方程和比例    4: 分数方程
-        keyType: 0,         //  0： 整数    1：整数带余数   2：浮点数   3：分数
+        quesType: 0, //  0: 整数、小数四则    1: 分数四则    2：3题整数3题分数    3：整数小数方程和比例    4: 分数方程
+        keyType: 0, //  0： 整数    1：整数带余数   2：浮点数   3：分数
 
-        typeDetail: 0,      //  试題细分类型 与picker初始化数组对应
+        typeDetail: 0, //  试題细分类型 与picker初始化数组对应
 
-        //  表达式为整数字符串时的试题式变量
+        //  表达式为整数字符串时的试题式变                                                                                                                                       
         ques0: '',
         ques1: '',
         ques2: '',
         ques3: '',
         ques4: '',
         ques5: '',
+
+        rques0: '',
+        rques1: '',
+        rques2: '',
+        rques3: '',
+        rques4: '',
+        rques5: '',
 
         ans0: '',
         ans1: '',
@@ -95,29 +106,29 @@ Page({
         ans4: '',
         ans5: '',
 
-        keys: [],               //  整数答案承接数组
-        keyMods: [],            //  余数答案承接数组
+        keys: [], //  整数答案承接数组
+        keyMods: [], //  余数答案承接数组
 
-        modJudg0: [0, 0],       //  整数答案判定结果数对，0：错 1：对，前整数，后余数
+        modJudg0: [0, 0], //  整数答案判定结果数对，0：错 1：对，前整数，后余数
         modJudg1: [0, 0],
         modJudg2: [0, 0],
         modJudg3: [0, 0],
         modJudg4: [0, 0],
         modJudg5: [0, 0],
 
-        keyZs: [],              //  分数答案数组
+        keyZs: [], //  分数答案数组
         keyFz: [],
         keyFm: [],
 
-        fraJudg0: [0, 0, 0],    //  分数答案判定结果数对，0：错 1：对，一整数部分，二分子部分，三分母部分
+        fraJudg0: [0, 0, 0], //  分数答案判定结果数对，0：错 1：对，一整数部分，二分子部分，三分母部分
         fraJudg1: [0, 0, 0],
         fraJudg2: [0, 0, 0],
         fraJudg3: [0, 0, 0],
         fraJudg4: [0, 0, 0],
         fraJudg5: [0, 0, 0],
 
-        keyFraType: [],         //  综合类答案类型标识，1:整数 2：分数  3：带分数   4: 小数
-        isDisabled0: false,     //  分子分母输入框不可用
+        keyFraType: [], //  综合类答案类型标识，1:整数 2：分数  3：带分数   4: 小数
+        isDisabled0: false, //  分子分母输入框不可用
         isDisabled1: false,
         isDisabled2: false,
         isDisabled3: false,
@@ -127,22 +138,29 @@ Page({
         //  6道题最终正误判定结果，0 未完成 1 正确 2 错误
         curJudg: [0, 0, 0, 0, 0, 0],
 
-        errQues: [],        //  当前错题集错题
-        errRec: [],         //  错题集中该型错题
+        errQues: [], //  当前错题集错题
+        errRec: [], //  错题集中该型错题
 
         txtScreenGrade: '一年级上',
         txtScreenType: '5以内的加法或减法',
         txtButtonGrade: '一年级上',
 
-        curGrade: -1,           //  用户所在年级
-        indexType: [],          //  picker 控件试题类型索引
-        txtType: [],            //  picker 控件題型字符串 
+        curGrade: app.globalData.userGrade, //  用户所在年级
+        indexType: [], //  picker 控件试题类型索引
+        txtType: [], //  picker 控件題型字符串 
 
         //usrExist: false,            //  排名表中用户记录是否存在
         grades: app.globalData._grades,
-        type: [
-            { values: Object.keys(app.globalData._types), className: 'column1' },
-            { values: app.globalData._types['一年级上'], className: 'column2', defaultIndex: 2 }
+        type: [{
+                values: Object.keys(app.globalData._types),
+                className: 'column1',
+                //defaultIndex: app.globalData.userGrade
+            },
+            {
+                values: app.globalData._types['一年级上'],
+                className: 'column2',
+                defaultIndex: 2
+            }
         ]
     },
 
@@ -168,10 +186,14 @@ Page({
         bgMusic.src = that.data.musBgm;
         rightMusic.src = that.data.musRight;
         errorMusic.src = that.data.musWrong;
+        startMusic.src = that.data.musStart;
+        submitMusic.src = that.data.musSubmit;
 
         bgMusic.loop = true;
         rightMusic.loop = false;
         errorMusic.loop = false;
+        startMusic.loop = false;
+        submitMusic.loop = false;
     },
 
     onReady() {
@@ -179,7 +201,7 @@ Page({
         let ret = 0;
 
         // initical question
-        that.data.indexType = [0, 0];   //  初始类型
+        that.data.indexType = [0, 0]; //  初始类型
         ret = that.initQues(0);
         if (ret == -1)
             console.log('ERROR: index/index.js -> onReady() -> initQeus()');
@@ -192,10 +214,14 @@ Page({
         this.bgMusic.stop();
         this.rightMusic.stop();
         this.errorMusic.stop();
+        this.startMusic.stop();
+        this.submitMusic.stop();
 
         this.bgMusic.destroy();
         this.rightMusic.destroy();
         this.errorMusic.destroy();
+        this.startMusic.destroy();
+        this.submitMusic.destroy();
     },
 
     onGetUserInfo: function (e) {
@@ -237,7 +263,7 @@ Page({
                                     success: res => {
                                         if (res.data.length != 0) {
                                             //用库中数据初始化用户所在年级
-                                            app.globalData.nickName = res.data[0].nickname;     //FIXME: 更新昵称
+                                            app.globalData.nickName = res.data[0].nickname; //FIXME: 更新昵称
                                             app.globalData.tdyCorrt = res.data[0].tdycorrt;
                                             app.globalData.tdyFinih = res.data[0].tdyfinih;
                                             app.globalData.tdyRate = res.data[0].sevenrate[6];
@@ -257,13 +283,46 @@ Page({
                                     indexType: [app.globalData.userGrade, 0],
                                     txtScreenGrade: config.types[app.globalData.userGrade].grade,
                                     txtScreenType: config.types[app.globalData.userGrade].type[0],
-                                    txtButtonGrade: config.types[app.globalData.userGrade].grade
+                                    txtButtonGrade: config.types[app.globalData.userGrade].grade,
+                                    type: [{
+                                        values: Object.keys(app.globalData._types),
+                                        className: 'column1',
+                                        defaultIndex: app.globalData.userGrade
+                                    },
+                                    {
+                                        values: app.globalData._types[config.types[app.globalData.userGrade].grade],
+                                        className: 'column2',
+                                        defaultIndex: 2
+                                    }
+                                ]
                                 });
 
                             } else {
                                 //pop窗口选择年级
-                                that.setData({ showGrade: true });
+                                that.setData({
+                                    showGrade: true
+                                });
                             }
+                        }
+                    })
+
+                    let oDate = new Date();
+                    let vDate = oDate.getDate(); //获取当前日期
+                    console.log('app.globalData.openid: ' + app.globalData.openid);
+                    console.log('vDate: ' + vDate);
+
+                    //刷新签到记录表
+                    wx.cloud.callFunction({
+                        name: 'updateRec',
+                        data: {
+                            id: app.globalData.openid,
+                            date: vDate
+                        },
+                        success: res => {
+                            console.log('[云函数] [updateRec] 调用成功', res);
+                        },
+                        fail: err => {
+                            console.error('[云函数] [updateRec] 调用失败', err)
                         }
                     })
 
@@ -281,15 +340,20 @@ Page({
     //  button START click
     onBtnStart: function (e) {
         let that = this;
-        let type = 0, ret = 0;
+        let type = 0,
+            ret = 0;
 
         // start timer
         if (that.data.enTimer) {
             that.timerClear();
-            init = setInterval(function () { that.timerWork() }, 1000);
+            init = setInterval(function () {
+                that.timerWork()
+            }, 1000);
         } else {
             //that.timerClear();
-            that.setData({ txtTimer: '0:00' });
+            that.setData({
+                txtTimer: '0:00'
+            });
         }
 
         // play mp3
@@ -302,6 +366,8 @@ Page({
             bgMusic.stop();
             bgMusic.play();
         }
+        startMusic.stop();
+        startMusic.play();
 
         // initical question && ticker
         ret = that.initQues(type);
@@ -364,7 +430,7 @@ Page({
             ans5Fz: '',
             ans5Fm: '',
 
-            modJudg0: [0, 0],    //  余数判定记录
+            modJudg0: [0, 0], //  余数判定记录
             modJudg1: [0, 0],
             modJudg2: [0, 0],
             modJudg3: [0, 0],
@@ -381,7 +447,7 @@ Page({
 
             curJudg: [0, 0, 0, 0, 0, 0],
 
-            fsize: config.types[ that.data.indexType[0] ].fsize[ that.data.indexType[1] ]
+            fsize: config.types[that.data.indexType[0]].fsize[that.data.indexType[1]]
         });
     },
 
@@ -389,8 +455,11 @@ Page({
     onBtnSubmit: function (e) {
         let that = this;
         let i = 0;
-        let finishCount = 0, correctCount = 0, errorCount = 0;
-        let tdyRate = 0, tdyFinish = 0;
+        let finishCount = 0,
+            correctCount = 0,
+            errorCount = 0;
+        let tdyRate = 0,
+            tdyFinish = 0;
         let len;
         let val1, val2, val3;
         //let usrExist = false;
@@ -403,6 +472,7 @@ Page({
         if (that.data.enMusic)
             //audio.pause();
             bgMusic.pause();
+
 
         // for (i=0; i<6; i++) {
         //     if (that.data.curJudg[i] == 2)
@@ -421,7 +491,7 @@ Page({
                     data: {
                         //openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques0,
+                        ques: that.data.rques0,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -438,7 +508,7 @@ Page({
                     data: {
                         //openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques1,
+                        ques: that.data.rques1,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -455,7 +525,7 @@ Page({
                     data: {
                         //openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques2,
+                        ques: that.data.rques2,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -472,7 +542,7 @@ Page({
                     data: {
                         //openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques3,
+                        ques: that.data.rques3,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -489,7 +559,7 @@ Page({
                     data: {
                         //openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques4,
+                        ques: that.data.rques4,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -506,7 +576,7 @@ Page({
                     data: {
                         // openID: that.data.openID,
                         type: that.data.typeDetail,
-                        ques: that.data.ques5,
+                        ques: that.data.rques5,
                     },
                     success: function (res) {
                         //console.log(res)
@@ -520,6 +590,9 @@ Page({
             that.updateRank(correctCount);
 
         }
+        
+        submitMusic.stop();
+        submitMusic.play();
 
         //  重置答题框
         that.setData({
@@ -578,7 +651,7 @@ Page({
             ans5Fz: '',
             ans5Fm: '',
 
-            modJudg0: [0, 0],    //  余数判定记录
+            modJudg0: [0, 0], //  余数判定记录
             modJudg1: [0, 0],
             modJudg2: [0, 0],
             modJudg3: [0, 0],
@@ -624,7 +697,7 @@ Page({
                         }
                     })
 
-                } else {    //  积分库内无该用户则新增
+                } else { //  积分库内无该用户则新增
                     let curRate = Math.round(correctCount / 6 * 100);
 
                     db.collection('rank').add({
@@ -676,7 +749,7 @@ Page({
                 break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[0]) {
-                    that.data.modJudg0[0] = 1;         //整数部分判断结果
+                    that.data.modJudg0[0] = 1; //整数部分判断结果
 
                     // FIXME: 条件合并
                     if (that.data.modJudg0[1] == 1) {
@@ -740,18 +813,18 @@ Page({
                 break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[1]) {
-                    that.data.modJudg1[0] = 1;         //整数部分判断结果
-          
+                    that.data.modJudg1[0] = 1; //整数部分判断结果
+
                     if (that.data.modJudg1[1] == 1) {
                         rightMusic.stop();
                         rightMusic.play();
                         this.setData({
                             tickColor1: 'red',
                         });
-                    } 
+                    }
                 } else {
                     // that.data.curJudg[1] = 2;
-                    
+
                 }
                 break;
             case 2:
@@ -806,15 +879,15 @@ Page({
                 break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[2]) {
-                    that.data.modJudg2[0] = 1;         //整数部分判断结果
- 
+                    that.data.modJudg2[0] = 1; //整数部分判断结果
+
                     if (that.data.modJudg2[1] == 1) {
                         rightMusic.stop();
                         rightMusic.play();
                         this.setData({
                             tickColor2: 'red',
                         });
-                    } 
+                    }
                 } else {
                     // that.data.curJudg[2] = 2;
                 }
@@ -872,7 +945,7 @@ Page({
 
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[3]) {
-                    that.data.modJudg3[0] = 1;         //整数部分判断结果
+                    that.data.modJudg3[0] = 1; //整数部分判断结果
 
                     if (that.data.modJudg3[1] == 1) {
                         rightMusic.stop();
@@ -926,15 +999,15 @@ Page({
                 break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[4]) {
-                    that.data.modJudg4[0] = 1;         //整数部分判断结果
-                    
+                    that.data.modJudg4[0] = 1; //整数部分判断结果
+
                     if (that.data.modJudg4[1] == 1) {
                         rightMusic.stop();
                         rightMusic.play();
                         this.setData({
                             tickColor4: 'red',
                         });
-                    } 
+                    }
                 } else {
                     // that.data.curJudg[4] = 2;
                 }
@@ -980,7 +1053,7 @@ Page({
                 break;
             case 1:
                 if (parseInt(e.detail.value) === that.data.keys[5]) {
-                    that.data.modJudg5[0] = 1;         //整数部分判断结果
+                    that.data.modJudg5[0] = 1; //整数部分判断结果
 
                     if (that.data.modJudg5[1] == 1) {
                         rightMusic.stop();
@@ -1019,7 +1092,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[0]) {
-            that.data.modJudg0[1] = 1        //余数部分判定
+            that.data.modJudg0[1] = 1 //余数部分判定
 
             if (that.data.modJudg0[0] == 1) {
                 rightMusic.stop();
@@ -1040,7 +1113,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[1]) {
-            that.data.modJudg1[1] = 1        //余数部分判定
+            that.data.modJudg1[1] = 1 //余数部分判定
 
             if (that.data.modJudg1[0] == 1) {
                 rightMusic.stop();
@@ -1061,7 +1134,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[2]) {
-            that.data.modJudg2[1] = 1        //余数部分判定
+            that.data.modJudg2[1] = 1 //余数部分判定
             if (that.data.modJudg2[0] == 1) {
                 rightMusic.stop();
                 rightMusic.play();
@@ -1081,7 +1154,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[3]) {
-            that.data.modJudg3[1] = 1        //余数部分判定
+            that.data.modJudg3[1] = 1 //余数部分判定
             if (that.data.modJudg3[0] == 1) {
                 rightMusic.stop();
                 rightMusic.play();
@@ -1101,7 +1174,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[4]) {
-            that.data.modJudg4[1] = 1        //余数部分判定
+            that.data.modJudg4[1] = 1 //余数部分判定
             if (that.data.modJudg4[0] == 1) {
                 rightMusic.stop();
                 rightMusic.play();
@@ -1121,7 +1194,7 @@ Page({
         let that = this;
 
         if (parseInt(e.detail.value) === that.data.keyMods[5]) {
-            that.data.modJudg5[1] = 1        //余数部分判定
+            that.data.modJudg5[1] = 1 //余数部分判定
             if (that.data.modJudg5[0] == 1) {
                 rightMusic.stop();
                 rightMusic.play();
@@ -1147,7 +1220,7 @@ Page({
         // console.log('that.data.keyZs[0] : ' + that.data.keyZs[0]);
 
         switch (that.data.keyFraType[0]) {
-            case 1:     //答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[0]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1162,7 +1235,7 @@ Page({
                 // 分数部分禁用输入
 
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
                     //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
@@ -1178,14 +1251,14 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[0] == 0)
                     that.data.fraJudg0[0] = 1;
                 break;
             case 3:
                 if (parseInt(e.detail.value) === that.data.keyZs[0]) {
                     that.data.fraJudg0[0] = 1;
-                   
+
                     if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
                         rightMusic.stop();
                         rightMusic.play();
@@ -1278,7 +1351,7 @@ Page({
         console.log('that.data.keyZs[1] : ' + that.data.keyZs[1]);
 
         switch (that.data.keyFraType[1]) {
-            case 1://答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[1]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1293,7 +1366,7 @@ Page({
                 // 分数部分禁用输入
 
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[1] - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1308,7 +1381,7 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[1] == 0) {
                     that.data.fraJudg1[0] = 1;
                 } else {
@@ -1413,7 +1486,7 @@ Page({
         // console.log('that.data.keyZs[2] : ' + that.data.keyZs[2]);
 
         switch (that.data.keyFraType[2]) {
-            case 1:     //答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[2]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1426,7 +1499,7 @@ Page({
                     errorMusic.play();
                 }
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1441,10 +1514,10 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[2] == 0) {
                     that.data.fraJudg2[0] = 1;
-                }// else {
+                } // else {
                 //     that.data.fraJudg2[0] = 0;
                 // }
 
@@ -1542,7 +1615,7 @@ Page({
         let that = this;
 
         switch (that.data.keyFraType[3]) {
-            case 1:     //答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[3]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1557,7 +1630,7 @@ Page({
                 // 分数部分禁用输入
 
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[3] - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1572,7 +1645,7 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[3] == 0) {
                     that.data.fraJudg3[0] = 1;
                 } else {
@@ -1672,7 +1745,7 @@ Page({
         let that = this;
 
         switch (that.data.keyFraType[4]) {
-            case 1:     //答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[4]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1687,7 +1760,7 @@ Page({
                 // 分数部分禁用输入
 
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[4] - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1702,7 +1775,7 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[4] == 0) {
                     that.data.fraJudg4[0] = 1;
                 } else {
@@ -1803,7 +1876,7 @@ Page({
         let that = this;
 
         switch (that.data.keyFraType[5]) {
-            case 1:     //答案为整数时，直接比对
+            case 1: //答案为整数时，直接比对
                 if (parseInt(e.detail.value) === that.data.keyZs[5]) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1818,7 +1891,7 @@ Page({
                 // 分数部分禁用输入
 
                 break;
-            case 4:     //答案为小数时，差值比对
+            case 4: //答案为小数时，差值比对
                 if (Math.abs(that.data.keyZs[5] - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1833,7 +1906,7 @@ Page({
                 }
                 // 分数部分禁用输入
                 break;
-            case 2:    //答案为纯分数时，整数部分为空
+            case 2: //答案为纯分数时，整数部分为空
                 if (e.detail.value == '' && that.data.keyZs[5] == 0) {
                     that.data.fraJudg5[0] = 1;
                 } else {
@@ -1930,21 +2003,31 @@ Page({
     },
 
     //  switch
-    onChangeTimer({ detail }) {
+    onChangeTimer({
+        detail
+    }) {
         let that = this;
 
-        this.setData({ enTimer: detail });
+        this.setData({
+            enTimer: detail
+        });
     },
 
-    onChangeMusic({ detail }) {
+    onChangeMusic({
+        detail
+    }) {
         let that = this;
 
-        this.setData({ enMusic: detail });
+        this.setData({
+            enMusic: detail
+        });
     },
 
     //  pop up
     onTapVwType: function (e) {
-        this.setData({ showType: true });
+        this.setData({
+            showType: true
+        });
     },
 
     onTapVwGrade: function (e) {
@@ -1952,11 +2035,15 @@ Page({
     },
 
     onPopTypeClose() {
-        this.setData({ showType: false });
+        this.setData({
+            showType: false
+        });
     },
 
     onPopGradeClose() {
-        this.setData({ showGrade: false });
+        this.setData({
+            showGrade: false
+        });
     },
 
     onChangeGrade(event) {
@@ -1966,7 +2053,11 @@ Page({
 
     onConfirmGrade(event) {
         let that = this;
-        const { picker, value, index } = event.detail;
+        const {
+            picker,
+            value,
+            index
+        } = event.detail;
 
         db.collection('user').add({
             data: {
@@ -1981,6 +2072,34 @@ Page({
             complete: console.log
         })
 
+        db.collection('loginRec').add({
+            data: {
+                //openID: that.data.openID,
+                rec: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            success: function (res) {
+                let oDate = new Date();
+                let vDate = oDate.getDate(); //获取当前日期
+
+                //刷新签到记录表
+                wx.cloud.callFunction({
+                    name: 'updateRec',
+                    data: {
+                        id: app.globalData.openid,
+                        date: vDate
+                    },
+                    success: res => {
+                        console.log('[云函数] [updateRec] 调用成功', res);
+                    },
+                    fail: err => {
+                        console.error('[云函数] [updateRec] 调用失败', err)
+                    }
+                })
+            },
+            fail: console.error,
+            complete: console.log
+        })
+
         app.globalData.userGrade = index;
 
         this.setData({
@@ -1989,17 +2108,34 @@ Page({
             indexType: [app.globalData.userGrade, 0],
             txtScreenGrade: config.types[app.globalData.userGrade].grade,
             txtScreenType: config.types[app.globalData.userGrade].type[0],
+
+            type: [{
+                values: Object.keys(app.globalData._types),
+                className: 'column1',
+                defaultIndex: app.globalData.userGrade
+            },
+            {
+                values: app.globalData._types[config.types[app.globalData.userGrade].grade],
+                className: 'column2',
+                defaultIndex: 2
+            }]
         });
 
         //picker.setColumnValues(index, config.types[value[0]]);
     },
 
     onCancelGrade() {
-        this.setData({ showGrade: false });
+        this.setData({
+            showGrade: false
+        });
     },
 
     onChangeType(event) {
-        const { picker, value, index } = event.detail;
+        const {
+            picker,
+            value,
+            index
+        } = event.detail;
         picker.setColumnValues(1, app.globalData._types[value[0]]);
     },
 
@@ -2016,7 +2152,9 @@ Page({
     },
 
     onCancelType() {
-        this.setData({ showType: false });
+        this.setData({
+            showType: false
+        });
     },
 
     onHide() {
@@ -2050,7 +2188,7 @@ Page({
         let mutVal = mut;
 
         if (sec < 10)
-            secVal = '0' + sec;            // 少于10补零
+            secVal = '0' + sec; // 少于10补零
         else
             secVal = sec;
 
@@ -2058,16 +2196,18 @@ Page({
 
         if (sec >= 60) {
             sec = 0,
-                that.data.second = 0;       // 满60归0
+                that.data.second = 0; // 满60归0
             mutVal = mut + 1;
 
             if (mut >= 10)
-                mutVal = mut % 10;      //  分数满10归0            
+                mutVal = mut % 10; //  分数满10归0            
 
             that.data.minute = mutVal;
         }
 
-        that.setData({ txtTimer: mutVal + ":" + secVal, });
+        that.setData({
+            txtTimer: mutVal + ":" + secVal,
+        });
     },
 
     //
@@ -2078,30 +2218,30 @@ Page({
         let ret = 0;
         let idxType = that.data.indexType;
 
-        switch (idxType[0]) {        //  FIXME: double switch
-            case 0:             //  一年级上
+        switch (idxType[0]) { //  FIXME: double switch
+            case 0: //  一年级上
                 switch (idxType[1]) {
-                    case 0:     // 5以内加法或减法
+                    case 0: // 5以内加法或减法
                         ret = g1First.g1First5AorS(0, 0, this);
                         that.data.typeDetail = 0;
                         break;
-                    case 1:     //  10以内加法或减法
+                    case 1: //  10以内加法或减法
                         ret = g1First.g1First10AorS(0, 1, this);
                         that.data.typeDetail = 1;
                         break;
-                    case 2:     //  10以内连加或连减
+                    case 2: //  10以内连加或连减
                         ret = g1First.g1First10DulAorS(0, 2, this);
                         that.data.typeDetail = 2;
                         break;
-                    case 3:     //  10以内加减混合
+                    case 3: //  10以内加减混合
                         ret = g1First.g1First10AandS(0, 3, this);
                         that.data.typeDetail = 3;
                         break;
-                    case 4:     //  10加个位数
+                    case 4: //  10加个位数
                         ret = g1First.g1First10A1b(0, 4, this);
                         that.data.typeDetail = 4;
                         break;
-                    case 5:     //  20以内进位加法
+                    case 5: //  20以内进位加法
                         ret = g1First.g1First20ACarry(0, 5, this);
                         that.data.typeDetail = 5;
                         break;
@@ -2109,29 +2249,29 @@ Page({
                         return -1;
                 }
                 break;
-            case 1:             //  一年级下
+            case 1: //  一年级下
                 switch (idxType[1]) {
-                    case 0:     //  20以内退位减法
+                    case 0: //  20以内退位减法
                         ret = g1Second.g1Second20SBorrow(1, 0, this);
                         that.data.typeDetail = 10;
                         break;
-                    case 1:     //  20以内加法或减法
+                    case 1: //  20以内加法或减法
                         ret = g1Second.g1Second20AorS(1, 1, this);
                         that.data.typeDetail = 11;
                         break;
-                    case 2:     //  整十加减整十
+                    case 2: //  整十加减整十
                         ret = g1Second.g1Second10AandS10(1, 2, this);
                         that.data.typeDetail = 12;
                         break;
-                    case 3:     //  两位数加减一位数或整十数
+                    case 3: //  两位数加减一位数或整十数
                         ret = g1Second.g1Second2bAandS10(1, 3, this);
                         that.data.typeDetail = 13;
                         break;
-                    case 4:     //  20以内连加或连减
+                    case 4: //  20以内连加或连减
                         ret = g1Second.g1Second20DulAorS(1, 4, this);
                         that.data.typeDetail = 14;
                         break;
-                    case 5:      //  20以内加减混合
+                    case 5: //  20以内加减混合
                         ret = g1Second.g1Second20AandS(1, 5, this);
                         that.data.typeDetail = 15;
                         break;
@@ -2139,41 +2279,41 @@ Page({
                         break;
                 }
                 break;
-            case 2:             //  二年级上
+            case 2: //  二年级上
                 switch (idxType[1]) {
-                    case 0:     //  两位数加减一位或两位数无进位退位
+                    case 0: //  两位数加减一位或两位数无进位退位
                         ret = g2First.f2bAorS12bNoCarry(2, 0, this);
                         that.data.typeDetail = 20;
                         break;
-                    case 1:     //  100以内连加或连减
+                    case 1: //  100以内连加或连减
                         ret = g2First.f100DulAorS(2, 1, this);
                         that.data.typeDetail = 21;
                         break;
-                    case 2:      //  100以内加减混合
+                    case 2: //  100以内加减混合
                         ret = g2First.f100AandS(2, 2, this);
                         that.data.typeDetail = 22;
                         break;
-                    case 3:      //   6以内乘法
+                    case 3: //   6以内乘法
                         ret = g2First.f66M(2, 3, this);
                         that.data.typeDetail = 23;
                         break;
-                    case 4:     //   表内乘法
+                    case 4: //   表内乘法
                         ret = g2First.f99M(2, 4, this);
                         that.data.typeDetail = 24;
                         break;
-                    case 5:     //   表内除法
+                    case 5: //   表内除法
                         ret = g2First.f9D(2, 5, this);
                         that.data.typeDetail = 25;
                         break;
-                    case 6:      //   100以内连乘或连除
+                    case 6: //   100以内连乘或连除
                         ret = g2First.f100DoulMorD(2, 6, this);
                         that.data.typeDetail = 26;
                         break;
-                    case 7:     //   100以内乘除混合
+                    case 7: //   100以内乘除混合
                         ret = g2First.f100MandD(2, 7, this);
                         that.data.typeDetail = 27;
                         break;
-                    case 8:      //   100以内乘与加或乘与减
+                    case 8: //   100以内乘与加或乘与减
                         ret = g2First.f100MandAS(2, 8, this);
                         that.data.typeDetail = 28;
                         break;
@@ -2182,41 +2322,41 @@ Page({
                 }
                 // console.log(that.data.keys);
                 break;
-            case 3:             //  二年级下
+            case 3: //  二年级下
                 switch (idxType[1]) {
-                    case 0:     //   几百几十相加或减
+                    case 0: //   几百几十相加或减
                         ret = g2Second.f110AorS(3, 0, this);
                         that.data.typeDetail = 30;
                         break;
-                    case 1:     //   几千几百相加或减
+                    case 1: //   几千几百相加或减
                         ret = g2Second.f1100AorS(3, 1, this);
                         that.data.typeDetail = 31;
                         break;
-                    case 2:     //   几千几百与几百几十相加或减
+                    case 2: //   几千几百与几百几十相加或减
                         ret = g2Second.f1100AorS110(3, 2, this);
                         that.data.typeDetail = 32;
                         break;
-                    case 3:      //   三位数加减法
+                    case 3: //   三位数加减法
                         ret = g2Second.f3bAorS(3, 3, this);
                         that.data.typeDetail = 33;
                         break;
-                    case 4:     //   两位数加减两位数含进位退位
+                    case 4: //   两位数加减两位数含进位退位
                         ret = g2Second.f2bAorSCarry(3, 4, this);
                         that.data.typeDetail = 34;
                         break;
-                    case 5:     //   表内乘、除法
+                    case 5: //   表内乘、除法
                         ret = g2Second.f1bMorD(3, 5, this);
                         that.data.typeDetail = 35;
                         break;
-                    case 6:      //   有余数除法
+                    case 6: //   有余数除法
                         ret = g2Second.f2bDMod(3, 6, this);
                         that.data.typeDetail = 36;
                         break;
-                    case 7:      //   两位数连加或连减
+                    case 7: //   两位数连加或连减
                         ret = g2Second.f2bDulAandS(3, 7, this);
                         that.data.typeDetail = 37;
                         break;
-                    case 8:      //   两位数加减混合
+                    case 8: //   两位数加减混合
                         ret = g2Second.f2bAandS(3, 8, this);
                         that.data.typeDetail = 38;
                         break;
@@ -2226,29 +2366,29 @@ Page({
                 // console.log(that.data.keys);
 
                 break;
-            case 4:             //  三年级上
+            case 4: //  三年级上
                 switch (idxType[1]) {
-                    case 0:      //   整十整百乘一位数
+                    case 0: //   整十整百乘一位数
                         ret = g3First.f110M1b(4, 0, this);
                         that.data.typeDetail = 40;
                         break;
-                    case 1:     //   整十整百除一位数
+                    case 1: //   整十整百除一位数
                         ret = g3First.f110D1b(4, 1, this);
                         that.data.typeDetail = 41;
                         break;
-                    case 2:     //   两位数三位数乘一位数
+                    case 2: //   两位数三位数乘一位数
                         ret = g3First.f3b2bD1b(4, 2, this);
                         that.data.typeDetail = 42;
                         break;
-                    case 3:     //   两位数除以一位数
+                    case 3: //   两位数除以一位数
                         ret = g3First.f2bD1b(4, 3, this);
                         that.data.typeDetail = 43;
                         break;
-                    case 4:     //   三位数乘以或除以一位数
+                    case 4: //   三位数乘以或除以一位数
                         ret = g3First.f3bMorD1b(4, 4, this);
                         that.data.typeDetail = 44;
                         break;
-                    case 5:     //   两位乘除一位混合运算
+                    case 5: //   两位乘除一位混合运算
                         ret = g3First.f3bMandD1b(4, 5, this);
                         that.data.typeDetail = 45;
                         break;
@@ -2258,33 +2398,33 @@ Page({
                 // console.log(that.data.keys);
 
                 break;
-            case 5:             //  三年级下
+            case 5: //  三年级下
                 switch (idxType[1]) {
-                    case 0:     //   两位数乘或除一位数
+                    case 0: //   两位数乘或除一位数
                         ret = g3Second.f2bMorD1b(5, 0, this);
                         that.data.typeDetail = 50;
                         break;
-                    case 1:     //   三位数乘或除一位数
+                    case 1: //   三位数乘或除一位数
                         ret = g3Second.f3bMorD1b(5, 1, this);
                         that.data.typeDetail = 51;
                         break;
-                    case 2:      //   整十整百乘一位数
+                    case 2: //   整十整百乘一位数
                         ret = g3Second.f110M1b(5, 2, this);
                         that.data.typeDetail = 52;
                         break;
-                    case 3:      //   两位数乘两位数
+                    case 3: //   两位数乘两位数
                         ret = g3Second.f2bM2b(5, 3, this);
                         that.data.typeDetail = 53;
                         break;
-                    case 4:      //   两位数连乘
+                    case 4: //   两位数连乘
                         ret = g3Second.f2bDoulM(5, 4, this);
                         that.data.typeDetail = 54;
                         break;
-                    case 5:      //   两位数乘加、乘减混合
+                    case 5: //   两位数乘加、乘减混合
                         ret = g3Second.f2bMandAorS(5, 5, this);
                         that.data.typeDetail = 55;
                         break;
-                    case 6:      //   两个两位数四则混合运算
+                    case 6: //   两个两位数四则混合运算
                         ret = g3Second.f2bASMD2s(5, 6, db, this);
                         that.data.typeDetail = 56;
                         break;
@@ -2294,37 +2434,37 @@ Page({
                 // console.log(that.data.keys);
 
                 break;
-            case 6:             //  四年级上
+            case 6: //  四年级上
                 switch (idxType[1]) {
-                    case 0:     //   三位整数加减法
+                    case 0: //   三位整数加减法
                         ret = g4First.f3bAorS(6, 0, this);
                         that.data.typeDetail = 60;
                         break;
-                    case 1:     //   两位数或三位数乘一位数
+                    case 1: //   两位数或三位数乘一位数
                         ret = g4First.f3b2bM1b(6, 1, this);
                         that.data.typeDetail = 61;
                         break;
-                    case 2:     //   两位数或三位数除一位数
+                    case 2: //   两位数或三位数除一位数
                         ret = g4First.f3b2bD1b(6, 2, this);
                         that.data.typeDetail = 62;
                         break;
-                    case 3:     //   两位数三位数除整十数
+                    case 3: //   两位数三位数除整十数
                         ret = g4First.f3b2bD10(6, 3, this);
                         that.data.typeDetail = 63;
                         break;
-                    case 4:      //   三位数除以两位数
+                    case 4: //   三位数除以两位数
                         ret = g4First.f3bD2b(6, 4, this);
                         that.data.typeDetail = 64;
                         break;
-                    case 5:     //   被除数或除数末尾含0
+                    case 5: //   被除数或除数末尾含0
                         ret = g4First.f3b0D2b0(6, 5, this);
                         that.data.typeDetail = 65;
                         break;
-                    case 6:      //   三位数两步混合运算
+                    case 6: //   三位数两步混合运算
                         ret = g4First.f3b3bASMD2s(6, 6, db, this);
                         that.data.typeDetail = 66;
                         break;
-                    case 7:     //   三位整数四则混合运算
+                    case 7: //   三位整数四则混合运算
                         ret = g4First.f3b3bASMD3s(6, 7, db, this);
                         that.data.typeDetail = 67;
                         break;
@@ -2334,37 +2474,37 @@ Page({
                 // console.log(that.data.keys);
 
                 break;
-            case 7:             //  四年级下
+            case 7: //  四年级下
                 switch (idxType[1]) {
-                    case 0:     //   三位整数加减法
+                    case 0: //   三位整数加减法
                         ret = g4Second.f3bAorS(7, 0, this);
                         that.data.typeDetail = 70;
                         break;
-                    case 1:      //   两位数乘一位数或整十数
+                    case 1: //   两位数乘一位数或整十数
                         ret = g4Second.f2bM1b10(7, 1, this);
                         that.data.typeDetail = 71;
                         break;
-                    case 2:     //   两位三位数除一位或整十数
+                    case 2: //   两位三位数除一位或整十数
                         ret = g4Second.f2b3bD1b10(7, 2, this);
                         that.data.typeDetail = 72;
                         break;
-                    case 3:     //   两位数乘整十数
+                    case 3: //   两位数乘整十数
                         ret = g4Second.f2bM10(7, 3, this);
                         that.data.typeDetail = 73;
                         break;
-                    case 4:     //   整百数乘整十数
+                    case 4: //   整百数乘整十数
                         ret = g4Second.f100M10(7, 4, this);
                         that.data.typeDetail = 74;
                         break;
-                    case 5:      //   三位数乘两位
+                    case 5: //   三位数乘两位
                         ret = g4Second.f3bM2b(7, 5, this);
                         that.data.typeDetail = 75;
                         break;
-                    case 6:     //四年级四测混合运算
+                    case 6: //四年级四测混合运算
                         ret = g4Second.f3b3bASMD4s(7, 6, db, this);
                         that.data.typeDetail = 76;
                         break;
-                    case 7:     //四年级简便合运算
+                    case 7: //四年级简便合运算
                         ret = g4Second.fg4easy(7, 7, db, this);
                         that.data.typeDetail = 77;
                         break;
@@ -2374,7 +2514,7 @@ Page({
                 // console.log(that.data.keys);
 
                 break;
-            case 8:             //  五年级上
+            case 8: //  五年级上
                 switch (idxType[1]) {
                     case 0:
                         ret = g5First.intAsmd(8, 0, db, this);
@@ -2400,29 +2540,29 @@ Page({
                         break;
                 }
                 break;
-            case 9:             //  五年级下
+            case 9: //  五年级下
                 switch (idxType[1]) {
-                    case 0:     //小数运算
+                    case 0: //小数运算
                         ret = g5Second.f1pot(9, 0, this);
                         that.data.typeDetail = 90;
                         break;
-                    case 1:     //小数四则混合运算
+                    case 1: //小数四则混合运算
                         ret = g5Second.fpotASMD(9, 1, db, this);
                         that.data.typeDetail = 91;
                         break;
-                    case 2:      //小数简便运算     FIXME: 间距
+                    case 2: //小数简便运算     FIXME: 间距
                         ret = g5Second.fpotSimple(9, 2, db, this);
                         that.data.typeDetail = 92;
                         break;
-                    case 3:      //简单方程
+                    case 3: //简单方程
                         ret = g5Second.f2formula(9, 3, db, this);
                         that.data.typeDetail = 93;
                         break;
-                    case 4:      //同分母分数加减
+                    case 4: //同分母分数加减
                         ret = g5Second.fsfAorS(9, 4, this);
                         that.data.typeDetail = 94;
                         break;
-                    case 5:      //带括号分数加减混合
+                    case 5: //带括号分数加减混合
                         ret = g5Second.fdfAorS(9, 5, db, this);
                         that.data.typeDetail = 95;
                         break;
@@ -2434,7 +2574,7 @@ Page({
                 // console.log(that.data.keyFz);
                 // console.log(that.data.keyFm);
                 break;
-            case 10:            //  六年级上
+            case 10: //  六年级上
                 switch (idxType[1]) {
                     case 0:
                         ret = g6First.ifAsmd(10, 0, db, this);
@@ -2459,30 +2599,30 @@ Page({
                     case 5:
                         ret = g6First.dformu(10, 5, db, this);
                         that.data.typeDetail = 105;
-                        break;                
+                        break;
                     default:
                         break;
                 }
                 break;
-            case 11:            //  六年级下
+            case 11: //  六年级下
                 switch (idxType[1]) {
-                    case 0:      // 各类型数字一步运算
+                    case 0: // 各类型数字一步运算
                         ret = g6Second.f61Step(11, 0, db, this);
                         that.data.typeDetail = 110;
                         break;
-                    case 1:     // 各类型数字四则运算
+                    case 1: // 各类型数字四则运算
                         ret = g6Second.f64Opt(11, 1, db, this);
                         that.data.typeDetail = 111;
                         break;
-                    case 2:      // 各类型数字简便运算
+                    case 2: // 各类型数字简便运算
                         ret = g6Second.f6Simple(11, 2, db, this);
                         that.data.typeDetail = 112;
                         break;
-                    case 3:     // 解方程
+                    case 3: // 解方程
                         ret = g6Second.f6Formula(11, 3, db, this);
                         that.data.typeDetail = 113;
                         break;
-                    case 4:      // 解比例
+                    case 4: // 解比例
                         ret = g6Second.f6Scale(11, 4, db, this);
                         that.data.typeDetail = 114;
                         break;

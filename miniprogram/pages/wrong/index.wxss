@@ -2,8 +2,9 @@
 @import "../../style/common.wxss";
 
 .calendar {
-  --calendar-height: 500rpx;
+    --calendar-height: 500rpx;
 }
+
 /* 
 .van-calendar__confirm {
     height: 10rpx;
@@ -30,6 +31,8 @@
     text-align: right;
     background-color: white;
     padding: 10rpx;
+    font-weight: bold;
+
 }
 
 /* 分数表达式 */
@@ -46,7 +49,8 @@
     display: flex;
     flex-direction: row;
     margin-right: 2rpx;
-    /* width: 200rpx; *//* height: 80rpx; */
+    /* width: 200rpx; */
+    /* height: 80rpx; */
 }
 
 .zsbufen {
@@ -54,7 +58,8 @@
     flex-direction: row-reverse;
     align-items: center;
     padding-right: 2rpx;
-    /* width: 100rpx; *//* height: 80rpx; */
+    /* width: 100rpx; */
+    /* height: 80rpx; */
 }
 
 .fsbufen {
@@ -63,7 +68,8 @@
 }
 
 .fenzi {
-    /* height: 40rpx; *//* align-items: center; */
+    /* height: 40rpx; */
+    /* align-items: center; */
     display: flex;
     justify-content: center;
 }
@@ -88,6 +94,94 @@
     background-color: crimson;
 }
 
+/* 打卡日历 */
+.week {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    margin: 20rpx;
+    border-radius: 10px;
+    background-color: #acd;
+    font-weight: bold;
+}
+
+.days {
+    margin: 20rpx;
+    padding: 10rpx;
+    border-radius: 10px;
+    background-color: #acd;
+    font-weight: bold;
+
+}
+
+.columns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.columns .rows {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.columns .rows .cell {
+    width: 84rpx;
+    height: 88rpx;
+    margin: 3rpx;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.count .daynumber {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.count .daynumber .day {
+    margin-top: 50rpx;
+}
+
+.count {
+    margin: 20rpx;
+    padding: 30rpx;
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #acd;
+    align-items: center;
+}
+
+.count .number {
+    color: crimson;
+    font-size: 60rpx;
+    background-color: #fff;
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20rpx;
+}
+
+.count text {
+    margin: 10rpx;
+    /* font-weight: bold; */
+
+}
+
+/*  */
 .top-50 {
     margin-top: 50rpx;
 }
@@ -97,7 +191,7 @@
 }
 
 .bc-red {
-    background-color:crimson;
+    background-color: crimson;
 }
 
 .bc-green {
@@ -105,7 +199,7 @@
 }
 
 .bc-blue {
-    background-color:cornflowerblue;
+    background-color: cornflowerblue;
 }
 
 .bc-gray {

@@ -21,7 +21,7 @@
         <van-row>
             <van-panel title="文升教育" desc="在线教育应用开发" status="持续升级中" use-footer-slot>
                 <view class="loc-mid font-150 top-50 btm-40">
-                    <van-image width="40" height="40" src="cloud://ascpg.6173-ascpg-1301277680/appicon.png" /> 计算能手 1.0.3</view>
+                    <van-image width="40" height="40" src="cloud://ascpg.6173-ascpg-1301277680/appicon.png" /> 计算能手 1.1.0</view>
                 <view slot="footer" class="footer">
                     <van-button size="small" bind:click="onBtnRet">返回</van-button>
                     <van-button size="small" type="primary" open-type="share">分享</van-button>

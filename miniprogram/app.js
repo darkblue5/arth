@@ -1,7 +1,7 @@
 //app.js
 import * as config from 'pages/config/config.js';
 
-let _DEBUG_ = true;
+let _DEBUG_ = false;
 let types = {};
 let grades = [];
 

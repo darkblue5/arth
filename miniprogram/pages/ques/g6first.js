@@ -45,6 +45,13 @@ function ifAsmd(grade, type, db, pt) {
                 ques4: res.result.data[4].ques,
                 ques5: res.result.data[5].ques,
 
+                rques0: res.result.data[0].ques,
+                rques1: res.result.data[1].ques,
+                rques2: res.result.data[2].ques,
+                rques3: res.result.data[3].ques,
+                rques4: res.result.data[4].ques,
+                rques5: res.result.data[5].ques,
+
                 keys: ckey
             });
         }).catch(err => {
@@ -252,6 +259,13 @@ function dAs(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
@@ -466,6 +480,13 @@ function dSd(grade, type, db, pt) {
                 ques4: shizi[4],
                 ques5: shizi[5],
 
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
+
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
                 keyFm: cKeyFm,
@@ -508,7 +529,7 @@ function dAsmd(grade, type, db, pt) {
             name: 'dbquery',
             data: {
                 table: 'q61',
-                type: 6103,
+                type: 6104,
                 count: config.types[10].count[3]
             }
         }).then(res => {           
@@ -677,6 +698,13 @@ function dAsmd(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
@@ -890,6 +918,13 @@ function dSimp(grade, type, db, pt) {
                 ques4: shizi[4],
                 ques5: shizi[5],
 
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
+
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
                 keyFm: cKeyFm,
@@ -1101,6 +1136,13 @@ function dformu(grade, type, db, pt) {
                 ques3: shizi[3],
                 ques4: shizi[4],
                 ques5: shizi[5],
+
+                rques0: cques[0],
+                rques1: cques[1],
+                rques2: cques[2],
+                rques3: cques[3],
+                rques4: cques[4],
+                rques5: cques[5],
 
                 keyZs: cKeyZs,
                 keyFz: cKeyFz,
