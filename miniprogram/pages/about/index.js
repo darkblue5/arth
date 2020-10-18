@@ -23,11 +23,21 @@ Page({
         if (res.from === 'button') {
         }
         return {
-            title: '计算能手 小程序',
-            path: '../pages/index/index',
+            title: '计算能手 计算训练好帮手',
+            path: 'pages/index/index',
             success: function (res) {
                 console.log('成功', res)
             }
+        }
+    },
+
+    onShareTimeline : function() {
+        return {
+          title: '计算能手 计算训练好帮手',
+        //   query: {
+        //     key: value
+        //   },
+        //   imageUrl: 'https://6173-ascpg-1301277680.tcb.qcloud.la/tlicon.jpg?sign=e5bf8f0911da56865afe10540cbfb279&t=1602984301'
         }
     },
 
