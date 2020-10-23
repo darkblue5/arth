@@ -28,7 +28,7 @@ const startMusic = wx.createInnerAudioContext(); //  right music
 const submitMusic = wx.createInnerAudioContext(); //  error music
 
 const QCOUNT = 6; //  1组6道题
-const FLOTERR = Number.EPSILON * Math.pow(2, 10); //  浮点数比对差值
+const FLOTERR = Number.EPSILON * Math.pow(2, 5); //  浮点数比对差值
 
 const db = wx.cloud.database(); //
 
@@ -764,7 +764,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[0]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -777,7 +777,7 @@ Page({
                 }
                 break;
             default:
-                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[0]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -828,7 +828,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[1]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[1]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -843,7 +843,7 @@ Page({
             case 3:
                 break;
             default:
-                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[0]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -893,7 +893,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[3]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -908,7 +908,7 @@ Page({
             case 3:
                 break;
             default:
-                if (Math.abs(e.detail.value - that.data.keys[0]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[0]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -959,7 +959,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[3]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[3]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -1013,7 +1013,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[4]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[4]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -1067,7 +1067,7 @@ Page({
                 }
                 break;
             case 2:
-                if (Math.abs(e.detail.value - that.data.keys[5]) <= FLOTERR) {
+                if (Math.abs(parseFloat(e.detail.value) - that.data.keys[5]) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -1236,7 +1236,7 @@ Page({
 
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[0] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[0]) - e.detail.value) <= FLOTERR) {
                     //if (Math.abs(that.data.keyZs0 - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
@@ -1367,7 +1367,7 @@ Page({
 
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[1] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[1]) - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     that.setData({
@@ -1500,7 +1500,7 @@ Page({
                 }
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[2] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[2]) - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     that.setData({
@@ -1631,7 +1631,7 @@ Page({
 
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[3] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[3]) - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     this.setData({
@@ -1761,7 +1761,7 @@ Page({
 
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[4] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[4]) - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     that.setData({
@@ -1892,7 +1892,7 @@ Page({
 
                 break;
             case 4: //答案为小数时，差值比对
-                if (Math.abs(that.data.keyZs[5] - e.detail.value) <= FLOTERR) {
+                if (Math.abs(parseFloat( that.data.keyZs[5]) - e.detail.value) <= FLOTERR) {
                     rightMusic.stop();
                     rightMusic.play();
                     that.setData({

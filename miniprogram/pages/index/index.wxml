@@ -258,12 +258,12 @@
             <block wx:if="{{keyType == 0 || keyType == 1 || keyType == 2}}">
                 <van-col span="5">
                     <view class="vw-col">
-                        <input class="inp-ans" type="number" value='{{ans0}}' bindblur="onBluAns0" />
-                        <input class="inp-ans" type="number" value='{{ans1}}' bindblur="onBluAns1" />
-                        <input class="inp-ans" type="number" value='{{ans2}}' bindblur="onBluAns2" />
-                        <input class="inp-ans" type="number" value='{{ans3}}' bindblur="onBluAns3" />
-                        <input class="inp-ans" type="number" value='{{ans4}}' bindblur="onBluAns4" />
-                        <input class="inp-ans" type="number" value='{{ans5}}' bindblur="onBluAns5" />
+                        <input class="inp-ans" type="digit" value='{{ans0}}' bindblur="onBluAns0" />
+                        <input class="inp-ans" type="digit" value='{{ans1}}' bindblur="onBluAns1" />
+                        <input class="inp-ans" type="digit" value='{{ans2}}' bindblur="onBluAns2" />
+                        <input class="inp-ans" type="digit" value='{{ans3}}' bindblur="onBluAns3" />
+                        <input class="inp-ans" type="digit" value='{{ans4}}' bindblur="onBluAns4" />
+                        <input class="inp-ans" type="digit" value='{{ans5}}' bindblur="onBluAns5" />
                     </view>
                 </van-col>
             </block>
@@ -271,12 +271,12 @@
             <block wx:elif="{{keyType == 3}}">
                 <van-col span="{{wdAns}}">
                     <view class="vw-ans-zs">
-                        <input class="in-ans-zs" value='{{ans0Zs}}' type="number" bindblur="onInpBlurAns0Zs" />
-                        <input class="in-ans-zs" value='{{ans1Zs}}' type="number" bindblur="onInpBlurAns1Zs" />
-                        <input class="in-ans-zs" value='{{ans2Zs}}' type="number" bindblur="onInpBlurAns2Zs" />
-                        <input class="in-ans-zs" value='{{ans3Zs}}' type="number" bindblur="onInpBlurAns3Zs" />
-                        <input class="in-ans-zs" value='{{ans4Zs}}' type="number" bindblur="onInpBlurAns4Zs" />
-                        <input class="in-ans-zs" value='{{ans5Zs}}' type="number" bindblur="onInpBlurAns5Zs" />
+                        <input class="in-ans-zs" value='{{ans0Zs}}' type="digit" bindblur="onInpBlurAns0Zs" />
+                        <input class="in-ans-zs" value='{{ans1Zs}}' type="digit" bindblur="onInpBlurAns1Zs" />
+                        <input class="in-ans-zs" value='{{ans2Zs}}' type="digit" bindblur="onInpBlurAns2Zs" />
+                        <input class="in-ans-zs" value='{{ans3Zs}}' type="digit" bindblur="onInpBlurAns3Zs" />
+                        <input class="in-ans-zs" value='{{ans4Zs}}' type="digit" bindblur="onInpBlurAns4Zs" />
+                        <input class="in-ans-zs" value='{{ans5Zs}}' type="digit" bindblur="onInpBlurAns5Zs" />
                     </view>
                 </van-col>
                 <van-col span="3">
