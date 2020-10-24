@@ -1229,8 +1229,8 @@ Page({
                         isDisabled0: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -1246,8 +1246,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1266,8 +1266,8 @@ Page({
                             tickColor0: 'red',
                         });
                     } else {
-                        errorMusic.stop();
-                        errorMusic.play();
+                        // errorMusic.stop();
+                        // errorMusic.play();
                     }
                 }
                 break;
@@ -1292,8 +1292,8 @@ Page({
                     tickColor0: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[0] == 3) {
             if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
@@ -1303,8 +1303,8 @@ Page({
                     tickColor0: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1325,8 +1325,8 @@ Page({
                     tickColor0: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[0] == 3) {
             if (that.data.fraJudg0[0] == 1 && that.data.fraJudg0[1] == 1 && that.data.fraJudg0[2] == 1) {
@@ -1336,8 +1336,8 @@ Page({
                     tickColor0: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1360,8 +1360,8 @@ Page({
                         isDisabled1: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -1376,8 +1376,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1399,8 +1399,8 @@ Page({
                             tickColor1: 'red',
                         });
                     } else {
-                        errorMusic.stop();
-                        errorMusic.play();
+                        // errorMusic.stop();
+                        // errorMusic.play();
                     }
                 }
                 break;
@@ -1426,8 +1426,8 @@ Page({
                     tickColor1: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[1] == 3) {
             if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
@@ -1437,8 +1437,8 @@ Page({
                     tickColor1: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1460,8 +1460,8 @@ Page({
                     tickColor1: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[1] == 3) {
             if (that.data.fraJudg1[0] == 1 && that.data.fraJudg1[1] == 1 && that.data.fraJudg1[2] == 1) {
@@ -1471,8 +1471,8 @@ Page({
                     tickColor1: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1495,8 +1495,8 @@ Page({
                         isDisabled2: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 break;
             case 4: //答案为小数时，差值比对
@@ -1509,8 +1509,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1532,8 +1532,8 @@ Page({
                             tickColor2: 'red',
                         });
                     } else {
-                        errorMusic.stop();
-                        errorMusic.play();
+                        // errorMusic.stop();
+                        // errorMusic.play();
                     }
                 }
                 break;
@@ -1559,8 +1559,8 @@ Page({
                     tickColor2: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[2] == 3) {
             if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
@@ -1570,8 +1570,8 @@ Page({
                     tickColor2: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1593,8 +1593,8 @@ Page({
                     tickColor2: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[2] == 3) {
             if (that.data.fraJudg2[0] == 1 && that.data.fraJudg2[1] == 1 && that.data.fraJudg2[2] == 1) {
@@ -1604,8 +1604,8 @@ Page({
                     tickColor2: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1624,8 +1624,8 @@ Page({
                         isDisabled3: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -1640,8 +1640,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1663,8 +1663,8 @@ Page({
                             tickColor3: 'red',
                         });
                     } else {
-                        errorMusic.stop();
-                        errorMusic.play();
+                        // errorMusic.stop();
+                        // errorMusic.play();
                     }
                 }
                 break;
@@ -1690,8 +1690,8 @@ Page({
                     tickColor3: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[3] == 3) {
             if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
@@ -1701,8 +1701,8 @@ Page({
                     tickColor3: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1723,8 +1723,8 @@ Page({
                     tickColor3: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[3] == 3) {
             if (that.data.fraJudg3[0] == 1 && that.data.fraJudg3[1] == 1 && that.data.fraJudg3[2] == 1) {
@@ -1734,8 +1734,8 @@ Page({
                     tickColor3: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1754,8 +1754,8 @@ Page({
                         isDisabled4: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -1770,8 +1770,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1794,8 +1794,8 @@ Page({
                         });
                     }
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 break;
             default:
@@ -1820,8 +1820,8 @@ Page({
                     tickColor4: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[4] == 3) {
             if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
@@ -1831,8 +1831,8 @@ Page({
                     tickColor4: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1854,8 +1854,8 @@ Page({
                     tickColor4: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[4] == 3) {
             if (that.data.fraJudg4[0] == 1 && that.data.fraJudg4[1] == 1 && that.data.fraJudg4[2] == 1) {
@@ -1865,8 +1865,8 @@ Page({
                     tickColor4: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1885,8 +1885,8 @@ Page({
                         isDisabled5: true,
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
 
@@ -1901,8 +1901,8 @@ Page({
                         //inpBorder: '3rpx solid gray'
                     });
                 } else {
-                    errorMusic.stop();
-                    errorMusic.play();
+                    // errorMusic.stop();
+                    // errorMusic.play();
                 }
                 // 分数部分禁用输入
                 break;
@@ -1924,8 +1924,8 @@ Page({
                             tickColor5: 'red',
                         });
                     } else {
-                        errorMusic.stop();
-                        errorMusic.play();
+                        // errorMusic.stop();
+                        // errorMusic.play();
                     }
                 }
                 break;
@@ -1951,8 +1951,8 @@ Page({
                     tickColor5: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[5] == 3) {
             if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
@@ -1962,8 +1962,8 @@ Page({
                     tickColor5: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
@@ -1985,8 +1985,8 @@ Page({
                     tickColor5: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         } else if (that.data.keyFraType[5] == 3) {
             if (that.data.fraJudg5[0] == 1 && that.data.fraJudg5[1] == 1 && that.data.fraJudg5[2] == 1) {
@@ -1996,8 +1996,8 @@ Page({
                     tickColor5: 'red',
                 });
             } else {
-                errorMusic.stop();
-                errorMusic.play();
+                // errorMusic.stop();
+                // errorMusic.play();
             }
         }
     },
